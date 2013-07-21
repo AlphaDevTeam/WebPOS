@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="70"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["H:\\AlphaDevs\\Alpha_Service_Center\\AlphaServiceCenterV1\\AlphaServiceV1\\AlphaServiceV1-war\\web\\Reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="billStatus" class="com.AlphaDevs.Web.Enums.BillStatus">
+		<fieldDescription><![CDATA[billStatus]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="creditPeriod" class="java.lang.Double">
+		<fieldDescription><![CDATA[creditPeriod]]></fieldDescription>
+	</field>
+	<field name="gRNDetailss" class="java.util.List">
+		<fieldDescription><![CDATA[gRNDetailss]]></fieldDescription>
+	</field>
+	<field name="grnDate" class="java.util.Date">
+		<fieldDescription><![CDATA[grnDate]]></fieldDescription>
+	</field>
+	<field name="grnNo" class="java.lang.String">
+		<fieldDescription><![CDATA[grnNo]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="invNo" class="java.lang.String">
+		<fieldDescription><![CDATA[invNo]]></fieldDescription>
+	</field>
+	<field name="location" class="com.AlphaDevs.Web.Entities.Location">
+		<fieldDescription><![CDATA[location]]></fieldDescription>
+	</field>
+	<field name="logger" class="com.AlphaDevs.Web.Entities.Logger">
+		<fieldDescription><![CDATA[logger]]></fieldDescription>
+	</field>
+	<field name="purchaseType" class="com.AlphaDevs.Web.Enums.PurchaseType">
+		<fieldDescription><![CDATA[purchaseType]]></fieldDescription>
+	</field>
+	<field name="supplier" class="com.AlphaDevs.Web.Entities.Supplier">
+		<fieldDescription><![CDATA[supplier]]></fieldDescription>
+	</field>
+	<field name="totalAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[totalAmount]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="59"/>
+				<textElement textAlignment="Center">
+					<font size="40"/>
+				</textElement>
+				<text><![CDATA[Good Receieve Note]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement x="69" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{billStatus}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Bill Status ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Credit Period :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{creditPeriod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="40" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{grnDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Date ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[P.Type]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="525" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{purchaseType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="525" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{invNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="454" y="19" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Bill No]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="247" y="40" width="207" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{location}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="21" width="206" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[""+$F{supplier}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="25" width="802" height="100"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{gRNDetailss})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "GrnReport_Details.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="0" y="5" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{grnNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="493" y="25" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="25" width="282" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{logger}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="BillNo:" for="billNo" />
+                    <h:inputText id="billNo" value="#{invoiceHandler.current.billNo}" title="BillNo" />
+                    <h:outputLabel value="BillStat:" for="billStat" />
+                    <h:inputText id="billStat" value="#{invoiceHandler.current.billStat}" title="BillStat" />
+                    <h:outputLabel value="Customer:" for="customer" />
+                    <h:inputText id="customer" value="#{invoiceHandler.current.customer}" title="Customer" />
+                    <h:outputLabel value="Location:" for="location" />
+                    <h:inputText id="location" value="#{invoiceHandler.current.location}" title="Location" />
+                    <h:outputLabel value="Logger:" for="logger" />
+                    <h:inputText id="logger" value="#{invoiceHandler.current.logger}" title="Logger" />
+                    <h:outputLabel value="RefNo:" for="refNo" />
+                    <h:inputText id="refNo" value="#{invoiceHandler.current.refNo}" title="RefNo" />
+                    <h:outputLabel value="TotalAmount:" for="totalAmount" />
+                    <h:inputText id="totalAmount" value="#{invoiceHandler.current.totalAmount}" title="TotalAmount" />
+                    <h:outputLabel value="TrnDate:" for="trnDate" />
+                    <h:inputText id="trnDate" value="#{invoiceHandler.current.trnDate}" title="TrnDate" />
+                    <h:outputLabel value="Id:" for="id" />
+                    <h:inputText id="id" value="#{invoiceHandler.current.id}" title="Id" />
+                </h:panelGrid>
+                <hr/>
+                
+                <h:form>
+                    <h1><h:outputText value="Create/Edit"/></h1>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Invoice:" for="invoice" />
+                        
+                        <p:autoComplete id="acItem" value="#{invoiceDetailsHandler.current.item}"   
+                                    completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                        <p:ajax event="itemSelect" listener="#{invoiceDetailsHandler.handleSelect}" update="price" />  
+                    </p:autoComplete>  
+                        
+                        <h:outputLabel value="ItemQty:" for="itemQty" />
+                        <h:inputText id="itemQty" value="#{invoiceDetailsHandler.current.itemQty}" title="ItemQty" />
+                        <h:outputLabel value="Price:" for="price" />
+                        <h:inputText id="price" value="#{invoiceDetailsHandler.current.price}" title="Price" />
+                        <h:outputLabel value="Id:" for="id" />
+                        <h:inputText id="id" value="#{invoiceDetailsHandler.current.id}" title="Id" />
+                    </h:panelGrid>
+                </h:form>
+                
+                
+                <h:form>
+                    <h1><h:outputText value="List"/></h1>
+                    <p:dataTable value="#{invoiceDetailsHandler.virtualInvDetails}" var="item">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Invoice"/>
+                            </f:facet>
+                            <h:outputText value="#{item.invoice}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Item"/>
+                            </f:facet>
+                            <h:outputText value="#{item.item}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ItemQty"/>
+                            </f:facet>
+                            <h:outputText value="#{item.itemQty}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Price"/>
+                            </f:facet>
+                            <h:outputText value="#{item.price}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+
+
+
+                
+            </h:form>
+        </f:view>
+
+    </h:body>
+</html>
+

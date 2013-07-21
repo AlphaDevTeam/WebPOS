@@ -1,0 +1,33 @@
+/* 
+    Document   : CoreStyles
+    Created on : Oct 26, 2012, 10:22:47 PM
+    Author     : Mihindu Gajaba Karunarathne
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+    background-color: black;
+    color: silver;
+}
+
+#AlphaLogo 
+{
+    background-color: black;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+        
+}
+body
+{
+    background-color: black;
+    color: silver;
+}
+
+#InvalidAuth
+{
+    color: red;
+}
+

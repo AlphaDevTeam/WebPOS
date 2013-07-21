@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Hello from Facelets
+        
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="AddressState:" for="addressState" />
+                    <h:inputText id="addressState" value="#{supplierHandler.current.addressState}" title="AddressState" />
+                    <h:outputLabel value="City:" for="city" />
+                    <h:inputText id="city" value="#{supplierHandler.current.city}" title="City" />
+                    <h:outputLabel value="EmailAddress:" for="emailAddress" />
+                    <h:inputText id="emailAddress" value="#{supplierHandler.current.emailAddress}" title="EmailAddress" />
+                    <h:outputLabel value="Fax:" for="fax" />
+                    <h:inputText id="fax" value="#{supplierHandler.current.fax}" title="Fax" />
+                    <h:outputLabel value="Mobile:" for="mobile" />
+                    <h:inputText id="mobile" value="#{supplierHandler.current.mobile}" title="Mobile" />
+                    <h:outputLabel value="Phone:" for="phone" />
+                    <h:inputText id="phone" value="#{supplierHandler.current.phone}" title="Phone" />
+                    <h:outputLabel value="Street:" for="street" />
+                    <h:inputText id="street" value="#{supplierHandler.current.street}" title="Street" />
+                    <h:outputLabel value="URL:" for="URL" />
+                    <h:inputText id="URL" value="#{supplierHandler.current.URL}" title="URL" />
+                    <h:outputLabel value="ZipCode:" for="zipCode" />
+                    <h:inputText id="zipCode" value="#{supplierHandler.current.zipCode}" title="ZipCode" />
+                    <h:outputLabel value="CreditLimit:" for="creditLimit" />
+                    <h:inputText id="creditLimit" value="#{supplierHandler.current.creditLimit}" title="CreditLimit" />
+                    <h:outputLabel value="CustCode:" for="custCode" />
+                    <h:inputText id="custCode" value="#{supplierHandler.current.custCode}" title="CustCode" />
+                    <h:outputLabel value="CustNIC:" for="custNIC" />
+                    <h:inputText id="custNIC" value="#{supplierHandler.current.custNIC}" title="CustNIC" />
+                    <h:outputLabel value="Custcategory:" for="custcategory" />
+                    <h:selectOneMenu id="custcategory" value="#{supplierHandler.current.custcategory}" title="Custcategory" converter="#{managedConvertor}" >
+                        <f:selectItems value="#{customerCategoryHandler.list}"/>
+                    </h:selectOneMenu>
+                    <!--
+                    <h:outputLabel value="Extra:" for="extra" />
+                    <h:inputText id="extra" value="#{supplierHandler.current.extra}" title="Extra" />
+                    -->
+                    <h:outputLabel value="FirstName:" for="firstName" />
+                    <h:inputText id="firstName" value="#{supplierHandler.current.firstName}" title="FirstName" />
+                    <h:outputLabel value="Inactive:" for="inactive" />
+                    <h:inputText id="inactive" value="#{supplierHandler.current.inactive}" title="Inactive" />
+                    <h:outputLabel value="LastName:" for="lastName" />
+                    <h:inputText id="lastName" value="#{supplierHandler.current.lastName}" title="LastName" />
+                    
+                    <h:commandButton value="Save" action="#{supplierHandler.createSup()}"/>
+                    
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+
+
+    </h:body>
+</html>
+

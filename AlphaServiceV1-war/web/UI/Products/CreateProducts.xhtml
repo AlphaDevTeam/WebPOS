@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="ProductPrefix:" for="productPrefix" />
+                    <h:inputText id="productPrefix" value="#{productHandler.current.productPrefix}" title="ProductPrefix" />
+                    <h:outputLabel value="ProdCode:" for="prodCode" />
+                    <h:inputText id="prodCode" value="#{productHandler.current.prodCode}" title="ProdCode" />
+                    <h:outputLabel value="ProductDescription:" for="productDescription" />
+                    <h:inputText id="productDescription" value="#{productHandler.current.productDescription}" title="ProductDescription" />
+                    <h:outputLabel value="ProfitPerc:" for="profitPerc" />
+                    <h:inputText id="profitPerc" value="#{productHandler.current.profitPerc}" title="ProfitPerc" />
+                    
+                    <h:commandButton value="Save" action="#{productHandler.persistProduct()}"/>
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+
+
+    </h:body>
+</html>
+

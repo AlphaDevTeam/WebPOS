@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="DesignPrefix:" for="designPrefix" />
+                    <h:inputText id="designPrefix" value="#{designHandler.current.designPrefix}" title="DesignPrefix" />
+                    <h:outputLabel value="Description:" for="description" />
+                    <h:inputText id="description" value="#{designHandler.current.description}" title="Description" />
+                    <h:outputLabel value="DesignCode:" for="designCode" />
+                    <h:inputText id="designCode" value="#{designHandler.current.designCode}" title="DesignCode" />
+                    <h:outputLabel value="DesignProfitPerc:" for="designProfitPerc" />
+                    <h:inputText id="designProfitPerc" value="#{designHandler.current.designProfitPerc}" title="DesignProfitPerc" />
+                    <h:outputLabel value="Product:" for="product" />
+                    <h:selectOneMenu id="product" value="#{designHandler.current.product}" title="Product" converter="#{productConvertor}" >
+                        <f:selectItems value="#{productHandler.list}"/>
+                    </h:selectOneMenu>
+                    <h:commandButton value="Save" action="#{designHandler.persistDesign()}"/>
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+
+
+        
+    </h:body>
+</html>
+
