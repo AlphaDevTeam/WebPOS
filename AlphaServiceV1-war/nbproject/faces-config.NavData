@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="UI/Location/CreateLocation.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="index.jsp" x="150" y="450" zoom="true"/>
+        <Node id="UI/Reports/BinCard.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="UI/GRN/ReturnGrn.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="UI/Supplier/CreateSupplier.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="UI/Design/ListDesigns.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="UI/Items/CreateItems.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="UI/Supplier/Account.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="UI/Login.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="UI/Reprints/ReprintGRN.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="UI/Sales/Invoice.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="index2.jsp" x="150" y="300" zoom="true"/>
+        <Node id="UI/Products/CreateProducts.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="TestJSPJSF.jsp" x="650" y="300" zoom="true"/>
+        <Node id="UI/CustomerCategory/ListCustomerCategory.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="UI/Location/ListLocation.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="UI/Reports/Stock.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="UI/Products/ListProducts.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="UI/Supplier/ListSupplier.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="Test.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="UI/GRN/CreateGRN.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="UI/Design/CreateDesign.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="index.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="UI/CashBook/CashBook.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="UI/CustomerCategory/CreateCustomerCategory.xhtml" x="900" y="150" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

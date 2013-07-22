@@ -28,7 +28,17 @@ public class UserX implements Serializable
     @OneToOne
     private Logger Logger;
     
+    @OneToOne
+    private Company associatedCompany;
+    
     public UserX() {
+    }
+
+    public UserX(String userName, String passWord, Logger Logger, Company associatedCompany) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.Logger = Logger;
+        this.associatedCompany = associatedCompany;
     }
 
     public UserX(String userName, String passWord, com.AlphaDevs.Web.Entities.Logger Logger) {
@@ -42,6 +52,13 @@ public class UserX implements Serializable
         this.passWord = passWord;
     }
     
+    public Company getAssociatedCompany() {
+        return associatedCompany;
+    }
+
+    public void setAssociatedCompany(Company associatedCompany) {
+        this.associatedCompany = associatedCompany;
+    }
 
     public com.AlphaDevs.Web.Entities.Logger getLogger() {
         return Logger;
