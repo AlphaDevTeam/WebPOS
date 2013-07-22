@@ -29,5 +29,37 @@ body
 #InvalidAuth
 {
     color: red;
+    border-color: greenyellow;
+    background-color: yellow;
 }
 
+#LoginForm{
+    position: fixed;
+    top: 175px;
+    left: 700px;
+}
+
+#verticalLine{
+    background-color: silver;
+    height: 400px;
+    width: 1px;
+    left: 600px;
+    position: fixed;
+    top: 100px;
+}
+
+#footerStyle{
+    background-color: black;
+    color: silver;
+    float:bottom;
+ }
+
+
+.ui-message-title {
+    font: 28px "Lucida Console", Monaco, monospace;
+    text-align: center;
+}
+.ui-message-message p {
+    font: 20px "Lucida Console", Monaco, monospace;
+    letter-spacing: -1px;
+}

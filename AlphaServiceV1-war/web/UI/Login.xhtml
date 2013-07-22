@@ -8,32 +8,38 @@
         <title>Alpha Service - Alpha Development Team ( Pvt ) Ltd</title>
         <link rel="stylesheet" type="text/css" href="Reso/CoreStyles.css" />
     </h:head>
-    
-    
-    <h:body >
-        <!-- <p:graphicImage id="AlphaLogo"  value="Alpha Development Team ( Pvt ) Ltd" url="Reso/AlphaLogoBlack.jpg"/>  -->
-        <hr/>
-        <center>
-        </center>
-        <hr/>
-        <h:outputLabel id="InvalidAuth" value="Un-Authorized Access" rendered="#{!infoGrabber.validTerminal}" />
-        
-        <f:view>
-            <h:form >
-                <p:growl id="message" autoUpdate="true" />
-                <h:commandButton value="Validate" action="#{terminalHandler.validateTerminal}" />
-                <h1><h:outputText value="Create/Edit #{terminalHandler.validateTerminalSession()} "/></h1>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="PassWord:" for="passWord" />
-                    <h:inputText id="passWord" value="#{userHandler.current.passWord}" title="PassWord" />
-                    <h:outputLabel value="UserName:" for="userName" />
-                    <h:inputText id="userName" value="#{userHandler.current.userName}" title="UserName" />
-                    <h:commandButton value="Validate" action="#{userHandler.validateUser}"/>
-                </h:panelGrid>
-            </h:form>
-        </f:view>
 
+
+    <h:body >
+        <p:graphicImage id="AlphaLogo"  value="Alpha Development Team ( Pvt ) Ltd" url="Reso/AlphaLogoBlack.jpg"/> 
+        <div id="verticalLine"/>
+        <h:outputLabel id="InvalidAuth" value="Un-Authorized Access" rendered="#{!infoGrabber.validTerminal}" />
+
+        <f:view>
+            <div id="LoginForm">
+                <h:form>
+                    <p:growl id="message" autoUpdate="true" />
+                    <center>
+                        <h1><h:outputText value="User Login "/></h1>
+                    </center>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="UserName:" for="userName" />
+                        <h:inputText id="userName" value="#{userHandler.current.userName}" title="UserName" required="true" requiredMessage="Please Enter Username to Proceed"/>
+                        <h:outputLabel value="PassWord:" for="passWord" />
+                        <h:inputText id="passWord" value="#{userHandler.current.passWord}" title="PassWord" required="true" requiredMessage="Please Enter Password to Proceed"/>
+                        <center>
+                            <h:commandButton value="Login" action="#{userHandler.validateUser}"/>
+                        </center>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </f:view>
+        <h:outputLabel id="footerStyle" value="Powered by Alpha Development Team ( Pvt ) Ltd | The Team that gives you the best | 0777117477 " />
+        <footer>
+  <p>Powered by Alpha Development Team ( Pvt ) Ltd </p>
+  <p><time datetime="2012-03-01"></time></p>
+</footer> 
     </h:body>
-   
+
 </html>
 
