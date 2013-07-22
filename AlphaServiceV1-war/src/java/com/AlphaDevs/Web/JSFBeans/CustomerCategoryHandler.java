@@ -1,6 +1,8 @@
 
 package com.AlphaDevs.Web.JSFBeans;
 
+import com.AlphaDevs.Engines.Validations.Standards.StandardValidationRule;
+import com.AlphaDevs.Engines.Validations.ValidationRule;
 import com.AlphaDevs.Web.Entities.CustomerCategory;
 import com.AlphaDevs.Web.Entities.Logger;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
@@ -49,6 +51,8 @@ public class CustomerCategoryHandler
     {
         try
         {
+            ValidationRule validation = new StandardValidationRule();
+            System.out.println("Validating .... " + validation.isRequred());
             System.out.println("Creating Log");
             Logger Log = EntityHelper.createLogger("Create Customer Category", "", TransactionTypes.CUSTOMERCAT);
             System.out.println("Creating Log....ok");
