@@ -2,10 +2,12 @@
 package com.AlphaDevs.Web.Entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -26,6 +28,8 @@ public class Company implements Serializable {
     private Long id;
     private String companyName;
     private String companyDescription;
+    @OneToMany(mappedBy = "relatedCompany")
+    private List<AdditionalFields> additionalFields;
 
     public Company() {
     }
@@ -69,6 +73,14 @@ public class Company implements Serializable {
         this.id = id;
     }
 
+    public List<AdditionalFields> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public void setAdditionalFields(List<AdditionalFields> additionalFields) {
+        this.additionalFields = additionalFields;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

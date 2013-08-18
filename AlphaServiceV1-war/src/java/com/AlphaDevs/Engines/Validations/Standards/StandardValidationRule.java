@@ -50,17 +50,19 @@ public class StandardValidationRule implements ValidationRule{
     public void resetValidation(){
         validationErrors.clear();
     }
-
-    @Override
-    public void validatePage(Object validatingObject) {
-        resetValidation();
-        
+    
+    public void standardValidations(Object validatingObject){
         //Strandard VLD 1
         //Validate the Description Length
         CustomerCategory custCat =  (CustomerCategory) validatingObject;
         if(custCat.getDescription().length() == 0){
             addValidation("STANDARD VLD 1","You must Specify a Value to Discription");
         }
+    }
+
+    @Override
+    public void validatePage(Object validatingObject) {
+        resetValidation();
         
         try {
             

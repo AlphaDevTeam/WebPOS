@@ -63,22 +63,34 @@ public class GRN implements Serializable
     
     @OneToOne(mappedBy = "relatedGrn",cascade= CascadeType.ALL)
     private GRNPaymentDetails gRNPaymentDetails;
+    
+    @OneToMany(mappedBy = "gRN")
+    private List<AdditionalFields> additionalFieldList;
 
-    public GRN(String grnNo, Date grnDate, Supplier supplier, String invNo, PurchaseType purchaseType, double CreditPeriod, double TotalAmount, double settledAmount, GRNFlags grnFlags, Location location, BillStatus billStatus, List<GRNDetails> gRNDetailss, Logger logger, GRNPaymentDetails gRNPaymentDetails) {
+    public GRN(String grnNo, Date grnDate, Supplier supplier, String invNo, PurchaseType purchaseType, BillStatus billStatus, double CreditPeriod, double TotalAmount, double settledAmount, GRNFlags grnFlags, Location location, List<GRNDetails> gRNDetailss, Logger logger, GRNPaymentDetails gRNPaymentDetails, List<AdditionalFields> additionalFieldList) {
         this.grnNo = grnNo;
         this.grnDate = grnDate;
         this.supplier = supplier;
         this.invNo = invNo;
         this.purchaseType = purchaseType;
+        this.billStatus = billStatus;
         this.CreditPeriod = CreditPeriod;
         this.TotalAmount = TotalAmount;
         this.settledAmount = settledAmount;
         this.grnFlags = grnFlags;
         this.location = location;
-        this.billStatus = billStatus;
         this.gRNDetailss = gRNDetailss;
         this.logger = logger;
         this.gRNPaymentDetails = gRNPaymentDetails;
+        this.additionalFieldList = additionalFieldList;
+    }
+
+    public List<AdditionalFields> getAdditionalFieldList() {
+        return additionalFieldList;
+    }
+
+    public void setAdditionalFieldList(List<AdditionalFields> additionalFieldList) {
+        this.additionalFieldList = additionalFieldList;
     }
 
     public GRNPaymentDetails getgRNPaymentDetails() {

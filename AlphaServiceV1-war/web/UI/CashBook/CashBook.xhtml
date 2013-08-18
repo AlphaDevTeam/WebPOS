@@ -8,13 +8,13 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form> 
+        <h:form target="_new" > 
             <h:commandButton value="Print" action="#{cashbookHandler.printReport}"/>
             <h:commandButton value="Print Down" action="#{cashbookHandler.printReportDownload}"/>
             <p:commandButton value="Prime Print " ajax="false"  action="#{cashbookHandler.printReportDownload}"/>
                     <h:outputLabel value="Item" for="acItem" />
                     <p:autoComplete id="acItem" value="#{gRNHandler.currentDetails.grnItem}" 
-                                    completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" converter="#{itemConvertor}"/>  
+                                    completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"/>  
                     
                     <f:view>
                         <h:form>

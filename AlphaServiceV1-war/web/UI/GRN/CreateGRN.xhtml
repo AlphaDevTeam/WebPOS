@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -161,7 +162,13 @@
         </f:view>
 
        
-
+        <c:forEach begin="0" end="1" var="a">
+            
+            
+            <h:outputText value=" #{additionalFieldsHandler.getList('INV').get(a).displayName}"/><br/>
+            <p:inputText value=" #{additionalFieldsHandler.getList('INV').get(a).fieldValue}" /><br/>
+          
+        </c:forEach>
 
         
     </h:body>

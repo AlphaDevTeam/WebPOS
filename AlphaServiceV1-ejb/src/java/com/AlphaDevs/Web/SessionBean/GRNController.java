@@ -1,10 +1,8 @@
 
 package com.AlphaDevs.Web.SessionBean;
 
-import com.AlphaDevs.Web.Entities.Design;
 import com.AlphaDevs.Web.Entities.GRN;
 import com.AlphaDevs.Web.Entities.GRNDetails;
-import com.AlphaDevs.Web.Entities.Product;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;

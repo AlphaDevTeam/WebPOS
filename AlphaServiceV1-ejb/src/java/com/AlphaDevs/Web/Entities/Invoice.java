@@ -42,11 +42,15 @@ public class Invoice implements Serializable
         
     @OneToMany(mappedBy = "invoice")
     private List<InvoiceDetails> InvDetails;
-
+    
+    @OneToMany
+    private List<AdditionalFields> additionalFieldList;
+    
     public Invoice() {
+        
     }
 
-    public Invoice(String BillNo, String RefNo, double TotalAmount, BillStatus BillStat, Date TrnDate, Supplier Customer, com.AlphaDevs.Web.Entities.Location Location, com.AlphaDevs.Web.Entities.Logger Logger) {
+    public Invoice(String BillNo, String RefNo, double TotalAmount, BillStatus BillStat, Date TrnDate, Supplier Customer, Location Location, Logger Logger, List<InvoiceDetails> InvDetails, List<AdditionalFields> additionalFieldList) {
         this.BillNo = BillNo;
         this.RefNo = RefNo;
         this.TotalAmount = TotalAmount;
@@ -55,6 +59,25 @@ public class Invoice implements Serializable
         this.Customer = Customer;
         this.Location = Location;
         this.Logger = Logger;
+        this.InvDetails = InvDetails;
+        this.additionalFieldList = additionalFieldList;
+    }
+
+   
+    public List<InvoiceDetails> getInvDetails() {
+        return InvDetails;
+    }
+
+    public void setInvDetails(List<InvoiceDetails> InvDetails) {
+        this.InvDetails = InvDetails;
+    }
+
+    public List<AdditionalFields> getAdditionalFieldList() {
+        return additionalFieldList;
+    }
+
+    public void setAdditionalFieldList(List<AdditionalFields> additionalFieldList) {
+        this.additionalFieldList = additionalFieldList;
     }
 
     public String getBillNo() {

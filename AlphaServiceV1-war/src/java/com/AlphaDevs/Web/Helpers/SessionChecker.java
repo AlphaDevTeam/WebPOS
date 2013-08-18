@@ -26,7 +26,7 @@ public class SessionChecker implements HttpSessionListener
     public void sessionDestroyed(HttpSessionEvent se) 
     {
         System.out.println("Session Destroyed " + new Date());
-        //MessageHelper.addErrorMessage("Session Expired!", "Session Has been expired , Please Login again");
+        MessageHelper.addErrorMessage("Session Expired!", "Session Has been expired , Please Login again");
     }
 
 }

@@ -2,14 +2,18 @@
 
 package com.AlphaDevs.Web.JSFBeans;
 
+import com.AlphaDevs.Web.Entities.AdditionalFields;
+import com.AlphaDevs.Web.Entities.Company;
 import com.AlphaDevs.Web.Entities.Invoice;
-import com.AlphaDevs.Web.Entities.InvoiceDetails;
+import com.AlphaDevs.Web.Entities.UserX;
+import com.AlphaDevs.Web.Enums.DocType;
+import com.AlphaDevs.Web.SessionBean.AdditionalFieldsController;
 import com.AlphaDevs.Web.SessionBean.InvoiceController;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -23,7 +27,11 @@ import javax.faces.bean.SessionScoped;
 public class InvoiceHandler 
 {
     @EJB
+    private AdditionalFieldsController additionalFieldsController;
+  
+    @EJB
     private InvoiceController invoiceController;
+   
     
     private Invoice current;
     
@@ -32,9 +40,19 @@ public class InvoiceHandler
         if(current == null)
         {
             current = new Invoice();
+            
         }
     }
 
+    public AdditionalFieldsController getAdditionalFieldsController() {
+        return additionalFieldsController;
+    }
+
+    public void setAdditionalFieldsController(AdditionalFieldsController additionalFieldsController) {
+        this.additionalFieldsController = additionalFieldsController;
+        System.out.println("AdditionalFeildController Set ");
+    }
+    
     public Invoice getCurrent() {
         return current;
     }
@@ -56,6 +74,8 @@ public class InvoiceHandler
     public List<Invoice> getList()
     {
         return invoiceController.findAll();
-    }
+    } 
+    
+   
 
 }

@@ -21,7 +21,7 @@ public class MihiValidationRule extends StandardValidationRule{
        
     @Override
     public void validatePage(Object validatingObject) {    
-        
+        super.standardValidations(validatingObject);
         CustomerCategory custCat =  (CustomerCategory) validatingObject;
         
         if(custCat.getDescription().length() >5 ){

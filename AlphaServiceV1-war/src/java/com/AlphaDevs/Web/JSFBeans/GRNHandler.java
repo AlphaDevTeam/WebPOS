@@ -3,6 +3,7 @@ package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.*;
 import com.AlphaDevs.Web.Enums.BillStatus;
+import com.AlphaDevs.Web.Enums.DocType;
 import com.AlphaDevs.Web.Enums.PurchaseType;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
@@ -46,6 +47,8 @@ import org.primefaces.event.SelectEvent;
 public class GRNHandler 
 {
     @EJB
+    private AdditionalFieldsController additionalFieldsController;
+    @EJB
     private GRNPaymentDetailsController gRNPaymentDetailsController;
     @EJB
     private CashBookBalanceController cashBookBalanceController;
@@ -67,6 +70,7 @@ public class GRNHandler
     private SystemsController systemsController;
     @EJB
     private GRNController gRNController;
+
     
 
     private double cashAmount;
@@ -82,6 +86,7 @@ public class GRNHandler
         if (current == null)
         {
             current = new GRN();
+            initAdditionalFields();
         }
         if(currentDetails == null)
         {
@@ -460,6 +465,26 @@ public class GRNHandler
     {
         System.out.println("Got List");
         return gRNController.findSpecific(getCurrent());
+        
+    }
+    
+     public String initAdditionalFields(){
+        System.out.println("Grabbing extras");
+        FacesContext context = FacesContext.getCurrentInstance();
+        UserX logedUser = (UserX) context.getExternalContext().getSessionMap().get("User");
+        System.out.println("user");
+        Company company = logedUser.getAssociatedCompany();
+        System.out.println("Doc : " + DocType.INV + " Company : " + company.getCompanyName());
+        if(additionalFieldsController != null){
+             List<AdditionalFields> additionalFields = additionalFieldsController.findAll(DocType.INV,company);
+            System.out.println("Returned : " + additionalFields);
+            current.setAdditionalFieldList(additionalFields);
+            return "Done";
+        }else{
+            System.out.println("Returned : Error");
+            return "Error";
+        }
+       
         
     }
     
