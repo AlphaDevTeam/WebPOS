@@ -167,6 +167,7 @@ public class GRNHandler
         
         for(Properties properties : current.getExtraz()){
             System.out.println("Trying Saving ... " + properties.getPropertyName() + " : " + properties.getPropertyValue());
+            //properties.setRelatedGRNs(current);
             propertiesController.create(properties);
             System.out.println("Done");
         }

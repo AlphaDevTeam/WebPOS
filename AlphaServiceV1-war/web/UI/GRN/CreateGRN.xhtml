@@ -58,22 +58,20 @@
                         <p:ajax event="itemSelect" listener="#{gRNHandler.handleSelect}" update="itemCost" />  
                     </p:autoComplete>  
                     <h:outputLabel value="Qty" for="itemQty" />
-                    <p:inputText id="itemQty" title="Qty" value="#{gRNHandler.currentDetails.grnQty}" >
-                        
-                    </p:inputText>
-                    
+                    <p:inputText id="itemQty" title="Qty" value="#{gRNHandler.currentDetails.grnQty}" />
+                 
                     <h:outputLabel value="Cost" for="itemCost" />
-                    <p:inputText id="itemCost" title="Item Cost" value="#{gRNHandler.currentDetails.grnItemCost}" >
-                           
-                    </p:inputText>
+                    <p:inputText id="itemCost" title="Item Cost" value="#{gRNHandler.currentDetails.grnItemCost}" />
+                    
+                    <c:forEach begin="0" end="#{(gRNHandler.propListTest.size() - 1)}" var="a">
+                        <h:outputText value="#{gRNHandler.propListTest.get(a).propertyName}"/>
+                        <p:inputText value="#{gRNHandler.propListTest.get(a).propertyValue}" />
+                    </c:forEach> 
                     
                     <h:commandButton value="Save" action="#{gRNHandler.addTEst()}"/>
                     <p:commandButton value="Add" action="#{gRNHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
                         
-                    <c:forEach begin="0" end="#{(gRNHandler.propListTest.size() - 1)}" var="a">
-                        <h:outputText value="#{gRNHandler.propListTest.get(a).propertyName}"/><br/>
-                        <p:inputText value="#{gRNHandler.propListTest.get(a).propertyValue}" /><br/>
-                    </c:forEach> 
+                    
                     
                 </h:panelGrid>
                 

@@ -19,4 +19,11 @@
        <phase-listener>com.AlphaDevs.Web.Helpers.SessionPhaseListner</phase-listener>
     </lifecycle>
     -->
+    <navigation-rule>
+        <from-view-id>/UI/GRN/CreateGRN.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

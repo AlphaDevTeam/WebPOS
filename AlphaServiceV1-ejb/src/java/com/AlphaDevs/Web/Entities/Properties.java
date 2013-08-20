@@ -57,6 +57,14 @@ public class Properties implements Serializable {
         this.propertyValue = propertyValue;
     }
 
+    public GRN getRelatedGRNs() {
+        return relatedGRNs;
+    }
+
+    public void setRelatedGRNs(GRN relatedGRNs) {
+        this.relatedGRNs = relatedGRNs;
+    }
+
     public Long getId() {
         return id;
     }

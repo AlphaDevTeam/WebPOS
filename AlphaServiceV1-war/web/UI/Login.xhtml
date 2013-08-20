@@ -26,7 +26,7 @@
                         <h:outputLabel value="UserName:" for="userName" />
                         <h:inputText id="userName" value="#{userHandler.current.userName}" title="UserName" required="true" requiredMessage="Please Enter Username to Proceed"/>
                         <h:outputLabel value="PassWord:" for="passWord" />
-                        <h:inputText id="passWord" value="#{userHandler.current.passWord}" title="PassWord" required="true" requiredMessage="Please Enter Password to Proceed"/>
+                        <p:password id="passWord" value="#{userHandler.current.passWord}" title="PassWord" required="true" requiredMessage="Please Enter Password to Proceed"/>
                         <center>
                             <h:commandButton value="Login" action="#{userHandler.validateUser}"/>
                         </center>
