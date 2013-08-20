@@ -3,6 +3,7 @@ package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.Company;
 import com.AlphaDevs.Web.SessionBean.CompanyController;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -37,5 +38,8 @@ public class CompanyHandler {
         this.current = current;
     }
     
+    public List<Company> getListOfCompany(){
+        return companyController.findAll();
+    }
     
 }

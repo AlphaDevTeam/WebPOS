@@ -3,14 +3,11 @@ package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.*;
 import com.AlphaDevs.Web.Enums.BillStatus;
-import com.AlphaDevs.Web.Enums.PurchaseType;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.Helpers.MessageHelper;
 import com.AlphaDevs.Web.SessionBean.*;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,7 +21,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -45,6 +41,11 @@ import org.primefaces.event.SelectEvent;
 @SessionScoped
 public class GRNHandler 
 {
+    @EJB
+    private PropertiesController propertiesController;
+    
+    @EJB
+    private PropertyManagerController propertyManagerController;
     @EJB
     private GRNPaymentDetailsController gRNPaymentDetailsController;
     @EJB
@@ -68,7 +69,8 @@ public class GRNHandler
     @EJB
     private GRNController gRNController;
     
-
+    
+    
     private double cashAmount;
     
     private GRN current;
@@ -79,9 +81,13 @@ public class GRNHandler
     
     
     public GRNHandler() {
+        
+                
         if (current == null)
         {
             current = new GRN();
+            System.out.println("Property Handler Created");
+            System.out.println("Constructor GRN");
         }
         if(currentDetails == null)
         {
@@ -159,10 +165,15 @@ public class GRNHandler
         current.setBillStatus(BillStatus.TAX);
         
         
+        for(Properties properties : current.getExtraz()){
+            System.out.println("Trying Saving ... " + properties.getPropertyName() + " : " + properties.getPropertyValue());
+            propertiesController.create(properties);
+            System.out.println("Done");
+        }
+        
         current.setgRNDetailss(VirtualList);
         current.setLogger(log);
         gRNController.create(current);
-        
         
         for(GRNDetails grnDet : getVirtualList())
         {
@@ -258,7 +269,7 @@ public class GRNHandler
         currentDetails = new GRNDetails();
         VirtualList = new ArrayList<GRNDetails>();
         setCashAmount(0);
-        return "UI/Test.xhtml";
+        return "Home";
     }
     
     
@@ -463,6 +474,21 @@ public class GRNHandler
         
     }
     
- 
+    public List<Properties> getPropListTest(){
+        
+        if(current.getExtraz() == null && propertyManagerController != null && propertyManagerController.findAll() != null){
+            List<Properties> propertyList = new ArrayList<Properties>();
+            for(PropertyManager propertyMng : propertyManagerController.findAll()){
+                Properties property = new Properties(propertyMng.getFieldName(), null);
+                propertyList.add(property);
+                System.out.println("Property added : " + property.getPropertyName());
+            }
+            current.setExtraz(propertyList);
+            System.out.println("Properties set");
+        }
+        
+        return current.getExtraz();
+    }
     
+   
 }

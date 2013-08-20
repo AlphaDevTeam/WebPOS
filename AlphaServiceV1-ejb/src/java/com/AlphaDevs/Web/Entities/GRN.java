@@ -63,7 +63,12 @@ public class GRN implements Serializable
     
     @OneToOne(mappedBy = "relatedGrn",cascade= CascadeType.ALL)
     private GRNPaymentDetails gRNPaymentDetails;
-
+    
+    
+    
+    @OneToMany(mappedBy = "relatedGRNs")
+    private List<Properties> extraz;
+    
     public GRN(String grnNo, Date grnDate, Supplier supplier, String invNo, PurchaseType purchaseType, double CreditPeriod, double TotalAmount, double settledAmount, GRNFlags grnFlags, Location location, BillStatus billStatus, List<GRNDetails> gRNDetailss, Logger logger, GRNPaymentDetails gRNPaymentDetails) {
         this.grnNo = grnNo;
         this.grnDate = grnDate;
@@ -81,6 +86,33 @@ public class GRN implements Serializable
         this.gRNPaymentDetails = gRNPaymentDetails;
     }
 
+    public GRN(String grnNo, Date grnDate, Supplier supplier, String invNo, PurchaseType purchaseType, BillStatus billStatus, double CreditPeriod, double TotalAmount, double settledAmount, GRNFlags grnFlags, Location location, List<GRNDetails> gRNDetailss, Logger logger, GRNPaymentDetails gRNPaymentDetails, List<Properties> extraz) {
+        this.grnNo = grnNo;
+        this.grnDate = grnDate;
+        this.supplier = supplier;
+        this.invNo = invNo;
+        this.purchaseType = purchaseType;
+        this.billStatus = billStatus;
+        this.CreditPeriod = CreditPeriod;
+        this.TotalAmount = TotalAmount;
+        this.settledAmount = settledAmount;
+        this.grnFlags = grnFlags;
+        this.location = location;
+        this.gRNDetailss = gRNDetailss;
+        this.logger = logger;
+        this.gRNPaymentDetails = gRNPaymentDetails;
+        this.extraz = extraz;
+    }
+    
+    
+    public List<Properties> getExtraz() {
+        return extraz;
+    }
+
+    public void setExtraz(List<Properties> extraz) {
+        this.extraz = extraz;
+    }
+    
     public GRNPaymentDetails getgRNPaymentDetails() {
         return gRNPaymentDetails;
     }

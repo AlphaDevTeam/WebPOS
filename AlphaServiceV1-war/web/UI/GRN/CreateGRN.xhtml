@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -11,7 +12,7 @@
         Hello from Facelets
         
         <f:view>
-            <h:form id="mainForm">
+            <h:form id="mainForm" target="_new">
                 <p:growl id="messages" showDetail="true"/>  
                 <h1><h:outputText value="Create/Edit"/></h1>
                 <h:panelGrid columns="6">
@@ -69,7 +70,11 @@
                     <h:commandButton value="Save" action="#{gRNHandler.addTEst()}"/>
                     <p:commandButton value="Add" action="#{gRNHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
                         
-                     
+                    <c:forEach begin="0" end="#{(gRNHandler.propListTest.size() - 1)}" var="a">
+                        <h:outputText value="#{gRNHandler.propListTest.get(a).propertyName}"/><br/>
+                        <p:inputText value="#{gRNHandler.propListTest.get(a).propertyValue}" /><br/>
+                    </c:forEach> 
+                    
                 </h:panelGrid>
                 
                 <p:dataTable  id="virtualList" editable="true" value="#{gRNHandler.virtualList}" var="item" selection="#{gRNHandler.selectedGrnData}" selectionMode="single" rowKey="#{item.grnItem}">
@@ -154,14 +159,12 @@
                 <h:outputText value="Cheque" />
                 <p:inputText id="chequeValue" value="#{gRNHandler.paymentDetails.chequeAmount}" required="true"/>
                 
-                
-                
-                
+              
             </h:form>
         </f:view>
 
-       
-
+        
+        
 
         
     </h:body>

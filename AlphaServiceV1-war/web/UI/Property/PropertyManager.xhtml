@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:selectOneMenu id="Document" value="#{propertyManagerHandler.current.document}" title="sfd"  >
+                        <f:selectItems value="#{documentEnumHandler.documentList}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel value="FieldName:" for="fieldName" />
+                    <h:inputText id="fieldName" value="#{propertyManagerHandler.current.fieldName}" title="FieldName" />
+                    <h:outputLabel value="Company:" for="company" />
+                    <h:selectOneMenu id="company" value="#{propertyManagerHandler.current.company}" title="Company" converter="#{companyConvertor}" >
+                        <f:selectItems value="#{companyHandler.listOfCompany}"/>
+                    </h:selectOneMenu>
+                    <h:commandButton value="Save" action="#{propertyManagerHandler.saveProperties()}"/>
+                </h:panelGrid>
+            </h:form>
+
+        </f:view>
+
+    </h:body>
+</html>
+
