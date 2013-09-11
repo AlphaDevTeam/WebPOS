@@ -164,17 +164,16 @@ public class GRNHandler
         
         current.setBillStatus(BillStatus.TAX);
         
-        
-        for(Properties properties : current.getExtraz()){
-            System.out.println("Trying Saving ... " + properties.getPropertyName() + " : " + properties.getPropertyValue());
-            //properties.setRelatedGRNs(current);
-            propertiesController.create(properties);
-            System.out.println("Done");
-        }
-        
         current.setgRNDetailss(VirtualList);
         current.setLogger(log);
         gRNController.create(current);
+        
+        for(Properties properties : current.getExtraz()){
+            System.out.println("Trying Saving ... " + properties.getPropertyName() + " : " + properties.getPropertyValue());
+            properties.setRelatedGRNs(current);
+            propertiesController.create(properties);
+            System.out.println("Done");
+        }
         
         for(GRNDetails grnDet : getVirtualList())
         {
@@ -279,6 +278,10 @@ public class GRNHandler
     public List<GRN> getGrnList()
     {
         return gRNController.findAll();
+    }
+    
+    public int getListCount(){
+        return current.getExtraz().size();
     }
     
     public void printReportDownload() 
