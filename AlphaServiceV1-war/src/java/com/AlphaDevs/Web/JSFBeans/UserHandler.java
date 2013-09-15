@@ -100,8 +100,12 @@ public class UserHandler
         }
         else
         {
-            //MessageHelper.addErrorMessage("UnAuthorized", "UnAuthorized Access");
-            return false;
+//            MessageHelper.addErrorMessage("UnAuthorized", "UnAuthorized Access");
+//            return false;
+            
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getSessionMap().put("Terminal", LoggedTerminal.get(0) );
+            return true;
         }
         
     }

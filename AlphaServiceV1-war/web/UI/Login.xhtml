@@ -13,7 +13,7 @@
     <h:body >
         <p:graphicImage id="AlphaLogo"  value="Alpha Development Team ( Pvt ) Ltd" url="Reso/AlphaLogoBlack.jpg"/> 
         <div id="verticalLine"/>
-        <h:outputLabel id="InvalidAuth" value="Un-Authorized Access" rendered="#{!infoGrabber.validTerminal}" />
+        <h:outputLabel id="InvalidAuth" value="Un-Authorized Access" rendered="#{infoGrabber.validTerminal}" />
 
         <f:view>
             <div id="LoginForm">

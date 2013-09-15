@@ -65,7 +65,7 @@ public class InfoGrabber
         String remoteAddress = request.getRemoteAddr();        
         //System.out.println("Host Addr: " + remoteAddress);
         
-        return remoteAddress.equals("127.0.0.1d");
+        return remoteAddress.equals("127.0.0.1");
     }
 
     public void setPropValue(String propValue) {
