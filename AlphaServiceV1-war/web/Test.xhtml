@@ -4,11 +4,11 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title> Title</title>
         <link rel="stylesheet" type="text/css" href="UI/Reso/CoreStyles.css" />
     </h:head>
     <h:body>
-        Hello from Facelets
+        
         <h:form>
             <p:growl id="message"/>
             <h:commandButton value="Ss" action="UI/CustomerCategory/CreateCustomerCategory.xhtml"/>
@@ -34,8 +34,8 @@
             <h:commandButton value="Return GRN" action="UI/GRN/ReturnGrn.xhtml"/>
             <h:commandButton value="Invoice" action="UI/Sales/Invoice.xhtml"/>
             <h:commandButton value="PropertyManager" action="UI/Property/PropertyManager.xhtml"/>
-            
-            
+            <h:commandButton value="Employe" action="UI/Employe/CreateEmploye.xhtml"/>
+            <h:commandButton value="Employe List" action="UI/Employe/ListEmploye.xhtml"/>
             
             <h:commandButton value="Logout" action="#{infoGrabber.logoutUser}"/>
         </h:form>

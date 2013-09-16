@@ -2,6 +2,7 @@
 package com.AlphaDevs.Web.Entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Employe implements Serializable {
     private String empName;
     private String empCode;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Logger logger;
     
     public Employe() {

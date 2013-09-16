@@ -10,6 +10,7 @@ import com.AlphaDevs.Web.SessionBean.CustomerCategoryController;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -20,7 +21,7 @@ import javax.faces.bean.SessionScoped;
  */
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class CustomerCategoryHandler 
 {
     @EJB

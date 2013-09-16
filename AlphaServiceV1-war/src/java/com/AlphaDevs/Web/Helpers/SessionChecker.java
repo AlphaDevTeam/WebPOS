@@ -19,14 +19,14 @@ public class SessionChecker implements HttpSessionListener
     public void sessionCreated(HttpSessionEvent se) 
     {
         System.out.println("Session Created " + new Date());
-        //MessageHelper.addErrorMessage("Session Created!", "Welcome");
+        MessageHelper.addErrorMessage("Session Created!", "Welcome");
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) 
     {
         System.out.println("Session Destroyed " + new Date());
-        //MessageHelper.addErrorMessage("Session Expired!", "Session Has been expired , Please Login again");
+        MessageHelper.addErrorMessage("Session Expired!", "Session Has been expired , Please Login again");
     }
 
 }
