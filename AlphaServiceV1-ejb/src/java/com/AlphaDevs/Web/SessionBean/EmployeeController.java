@@ -1,6 +1,6 @@
 package com.AlphaDevs.Web.SessionBean;
 
-import com.AlphaDevs.Web.Entities.Employe;
+import com.AlphaDevs.Web.Entities.Employee;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -18,14 +18,14 @@ import javax.persistence.PersistenceContext;
 
 @Stateless
 @LocalBean
-public class EmployeController extends AbstractFacade<Employe>{
+public class EmployeeController extends AbstractFacade<Employee>{
     
     @PersistenceContext(unitName = "AlphaServiceV1-ejbPU")
     private EntityManager em;
 
     
-    public EmployeController(){
-        super(Employe.class);
+    public EmployeeController(){
+        super(Employee.class);
     }
     
     @Override

@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
  */
 
 @Entity
-public class Employe implements Serializable {
+public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -31,17 +31,17 @@ public class Employe implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Logger logger;
     
-    public Employe() {
+    public Employee() {
     }
 
-    public Employe(String empName, String empCode, Logger logger) {
+    public Employee(String empName, String empCode, Logger logger) {
         this.empName = empName;
         this.empCode = empCode;
         this.logger = logger;
     }
 
     
-    public Employe(String empName, String empCode) {
+    public Employee(String empName, String empCode) {
         this.empName = empName;
         this.empCode = empCode;
     }
@@ -88,10 +88,10 @@ public class Employe implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employe)) {
+        if (!(object instanceof Employee)) {
             return false;
         }
-        Employe other = (Employe) object;
+        Employee other = (Employee) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

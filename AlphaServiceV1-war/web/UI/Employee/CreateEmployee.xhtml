@@ -13,11 +13,11 @@
                 <h1><h:outputText value="Create/Edit"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="EmpName:" for="empName" />
-                    <h:inputText id="empName" value="#{employeHandler.current.empName}" title="EmpName" />
+                    <h:inputText id="empName" value="#{employeeHandler.current.empName}" title="EmpName" />
                     <h:outputLabel value="EmpCode:" for="empCode" />
-                    <h:inputText id="empCode" value="#{employeHandler.current.empCode}" title="EmpCode" />
+                    <h:inputText id="empCode" value="#{employeeHandler.current.empCode}" title="EmpCode" />
                     <h:outputLabel value="Logger:" for="logger" />
-                    <h:commandButton value="Save" action="#{employeHandler.createEmploye()}"/>
+                    <h:commandButton value="Save" action="#{employeeHandler.createEmploye()}"/>
                 </h:panelGrid>
             </h:form>
         </f:view>

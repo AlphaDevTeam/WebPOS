@@ -1,12 +1,12 @@
 
 package com.AlphaDevs.Web.JSFBeans;
 
-import com.AlphaDevs.Web.Entities.Employe;
+import com.AlphaDevs.Web.Entities.Employee;
 import com.AlphaDevs.Web.Entities.Logger;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.Helpers.MessageHelper;
-import com.AlphaDevs.Web.SessionBean.EmployeController;
+import com.AlphaDevs.Web.SessionBean.EmployeeController;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -24,35 +24,35 @@ import javax.faces.bean.RequestScoped;
 
 @ManagedBean
 @RequestScoped
-public class EmployeHandler {
+public class EmployeeHandler {
     @EJB
-    private EmployeController employeController;
+    private EmployeeController employeController;
     
-    private Employe current;
+    private Employee current;
 
-    public EmployeHandler() {
+    public EmployeeHandler() {
         if(current == null){
-            current = new Employe();
+            current = new Employee();
         }
     }
     
-    public List<Employe> getList(){
+    public List<Employee> getList(){
         return employeController.findAll();
     }
 
-    public EmployeController getEmployeController() {
+    public EmployeeController getEmployeController() {
         return employeController;
     }
 
-    public void setEmployeController(EmployeController employeController) {
+    public void setEmployeController(EmployeeController employeController) {
         this.employeController = employeController;
     }
 
-    public Employe getCurrent() {
+    public Employee getCurrent() {
         return current;
     }
 
-    public void setCurrent(Employe current) {
+    public void setCurrent(Employee current) {
         this.current = current;
     }
     
