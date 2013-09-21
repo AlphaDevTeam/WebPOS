@@ -284,6 +284,41 @@ public class GRNHandler
         return current.getExtraz().size();
     }
     
+    public String rePrintGRN(){
+        System.out.println("Reprinting GRN " + current.getId() + ":" + current.getGrnNo() );
+        printReportSpecificGrn(current);
+        return "Home";
+    }
+    
+    public void printReportSpecificGrn(GRN printGrn) 
+    {
+        try
+        {
+            List<GRN> GrnList = new ArrayList<GRN>();
+            GRN printableGrn = (GRN) gRNController.find(printGrn.getId());
+            System.out.println("Grn : Added for Reprint " + printableGrn.getGrnNo() + " With :" + printableGrn.getId());
+            GrnList.add(printableGrn);
+            JRBeanCollectionDataSource beanCollection = new JRBeanCollectionDataSource(GrnList);
+            String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reports/GrnReport.jasper");
+            System.out.println("Path : " + reportPath);
+            JasperPrint jasPrint =  JasperFillManager.fillReport(reportPath, new HashMap(), beanCollection);
+            HttpServletResponse responce = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            responce.setContentType("application/pdf");
+            String filename = new StringBuffer(reportPath).append(".pdf").toString();  
+            ServletOutputStream output = responce.getOutputStream();
+            JasperExportManager.exportReportToPdfStream(jasPrint, output);
+            responce.addHeader("Content-Disposition", "inline; filename="+ filename);  
+            //responce.addHeader("Content-disposition", "attachment; filename=CashBook.pdf");
+            FacesContext.getCurrentInstance().responseComplete();
+            System.out.println("Report Done");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+    }
+    
     public void printReportDownload() 
     {
         try

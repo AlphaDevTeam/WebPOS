@@ -1,0 +1,1093 @@
+CREATE DATABASE  IF NOT EXISTS `simplepos` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `simplepos`;
+-- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
+--
+-- Host: localhost    Database: simplepos
+-- ------------------------------------------------------
+-- Server version	5.6.13
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `address`
+--
+
+DROP TABLE IF EXISTS `address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `address` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ADDRESSSTATE` varchar(255) DEFAULT NULL,
+  `CITY` varchar(255) DEFAULT NULL,
+  `STREET` varchar(255) DEFAULT NULL,
+  `ZIPCODE` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `address`
+--
+
+LOCK TABLES `address` WRITE;
+/*!40000 ALTER TABLE `address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `address` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cashbook`
+--
+
+DROP TABLE IF EXISTS `cashbook`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cashbook` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `BALANCE` double DEFAULT NULL,
+  `CR` double DEFAULT NULL,
+  `DR` double DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `BILLSTAT` int(11) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `LOCATION_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_CASHBOOK_LOGGER_ID` (`LOGGER_ID`),
+  KEY `FK_CASHBOOK_LOCATION_ID` (`LOCATION_ID`),
+  CONSTRAINT `FK_CASHBOOK_LOCATION_ID` FOREIGN KEY (`LOCATION_ID`) REFERENCES `location` (`ID`),
+  CONSTRAINT `FK_CASHBOOK_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cashbook`
+--
+
+LOCK TABLES `cashbook` WRITE;
+/*!40000 ALTER TABLE `cashbook` DISABLE KEYS */;
+INSERT INTO `cashbook` VALUES (1,-7600,7600,0,'Purchase - asd',NULL,9,1),(2,-11425,3825,0,'Purchase - GRN-02',NULL,11,1),(3,-15250,3825,0,'Purchase - GRN-05',NULL,12,1);
+/*!40000 ALTER TABLE `cashbook` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cashbookbalance`
+--
+
+DROP TABLE IF EXISTS `cashbookbalance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cashbookbalance` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `BANKBALANCE` double DEFAULT NULL,
+  `BILLSTATUS` int(11) DEFAULT NULL,
+  `CASHBALANCE` double DEFAULT NULL,
+  `LOCATION_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_CASHBOOKBALANCE_LOCATION_ID` (`LOCATION_ID`),
+  CONSTRAINT `FK_CASHBOOKBALANCE_LOCATION_ID` FOREIGN KEY (`LOCATION_ID`) REFERENCES `location` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cashbookbalance`
+--
+
+LOCK TABLES `cashbookbalance` WRITE;
+/*!40000 ALTER TABLE `cashbookbalance` DISABLE KEYS */;
+INSERT INTO `cashbookbalance` VALUES (1,0,0,-15250,1),(2,0,1,0,1);
+/*!40000 ALTER TABLE `cashbookbalance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `company`
+--
+
+DROP TABLE IF EXISTS `company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `COMPANYDESCRIPTION` varchar(255) DEFAULT NULL,
+  `COMPANYNAME` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `company`
+--
+
+LOCK TABLES `company` WRITE;
+/*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` VALUES (1,'DEFAULT COMPANY','DEFAULT ');
+/*!40000 ALTER TABLE `company` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contactinfo`
+--
+
+DROP TABLE IF EXISTS `contactinfo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contactinfo` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `EMAILADDRESS` varchar(255) DEFAULT NULL,
+  `FAX` varchar(255) DEFAULT NULL,
+  `MOBILE` varchar(255) DEFAULT NULL,
+  `PHONE` varchar(255) DEFAULT NULL,
+  `URL` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contactinfo`
+--
+
+LOCK TABLES `contactinfo` WRITE;
+/*!40000 ALTER TABLE `contactinfo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contactinfo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customerbalance`
+--
+
+DROP TABLE IF EXISTS `customerbalance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customerbalance` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `BALANCE` double DEFAULT NULL,
+  `SUPPLIER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_CUSTOMERBALANCE_SUPPLIER_ID` (`SUPPLIER_ID`),
+  CONSTRAINT `FK_CUSTOMERBALANCE_SUPPLIER_ID` FOREIGN KEY (`SUPPLIER_ID`) REFERENCES `supplier` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customerbalance`
+--
+
+LOCK TABLES `customerbalance` WRITE;
+/*!40000 ALTER TABLE `customerbalance` DISABLE KEYS */;
+INSERT INTO `customerbalance` VALUES (1,3875,1);
+/*!40000 ALTER TABLE `customerbalance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customercategory`
+--
+
+DROP TABLE IF EXISTS `customercategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customercategory` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_CUSTOMERCATEGORY_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_CUSTOMERCATEGORY_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customercategory`
+--
+
+LOCK TABLES `customercategory` WRITE;
+/*!40000 ALTER TABLE `customercategory` DISABLE KEYS */;
+INSERT INTO `customercategory` VALUES (1,'Customer & Supplier ',5);
+/*!40000 ALTER TABLE `customercategory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customertransaction`
+--
+
+DROP TABLE IF EXISTS `customertransaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customertransaction` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `BALANCE` double DEFAULT NULL,
+  `CR` double DEFAULT NULL,
+  `DR` double DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `BILLSTAT` int(11) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `SUPPLIER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_CUSTOMERTRANSACTION_LOGGER_ID` (`LOGGER_ID`),
+  KEY `FK_CUSTOMERTRANSACTION_SUPPLIER_ID` (`SUPPLIER_ID`),
+  CONSTRAINT `FK_CUSTOMERTRANSACTION_SUPPLIER_ID` FOREIGN KEY (`SUPPLIER_ID`) REFERENCES `supplier` (`ID`),
+  CONSTRAINT `FK_CUSTOMERTRANSACTION_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customertransaction`
+--
+
+LOCK TABLES `customertransaction` WRITE;
+/*!40000 ALTER TABLE `customertransaction` DISABLE KEYS */;
+INSERT INTO `customertransaction` VALUES (1,7650,0,7650,'GRN - asd',NULL,9,1),(2,50,7600,0,'PAID - asd',NULL,9,1),(3,3875,0,3825,'GRN - GRN-01',NULL,10,1),(4,7700,0,3825,'GRN - GRN-02',NULL,11,1),(5,3875,3825,0,'PAID - GRN-02',NULL,11,1),(6,7700,0,3825,'GRN - GRN-05',NULL,12,1),(7,3875,3825,0,'PAID - GRN-05',NULL,12,1);
+/*!40000 ALTER TABLE `customertransaction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `design`
+--
+
+DROP TABLE IF EXISTS `design`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `design` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `DESIGNCODE` varchar(255) DEFAULT NULL,
+  `DESIGNPREFIX` varchar(255) DEFAULT NULL,
+  `DESIGNPROFITPERC` double DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `PRODUCT_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_DESIGN_PRODUCT_ID` (`PRODUCT_ID`),
+  KEY `FK_DESIGN_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_DESIGN_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`),
+  CONSTRAINT `FK_DESIGN_PRODUCT_ID` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `product` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `design`
+--
+
+LOCK TABLES `design` WRITE;
+/*!40000 ALTER TABLE `design` DISABLE KEYS */;
+INSERT INTO `design` VALUES (1,'Design-Description','Design-Code','Design-Prefix',5,NULL,1),(2,'Design-Description-01','Design-Code-01','Design-Prefix-01',10,NULL,1);
+/*!40000 ALTER TABLE `design` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `EMPCODE` varchar(255) DEFAULT NULL,
+  `EMPNAME` varchar(255) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_EMPLOYEE_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_EMPLOYEE_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee`
+--
+
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES (1,'M101','Mihindu',4);
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `extras`
+--
+
+DROP TABLE IF EXISTS `extras`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `extras` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `extras`
+--
+
+LOCK TABLES `extras` WRITE;
+/*!40000 ALTER TABLE `extras` DISABLE KEYS */;
+/*!40000 ALTER TABLE `extras` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grn`
+--
+
+DROP TABLE IF EXISTS `grn`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grn` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `CREDITPERIOD` double DEFAULT NULL,
+  `TOTALAMOUNT` double DEFAULT NULL,
+  `BILLSTATUS` int(11) DEFAULT NULL,
+  `GRNDATE` date DEFAULT NULL,
+  `GRNFLAGS` int(11) DEFAULT NULL,
+  `GRNNO` varchar(255) DEFAULT NULL,
+  `INVNO` varchar(255) DEFAULT NULL,
+  `PURCHASETYPE` int(11) DEFAULT NULL,
+  `SETTLEDAMOUNT` double DEFAULT NULL,
+  `LOCATION_ID` bigint(20) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `SUPPLIER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_GRN_SUPPLIER_ID` (`SUPPLIER_ID`),
+  KEY `FK_GRN_LOGGER_ID` (`LOGGER_ID`),
+  KEY `FK_GRN_LOCATION_ID` (`LOCATION_ID`),
+  CONSTRAINT `FK_GRN_LOCATION_ID` FOREIGN KEY (`LOCATION_ID`) REFERENCES `location` (`ID`),
+  CONSTRAINT `FK_GRN_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`),
+  CONSTRAINT `FK_GRN_SUPPLIER_ID` FOREIGN KEY (`SUPPLIER_ID`) REFERENCES `supplier` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grn`
+--
+
+LOCK TABLES `grn` WRITE;
+/*!40000 ALTER TABLE `grn` DISABLE KEYS */;
+INSERT INTO `grn` VALUES (1,0,7650,0,'2013-09-03',NULL,'asd','asfas',NULL,0,1,9,1),(2,0,3825,0,'2013-09-04',NULL,'GRN-01','GRN-INV-01',0,0,1,10,1),(3,0,3825,0,'2013-09-17',NULL,'GRN-02','GRN-INV-02',0,0,1,11,1),(4,1,3825,0,'2013-09-03',NULL,'GRN-05','GRN-INV-05',NULL,0,1,12,1);
+/*!40000 ALTER TABLE `grn` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grndetails`
+--
+
+DROP TABLE IF EXISTS `grndetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grndetails` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `GRNITEMCOST` double DEFAULT NULL,
+  `GRNITEMDISCOUNTPERC` float DEFAULT NULL,
+  `GRNQTY` float DEFAULT NULL,
+  `RELATEDGRN_ID` bigint(20) DEFAULT NULL,
+  `GRNITEM_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_GRNDETAILS_GRNITEM_ID` (`GRNITEM_ID`),
+  KEY `FK_GRNDETAILS_RELATEDGRN_ID` (`RELATEDGRN_ID`),
+  CONSTRAINT `FK_GRNDETAILS_RELATEDGRN_ID` FOREIGN KEY (`RELATEDGRN_ID`) REFERENCES `grn` (`ID`),
+  CONSTRAINT `FK_GRNDETAILS_GRNITEM_ID` FOREIGN KEY (`GRNITEM_ID`) REFERENCES `items` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grndetails`
+--
+
+LOCK TABLES `grndetails` WRITE;
+/*!40000 ALTER TABLE `grndetails` DISABLE KEYS */;
+INSERT INTO `grndetails` VALUES (1,76.5,0,100,1,1),(2,76.5,0,50,2,1),(3,76.5,0,50,3,1),(4,76.5,0,50,4,1);
+/*!40000 ALTER TABLE `grndetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grnpaymentdetails`
+--
+
+DROP TABLE IF EXISTS `grnpaymentdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grnpaymentdetails` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `CASHAMOUNT` double DEFAULT NULL,
+  `CHEQUEAMOUNT` double DEFAULT NULL,
+  `CREDITCARDAMOUNT` double DEFAULT NULL,
+  `TOTALAMOUNT` double DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `RELATEDGRN_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_GRNPAYMENTDETAILS_LOGGER_ID` (`LOGGER_ID`),
+  KEY `FK_GRNPAYMENTDETAILS_RELATEDGRN_ID` (`RELATEDGRN_ID`),
+  CONSTRAINT `FK_GRNPAYMENTDETAILS_RELATEDGRN_ID` FOREIGN KEY (`RELATEDGRN_ID`) REFERENCES `grn` (`ID`),
+  CONSTRAINT `FK_GRNPAYMENTDETAILS_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grnpaymentdetails`
+--
+
+LOCK TABLES `grnpaymentdetails` WRITE;
+/*!40000 ALTER TABLE `grnpaymentdetails` DISABLE KEYS */;
+INSERT INTO `grnpaymentdetails` VALUES (1,7600,0,0,7650,9,1),(2,0,0,0,3825,10,2),(3,3825,0,0,3825,11,3),(4,3825,0,0,3825,12,4);
+/*!40000 ALTER TABLE `grnpaymentdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `invoice`
+--
+
+DROP TABLE IF EXISTS `invoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `invoice` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `BILLNO` varchar(255) DEFAULT NULL,
+  `BILLSTAT` int(11) DEFAULT NULL,
+  `REFNO` varchar(255) DEFAULT NULL,
+  `TOTALAMOUNT` double DEFAULT NULL,
+  `TRNDATE` date DEFAULT NULL,
+  `CUSTOMER_ID` bigint(20) DEFAULT NULL,
+  `LOCATION_ID` bigint(20) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_INVOICE_CUSTOMER_ID` (`CUSTOMER_ID`),
+  KEY `FK_INVOICE_LOCATION_ID` (`LOCATION_ID`),
+  KEY `FK_INVOICE_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_INVOICE_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`),
+  CONSTRAINT `FK_INVOICE_CUSTOMER_ID` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `supplier` (`ID`),
+  CONSTRAINT `FK_INVOICE_LOCATION_ID` FOREIGN KEY (`LOCATION_ID`) REFERENCES `location` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoice`
+--
+
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `invoicedetails`
+--
+
+DROP TABLE IF EXISTS `invoicedetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `invoicedetails` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ITEMQTY` double DEFAULT NULL,
+  `PRICE` double DEFAULT NULL,
+  `INVOICE_ID` bigint(20) DEFAULT NULL,
+  `ITEM_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_INVOICEDETAILS_INVOICE_ID` (`INVOICE_ID`),
+  KEY `FK_INVOICEDETAILS_ITEM_ID` (`ITEM_ID`),
+  CONSTRAINT `FK_INVOICEDETAILS_ITEM_ID` FOREIGN KEY (`ITEM_ID`) REFERENCES `items` (`ID`),
+  CONSTRAINT `FK_INVOICEDETAILS_INVOICE_ID` FOREIGN KEY (`INVOICE_ID`) REFERENCES `invoice` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoicedetails`
+--
+
+LOCK TABLES `invoicedetails` WRITE;
+/*!40000 ALTER TABLE `invoicedetails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoicedetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `itembincard`
+--
+
+DROP TABLE IF EXISTS `itembincard`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itembincard` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `BALANCE` double DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `QTY` double DEFAULT NULL,
+  `TRNNUMBER` varchar(255) DEFAULT NULL,
+  `BILLSTAT` int(11) DEFAULT NULL,
+  `ITEM_ID` bigint(20) DEFAULT NULL,
+  `LOG_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_ITEMBINCARD_LOG_ID` (`LOG_ID`),
+  KEY `FK_ITEMBINCARD_ITEM_ID` (`ITEM_ID`),
+  CONSTRAINT `FK_ITEMBINCARD_ITEM_ID` FOREIGN KEY (`ITEM_ID`) REFERENCES `items` (`ID`),
+  CONSTRAINT `FK_ITEMBINCARD_LOG_ID` FOREIGN KEY (`LOG_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itembincard`
+--
+
+LOCK TABLES `itembincard` WRITE;
+/*!40000 ALTER TABLE `itembincard` DISABLE KEYS */;
+INSERT INTO `itembincard` VALUES (1,100,'Good Received Note - asd',100,'asfas',NULL,1,9),(2,150,'Good Received Note - GRN-01',50,'GRN-INV-01',NULL,1,10),(3,200,'Good Received Note - GRN-02',50,'GRN-INV-02',NULL,1,11),(4,250,'Good Received Note - GRN-05',50,'GRN-INV-05',NULL,1,12);
+/*!40000 ALTER TABLE `itembincard` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `items`
+--
+
+DROP TABLE IF EXISTS `items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `items` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ITEMBARCODE` varchar(255) DEFAULT NULL,
+  `ITEMCODE` varchar(255) DEFAULT NULL,
+  `ITEMCOST` double DEFAULT NULL,
+  `ITEMDESCRIPTION` varchar(255) DEFAULT NULL,
+  `ITEMNAME` varchar(255) DEFAULT NULL,
+  `REORDERLEVEL` double DEFAULT NULL,
+  `UNITPRICE` double DEFAULT NULL,
+  `ITEMDESIGN_ID` bigint(20) DEFAULT NULL,
+  `ITEMLOCATION_ID` bigint(20) DEFAULT NULL,
+  `ITEMPRODUCT_ID` bigint(20) DEFAULT NULL,
+  `ITEMSUPPLIER_ID` bigint(20) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_ITEMS_ITEMSUPPLIER_ID` (`ITEMSUPPLIER_ID`),
+  KEY `FK_ITEMS_LOGGER_ID` (`LOGGER_ID`),
+  KEY `FK_ITEMS_ITEMDESIGN_ID` (`ITEMDESIGN_ID`),
+  KEY `FK_ITEMS_ITEMPRODUCT_ID` (`ITEMPRODUCT_ID`),
+  KEY `FK_ITEMS_ITEMLOCATION_ID` (`ITEMLOCATION_ID`),
+  CONSTRAINT `FK_ITEMS_ITEMLOCATION_ID` FOREIGN KEY (`ITEMLOCATION_ID`) REFERENCES `location` (`ID`),
+  CONSTRAINT `FK_ITEMS_ITEMDESIGN_ID` FOREIGN KEY (`ITEMDESIGN_ID`) REFERENCES `design` (`ID`),
+  CONSTRAINT `FK_ITEMS_ITEMPRODUCT_ID` FOREIGN KEY (`ITEMPRODUCT_ID`) REFERENCES `product` (`ID`),
+  CONSTRAINT `FK_ITEMS_ITEMSUPPLIER_ID` FOREIGN KEY (`ITEMSUPPLIER_ID`) REFERENCES `supplier` (`ID`),
+  CONSTRAINT `FK_ITEMS_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `items`
+--
+
+LOCK TABLES `items` WRITE;
+/*!40000 ALTER TABLE `items` DISABLE KEYS */;
+INSERT INTO `items` VALUES (1,'Item Barcode','ItemCode',76.5,'Item Description','Item Name',5,75.5,1,1,1,1,8);
+/*!40000 ALTER TABLE `items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `job`
+--
+
+DROP TABLE IF EXISTS `job`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `job` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `JOBASSINGEDDATE` date DEFAULT NULL,
+  `JOBDESCRIPTION` varchar(255) DEFAULT NULL,
+  `JOBNUMBER` varchar(255) DEFAULT NULL,
+  `JOBSTATUS` varchar(255) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_JOB_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_JOB_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `job`
+--
+
+LOCK TABLES `job` WRITE;
+/*!40000 ALTER TABLE `job` DISABLE KEYS */;
+INSERT INTO `job` VALUES (1,'2013-09-22','JOB-Description','JOB-001','PENDING',14);
+/*!40000 ALTER TABLE `job` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `location`
+--
+
+DROP TABLE IF EXISTS `location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `location` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `CODE` varchar(255) DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_LOCATION_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_LOCATION_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `location`
+--
+
+LOCK TABLES `location` WRITE;
+/*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` VALUES (1,'LOCATION-001','Test Location',7);
+/*!40000 ALTER TABLE `location` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `logger`
+--
+
+DROP TABLE IF EXISTS `logger`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logger` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `TRNNUMBER` varchar(255) DEFAULT NULL,
+  `TRNTIMESTAMP` datetime DEFAULT NULL,
+  `TRNTYPE` varchar(255) DEFAULT NULL,
+  `TERMINAL_ID` bigint(20) DEFAULT NULL,
+  `USER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_LOGGER_USER_ID` (`USER_ID`),
+  KEY `FK_LOGGER_TERMINAL_ID` (`TERMINAL_ID`),
+  CONSTRAINT `FK_LOGGER_TERMINAL_ID` FOREIGN KEY (`TERMINAL_ID`) REFERENCES `terminal` (`ID`),
+  CONSTRAINT `FK_LOGGER_USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `userx` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `logger`
+--
+
+LOCK TABLES `logger` WRITE;
+/*!40000 ALTER TABLE `logger` DISABLE KEYS */;
+INSERT INTO `logger` VALUES (1,'Init Logger ','LOG-01','2013-09-21 00:00:00',NULL,NULL,NULL),(2,'Admin User Added','USER-01','2013-09-21 00:00:00',NULL,NULL,1),(3,'Terminal Added ','TER-01','2013-09-21 00:00:00',NULL,1,1),(4,'Create Employee ','','2013-09-21 14:50:14','EMPLOYEE',2,1),(5,'Create Customer Category','','2013-09-21 17:30:10','CUSTOMERCAT',2,1),(6,'Create Supplier','First Name','2013-09-21 17:31:15','SUPPLIER',2,1),(7,'Create Location','LOCATION-001','2013-09-21 17:32:01','LOCATION',2,1),(8,'Create Item','ItemCode','2013-09-21 18:10:04','ITEM',2,1),(9,'Good Received Note','asd','2013-09-21 18:25:27','GRN',2,1),(10,'Good Received Note','GRN-01','2013-09-22 00:02:41','GRN',2,1),(11,'Good Received Note','GRN-02','2013-09-22 00:14:38','GRN',2,1),(12,'Good Received Note','GRN-05','2013-09-22 00:19:22','GRN',2,1),(13,'Create Job','JOB-001','2013-09-22 01:07:48','JOB',2,1),(14,'Create Job','JOB-001','2013-09-22 01:09:17','JOB',2,1);
+/*!40000 ALTER TABLE `logger` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paymentdetails`
+--
+
+DROP TABLE IF EXISTS `paymentdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `paymentdetails` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `TRNTYPE` int(11) DEFAULT NULL,
+  `LOGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_PAYMENTDETAILS_LOGER_ID` (`LOGER_ID`),
+  CONSTRAINT `FK_PAYMENTDETAILS_LOGER_ID` FOREIGN KEY (`LOGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `paymentdetails`
+--
+
+LOCK TABLES `paymentdetails` WRITE;
+/*!40000 ALTER TABLE `paymentdetails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paymentdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `PRODCODE` varchar(255) DEFAULT NULL,
+  `PRODUCTDESCRIPTION` varchar(255) DEFAULT NULL,
+  `PRODUCTPREFIX` varchar(255) DEFAULT NULL,
+  `PROFITPERC` double DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_PRODUCT_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_PRODUCT_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product`
+--
+
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'Product-Code','Product Description','Product-Prefix',5,NULL),(2,'Product-Code-01','Product Description-01','Product-Prefix-01',3,NULL);
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `properties`
+--
+
+DROP TABLE IF EXISTS `properties`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `properties` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `PROPERTYNAME` varchar(255) DEFAULT NULL,
+  `PROPERTYVALUE` varchar(255) DEFAULT NULL,
+  `RELATEDGRNS_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_PROPERTIES_RELATEDGRNS_ID` (`RELATEDGRNS_ID`),
+  CONSTRAINT `FK_PROPERTIES_RELATEDGRNS_ID` FOREIGN KEY (`RELATEDGRNS_ID`) REFERENCES `grn` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `properties`
+--
+
+LOCK TABLES `properties` WRITE;
+/*!40000 ALTER TABLE `properties` DISABLE KEYS */;
+/*!40000 ALTER TABLE `properties` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `propertymanager`
+--
+
+DROP TABLE IF EXISTS `propertymanager`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `propertymanager` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DOCUMENT` varchar(255) DEFAULT NULL,
+  `FIELDNAME` varchar(255) DEFAULT NULL,
+  `COMPANY_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_PROPERTYMANAGER_COMPANY_ID` (`COMPANY_ID`),
+  CONSTRAINT `FK_PROPERTYMANAGER_COMPANY_ID` FOREIGN KEY (`COMPANY_ID`) REFERENCES `company` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `propertymanager`
+--
+
+LOCK TABLES `propertymanager` WRITE;
+/*!40000 ALTER TABLE `propertymanager` DISABLE KEYS */;
+/*!40000 ALTER TABLE `propertymanager` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `propertyvalues`
+--
+
+DROP TABLE IF EXISTS `propertyvalues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `propertyvalues` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DOCUMENT` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `propertyvalues`
+--
+
+LOCK TABLES `propertyvalues` WRITE;
+/*!40000 ALTER TABLE `propertyvalues` DISABLE KEYS */;
+/*!40000 ALTER TABLE `propertyvalues` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `purchasereturn`
+--
+
+DROP TABLE IF EXISTS `purchasereturn`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `purchasereturn` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `CREDITPERIOD` double DEFAULT NULL,
+  `TOTALAMOUNT` double DEFAULT NULL,
+  `BILLSTATUS` int(11) DEFAULT NULL,
+  `GRNFLAGS` int(11) DEFAULT NULL,
+  `GRNRETDATE` date DEFAULT NULL,
+  `GRNRETNO` varchar(255) DEFAULT NULL,
+  `INVNO` varchar(255) DEFAULT NULL,
+  `PURCHASETYPE` int(11) DEFAULT NULL,
+  `LOCATION_ID` bigint(20) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `SUPPLIER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_PURCHASERETURN_SUPPLIER_ID` (`SUPPLIER_ID`),
+  KEY `FK_PURCHASERETURN_LOCATION_ID` (`LOCATION_ID`),
+  KEY `FK_PURCHASERETURN_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_PURCHASERETURN_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`),
+  CONSTRAINT `FK_PURCHASERETURN_LOCATION_ID` FOREIGN KEY (`LOCATION_ID`) REFERENCES `location` (`ID`),
+  CONSTRAINT `FK_PURCHASERETURN_SUPPLIER_ID` FOREIGN KEY (`SUPPLIER_ID`) REFERENCES `supplier` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchasereturn`
+--
+
+LOCK TABLES `purchasereturn` WRITE;
+/*!40000 ALTER TABLE `purchasereturn` DISABLE KEYS */;
+/*!40000 ALTER TABLE `purchasereturn` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `purchasereturndetails`
+--
+
+DROP TABLE IF EXISTS `purchasereturndetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `purchasereturndetails` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `GRNITEMCOST` double DEFAULT NULL,
+  `GRNITEMDISCOUNTPERC` float DEFAULT NULL,
+  `GRNQTY` float DEFAULT NULL,
+  `RELATEDPURCHASERET_ID` bigint(20) DEFAULT NULL,
+  `GRNITEM_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_PURCHASERETURNDETAILS_GRNITEM_ID` (`GRNITEM_ID`),
+  KEY `FK_PURCHASERETURNDETAILS_RELATEDPURCHASERET_ID` (`RELATEDPURCHASERET_ID`),
+  CONSTRAINT `FK_PURCHASERETURNDETAILS_RELATEDPURCHASERET_ID` FOREIGN KEY (`RELATEDPURCHASERET_ID`) REFERENCES `purchasereturn` (`ID`),
+  CONSTRAINT `FK_PURCHASERETURNDETAILS_GRNITEM_ID` FOREIGN KEY (`GRNITEM_ID`) REFERENCES `items` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchasereturndetails`
+--
+
+LOCK TABLES `purchasereturndetails` WRITE;
+/*!40000 ALTER TABLE `purchasereturndetails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `purchasereturndetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rules`
+--
+
+DROP TABLE IF EXISTS `rules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rules` (
+  `ID` bigint(20) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rules`
+--
+
+LOCK TABLES `rules` WRITE;
+/*!40000 ALTER TABLE `rules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sequence`
+--
+
+DROP TABLE IF EXISTS `sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sequence` (
+  `SEQ_NAME` varchar(50) NOT NULL,
+  `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
+  PRIMARY KEY (`SEQ_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sequence`
+--
+
+LOCK TABLES `sequence` WRITE;
+/*!40000 ALTER TABLE `sequence` DISABLE KEYS */;
+INSERT INTO `sequence` VALUES ('SEQ_GEN',0);
+/*!40000 ALTER TABLE `sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stock`
+--
+
+DROP TABLE IF EXISTS `stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stock` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `STOCKQTY` float DEFAULT NULL,
+  `SOCKITEM_ID` bigint(20) DEFAULT NULL,
+  `STOCKLOCATION_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_STOCK_STOCKLOCATION_ID` (`STOCKLOCATION_ID`),
+  KEY `FK_STOCK_SOCKITEM_ID` (`SOCKITEM_ID`),
+  CONSTRAINT `FK_STOCK_SOCKITEM_ID` FOREIGN KEY (`SOCKITEM_ID`) REFERENCES `items` (`ID`),
+  CONSTRAINT `FK_STOCK_STOCKLOCATION_ID` FOREIGN KEY (`STOCKLOCATION_ID`) REFERENCES `location` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock`
+--
+
+LOCK TABLES `stock` WRITE;
+/*!40000 ALTER TABLE `stock` DISABLE KEYS */;
+INSERT INTO `stock` VALUES (1,250,1,1);
+/*!40000 ALTER TABLE `stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `supplier`
+--
+
+DROP TABLE IF EXISTS `supplier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supplier` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ADDRESSSTATE` varchar(255) DEFAULT NULL,
+  `CITY` varchar(255) DEFAULT NULL,
+  `EMAILADDRESS` varchar(255) DEFAULT NULL,
+  `FAX` varchar(255) DEFAULT NULL,
+  `MOBILE` varchar(255) DEFAULT NULL,
+  `PHONE` varchar(255) DEFAULT NULL,
+  `STREET` varchar(255) DEFAULT NULL,
+  `URL` varchar(255) DEFAULT NULL,
+  `ZIPCODE` varchar(255) DEFAULT NULL,
+  `CREDITLIMIT` float DEFAULT NULL,
+  `CUSTCODE` varchar(255) DEFAULT NULL,
+  `CUSTNIC` varchar(255) DEFAULT NULL,
+  `FIRSTNAME` varchar(255) DEFAULT NULL,
+  `INACTIVE` int(11) DEFAULT NULL,
+  `LASTNAME` varchar(255) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `CUSTCATEGORY_ID` bigint(20) DEFAULT NULL,
+  `EXTRA_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_SUPPLIER_LOGGER_ID` (`LOGGER_ID`),
+  KEY `FK_SUPPLIER_EXTRA_ID` (`EXTRA_ID`),
+  KEY `FK_SUPPLIER_CUSTCATEGORY_ID` (`CUSTCATEGORY_ID`),
+  CONSTRAINT `FK_SUPPLIER_CUSTCATEGORY_ID` FOREIGN KEY (`CUSTCATEGORY_ID`) REFERENCES `customercategory` (`ID`),
+  CONSTRAINT `FK_SUPPLIER_EXTRA_ID` FOREIGN KEY (`EXTRA_ID`) REFERENCES `extras` (`ID`),
+  CONSTRAINT `FK_SUPPLIER_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `supplier`
+--
+
+LOCK TABLES `supplier` WRITE;
+/*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
+INSERT INTO `supplier` VALUES (1,'AddressState','City','Email@email.com','fax','mobile','phone','street','url','zip',1000,'CUST-CODE','NIC','First Name',0,'Last Name',6,1,NULL);
+/*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `systems`
+--
+
+DROP TABLE IF EXISTS `systems`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `systems` (
+  `ID` bigint(20) NOT NULL,
+  `HEADER` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `systems`
+--
+
+LOCK TABLES `systems` WRITE;
+/*!40000 ALTER TABLE `systems` DISABLE KEYS */;
+/*!40000 ALTER TABLE `systems` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `terminal`
+--
+
+DROP TABLE IF EXISTS `terminal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `terminal` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `TERMINALCODE` varchar(255) DEFAULT NULL,
+  `TERMINALIP` varchar(255) DEFAULT NULL,
+  `TERMINALNAME` varchar(255) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_TERMINAL_LOGGER_ID` (`LOGGER_ID`),
+  CONSTRAINT `FK_TERMINAL_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `terminal`
+--
+
+LOCK TABLES `terminal` WRITE;
+/*!40000 ALTER TABLE `terminal` DISABLE KEYS */;
+INSERT INTO `terminal` VALUES (1,'LOCAL','127.0.0.1','LOCAL',3),(2,'LOCAL TEMP','0:0:0:0:0:0:0:1','LOCAL TEMP',NULL);
+/*!40000 ALTER TABLE `terminal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userx`
+--
+
+DROP TABLE IF EXISTS `userx`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userx` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `PASSWORD` varchar(255) DEFAULT NULL,
+  `USERNAME` varchar(255) DEFAULT NULL,
+  `LOGGER_ID` bigint(20) DEFAULT NULL,
+  `ASSOCIATEDCOMPANY_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_USERX_LOGGER_ID` (`LOGGER_ID`),
+  KEY `FK_USERX_ASSOCIATEDCOMPANY_ID` (`ASSOCIATEDCOMPANY_ID`),
+  CONSTRAINT `FK_USERX_ASSOCIATEDCOMPANY_ID` FOREIGN KEY (`ASSOCIATEDCOMPANY_ID`) REFERENCES `company` (`ID`),
+  CONSTRAINT `FK_USERX_LOGGER_ID` FOREIGN KEY (`LOGGER_ID`) REFERENCES `logger` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userx`
+--
+
+LOCK TABLES `userx` WRITE;
+/*!40000 ALTER TABLE `userx` DISABLE KEYS */;
+INSERT INTO `userx` VALUES (1,'admin','admin',2,1);
+/*!40000 ALTER TABLE `userx` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-09-22  1:47:31

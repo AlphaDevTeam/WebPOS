@@ -94,12 +94,13 @@
                     </p:column> -->
                     
                 </p:dataTable>
+                
             </h:form>
         </f:view>
 
         <hr/>
         <f:view>
-            <h:form id="formDet">
+            <h:form id="formDet" target="_new">
                 <h1><h:outputText value="List"/></h1>
                 <p:dataTable id="GrnDetails" value="#{gRNHandler.specificGrnList}" var="item">
                     <p:column>
@@ -140,11 +141,10 @@
                     </p:column>
                     
                 </p:dataTable>
+                <h:commandButton value="Print " action="#{gRNHandler.rePrintGRN()}"/>
             </h:form>
         </f:view>
 
-        
-        
     </h:body>
 </html>
 
