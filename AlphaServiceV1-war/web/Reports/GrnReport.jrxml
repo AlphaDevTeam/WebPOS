@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="70"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["H:\\AlphaDevs\\Alpha_Service_Center\\AlphaServiceCenterV1\\AlphaServiceV1\\AlphaServiceV1-war\\web\\Reports\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[]]>

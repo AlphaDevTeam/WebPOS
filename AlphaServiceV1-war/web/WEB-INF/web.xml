@@ -15,11 +15,11 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            1
+            10
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>/UI/Login.xhtml</welcome-file>
+        <welcome-file>UI/Login.xhtml</welcome-file>
     </welcome-file-list>
     <listener>
         <listener-class>com.AlphaDevs.Web.Helpers.SessionChecker</listener-class>
