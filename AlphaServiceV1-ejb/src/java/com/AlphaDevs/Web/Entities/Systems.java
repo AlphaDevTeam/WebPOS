@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -18,9 +20,42 @@ import javax.persistence.Id;
 public class Systems implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String Header;
+    private boolean isGRNnumberAutoGenarated;
+    
+    @OneToOne
+    private Company relatedCompany;
+    @ManyToOne
+    private Location relatedLocation;
+
+    public Company getRelatedCompany() {
+        return relatedCompany;
+    }
+
+    public void setRelatedCompany(Company relatedCompany) {
+        this.relatedCompany = relatedCompany;
+    }
+
+    public Location getRelatedLocation() {
+        return relatedLocation;
+    }
+
+    public void setRelatedLocation(Location relatedLocation) {
+        this.relatedLocation = relatedLocation;
+    }
+
+    public boolean isIsGRNnumberAutoGenarated() {
+        return isGRNnumberAutoGenarated;
+    }
+
+    public void setIsGRNnumberAutoGenarated(boolean isGRNnumberAutoGenarated) {
+        this.isGRNnumberAutoGenarated = isGRNnumberAutoGenarated;
+    }
+    
+   
+    
     public Long getId() {
         return id;
     }

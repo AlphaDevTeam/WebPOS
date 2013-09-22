@@ -4,6 +4,8 @@ package com.AlphaDevs.Web.JSFBeans;
 import com.AlphaDevs.Web.Entities.Terminal;
 import com.AlphaDevs.Web.Entities.UserX;
 import com.AlphaDevs.Web.Helpers.MessageHelper;
+import com.AlphaDevs.Web.Helpers.SessionData;
+import com.AlphaDevs.Web.Helpers.SessionDataHelper;
 import com.AlphaDevs.Web.SessionBean.TerminalController;
 import com.AlphaDevs.Web.SessionBean.UserController;
 import java.util.List;
@@ -29,7 +31,7 @@ public class UserHandler
     private UserController userController;
     
     private UserX current;
-
+    
     
     public UserHandler() 
     {
@@ -74,7 +76,7 @@ public class UserHandler
         {
             MessageHelper.addSuccessMessage("Welcome");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.getExternalContext().getSessionMap().put("User", LoggedUser.get(0));
+            SessionDataHelper.addToSessionMap("User", LoggedUser.get(0));
             System.out.println("User Set & Redirecting.,,.");
             return "Home";
         }
@@ -93,9 +95,7 @@ public class UserHandler
         LoggedTerminal = terminalController.ValidateTerminal(term);
         if(!LoggedTerminal.isEmpty())
         {
-            //MessageHelper.addSuccessMessage("Welcome");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.getExternalContext().getSessionMap().put("Terminal", LoggedTerminal.get(0) );
+            SessionDataHelper.addToSessionMap("Terminal", LoggedTerminal.get(0));
             return true;
         }
         else

@@ -24,11 +24,11 @@ public class DocumentEnumConvertor implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return Document.valueOf(value).getFieldName();
+        return Document.valueOf(value).getDocumentName();
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Document)value).getFieldName();
+        return ((Document)value).getDocumentName();
     }
 }

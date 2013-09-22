@@ -14,14 +14,15 @@ import java.util.List;
  */
 public enum Document {
     
-    INVOICE("invoice");
+    INVOICE("Invoice"),
+    GOOD_RECEIPT_NOTE("Grn");
     
     private String fieldName;
     private Document(String feild){
         fieldName = feild;
     }
     
-    public String getFieldName(){
+    public String getDocumentName(){
         return fieldName;
     }
     

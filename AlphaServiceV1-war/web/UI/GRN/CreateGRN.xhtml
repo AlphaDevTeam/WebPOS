@@ -37,12 +37,13 @@
                     
                     
                     <h:outputLabel value="GrnNo:" for="grnNo" />
-                    <h:inputText id="grnNo" value="#{gRNHandler.current.grnNo}" title="GrnNo" />
+                    <h:inputText id="grnNo" value="#{gRNHandler.grnNumber}" title="GrnNo" />
                     <h:outputLabel value="InvNo:" for="invNo" />
                     <h:inputText id="invNo" value="#{gRNHandler.current.invNo}" title="InvNo" />
                     <h:outputLabel value="Location:" for="location" />
                     <h:selectOneMenu id="location" value="#{gRNHandler.current.location}" title="Location" converter="#{locationConvertor}" >
                         <f:selectItems value="#{locationHandler.list}"/>
+                        <p:ajax update="grnNo" /> 
                     </h:selectOneMenu>
                     <h:outputLabel value="PurchaseType:" for="purchaseType" />
                     <h:inputText id="purchaseType" value="#{gRNHandler.current.purchaseType}" title="PurchaseType" />

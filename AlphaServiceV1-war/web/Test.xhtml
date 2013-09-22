@@ -10,6 +10,7 @@
     <h:body>
         
         <h:form>
+            <p:clock />
             <p:growl id="message"/>
             <h:commandButton value="Ss" action="UI/CustomerCategory/CreateCustomerCategory.xhtml"/>
             <h:commandButton value="Create Supplier" action="UI/Supplier/CreateSupplier.xhtml"/>
@@ -38,6 +39,15 @@
             <h:commandButton value="Employe List" action="UI/Employee/ListEmployee.xhtml"/>
             <h:commandButton value="Job" action="UI/Job/CreateJob.xhtml"/>
             <h:commandButton value="Job List" action="UI/Job/ListJob.xhtml"/>
+            
+            
+            
+            <hr/>
+            <br/>
+            <h:commandButton value="Set System Numbers" action="Admin/UI/SystemNumbers/CreateSystemNumbers.xhtml"/>
+            <h:commandButton value="List of System Numbers" action="Admin/UI/SystemNumbers/ListSystemNumbers.xhtml"/>
+            <h:commandButton value="Set Systems " action="Admin/UI/Systems/CreateSystems.xhtml"/>
+            <h:commandButton value="List of Systems" action="Admin/UI/Systems/ListSystems.xhtml"/>
             
             <h:commandButton value="Logout" action="#{infoGrabber.logoutUser}"/>
         </h:form>

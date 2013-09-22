@@ -91,7 +91,7 @@ public class Company implements Serializable {
 
     @Override
     public String toString() {
-        return "com.AlphaDevs.Web.Entities.Company[ id=" + id + " ]";
+        return getCompanyName();
     }
     
 }

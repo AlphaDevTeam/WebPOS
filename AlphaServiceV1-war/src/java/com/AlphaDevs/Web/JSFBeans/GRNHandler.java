@@ -6,10 +6,12 @@ import com.AlphaDevs.Web.Enums.BillStatus;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.Helpers.MessageHelper;
+import com.AlphaDevs.Web.Helpers.SessionDataHelper;
 import com.AlphaDevs.Web.SessionBean.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 
@@ -41,6 +43,8 @@ import org.primefaces.event.SelectEvent;
 @SessionScoped
 public class GRNHandler 
 {
+    @EJB
+    private SystemNumbersController systemNumbersController;
     @EJB
     private PropertiesController propertiesController;
     
@@ -88,6 +92,7 @@ public class GRNHandler
             current = new GRN();
             System.out.println("Property Handler Created");
             System.out.println("Constructor GRN");
+            
         }
         if(currentDetails == null)
         {
@@ -106,6 +111,20 @@ public class GRNHandler
         cashAmount = 0;
         
         
+    }
+    
+    public String getGrnNumber(){
+        Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
+        UserX loggedUser = (UserX) sessionMap.get("User");
+        if(loggedUser != null && current.getLocation() != null){
+            List<SystemNumbers> systemNumbers = systemNumbersController.findSpecific(loggedUser.getAssociatedCompany(), current.getLocation());
+            if(systemNumbers != null && !systemNumbers.isEmpty()){
+                current.setGrnNo(systemNumbers.get(0).getDocumentSystemNo());
+            }
+            
+        }
+        
+        return  current.getGrnNo();
     }
 
     public GRNPaymentDetails getPaymentDetails() {
