@@ -4,7 +4,7 @@ package com.AlphaDevs.Web.JSFBeans;
 import com.AlphaDevs.Web.Entities.Company;
 import com.AlphaDevs.Web.Entities.Location;
 import com.AlphaDevs.Web.Entities.SystemNumbers;
-import com.AlphaDevs.Web.Entities.Systems;
+import com.AlphaDevs.Web.Enums.Document;
 import com.AlphaDevs.Web.SessionBean.SystemNumbersController;
 import java.util.List;
 import javax.ejb.EJB;
@@ -58,8 +58,8 @@ public class SystemNumbersHandler extends SuperHandler{
         return "Home";
     }
     
-    public List<SystemNumbers> getSpecific(Location relatedLocation , Company relatedCompany){
-        return getSystemNumbersController().findSpecific(relatedCompany, relatedLocation);
+    public List<SystemNumbers> getSpecific(Location relatedLocation , Company relatedCompany,Document relatedDocumnet){
+        return getSystemNumbersController().findSpecific(relatedCompany, relatedLocation,relatedDocumnet);
     }
     
 }

@@ -26,18 +26,13 @@
                         <f:selectItems value="#{gRNHandler.current.billStatus.values()}"/>
                     </h:selectOneMenu>
                     -->
-                    <!--
-                    <h:outputLabel value="GrnDate:" for="grnDate" />
-                    <h:inputText id="grnDate" value="#{gRNHandler.current.grnDate}" title="GrnDate" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    -->
+                    
                      <h:outputLabel value="GrnDate:" for="grnDate" />  
                      <p:calendar value="#{gRNHandler.current.grnDate}" pattern="MM/dd/yyyy" />  
                     
                     
                     <h:outputLabel value="GrnNo:" for="grnNo" />
-                    <h:inputText id="grnNo" value="#{gRNHandler.grnNumber}" title="GrnNo" />
+                    <h:inputText id="grnNo" value="#{gRNHandler.grnNumber}" title="GrnNo" readonly="#{systemsHandler.current.isGRNnumberAutoGenarated}" />
                     <h:outputLabel value="InvNo:" for="invNo" />
                     <h:inputText id="invNo" value="#{gRNHandler.current.invNo}" title="InvNo" />
                     <h:outputLabel value="Location:" for="location" />

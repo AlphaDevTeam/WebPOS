@@ -3,6 +3,7 @@ package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.*;
 import com.AlphaDevs.Web.Enums.BillStatus;
+import com.AlphaDevs.Web.Enums.Document;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.Helpers.MessageHelper;
@@ -73,7 +74,7 @@ public class GRNHandler
     @EJB
     private GRNController gRNController;
     
-    
+    private Document currentDocument;
     
     private double cashAmount;
     
@@ -83,9 +84,11 @@ public class GRNHandler
     private GRNDetails selectedGrnData;
     private GRNPaymentDetails paymentDetails;
     
+    private SystemNumbers currentSystemNumber;
     
     public GRNHandler() {
         
+        currentDocument = Document.GOOD_RECEIPT_NOTE;
                 
         if (current == null)
         {
@@ -114,17 +117,24 @@ public class GRNHandler
     }
     
     public String getGrnNumber(){
+        currentSystemNumber = null;
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
         UserX loggedUser = (UserX) sessionMap.get("User");
         if(loggedUser != null && current.getLocation() != null){
-            List<SystemNumbers> systemNumbers = systemNumbersController.findSpecific(loggedUser.getAssociatedCompany(), current.getLocation());
+            List<SystemNumbers> systemNumbers = systemNumbersController.findSpecific(loggedUser.getAssociatedCompany(), current.getLocation(), currentDocument);
             if(systemNumbers != null && !systemNumbers.isEmpty()){
-                current.setGrnNo(systemNumbers.get(0).getDocumentSystemNo());
+                currentSystemNumber  = systemNumbers.get(0);
+                //current.setGrnNo(currentSystemNumber.getDocumentSystemNo());
             }
             
         }
         
-        return  current.getGrnNo();
+        return  currentSystemNumber != null ? currentSystemNumber.getDocumentSystemNo() : "";
+        
+    }
+    
+    public void setGrnNumber(String grnNumber){
+        current.setGrnNo(grnNumber);
     }
 
     public GRNPaymentDetails getPaymentDetails() {
@@ -281,7 +291,9 @@ public class GRNHandler
             
         }
         
-        
+        //Increment the the Document No 
+        currentSystemNumber.setSystemNumber(currentSystemNumber.getSystemNumber() + 1);
+        systemNumbersController.edit(currentSystemNumber);
        
         printReportDownload();
         current = new GRN();

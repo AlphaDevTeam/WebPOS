@@ -5,7 +5,10 @@ import com.AlphaDevs.Web.Entities.Company;
 import com.AlphaDevs.Web.Entities.Location;
 import com.AlphaDevs.Web.Entities.SystemNumbers;
 import com.AlphaDevs.Web.Entities.Systems;
+import com.AlphaDevs.Web.Entities.UserX;
+import com.AlphaDevs.Web.Enums.Document;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -40,7 +43,7 @@ public class SystemNumbersController extends AbstractFacade<SystemNumbers>{
         return  em;
     }
 
-     public List<SystemNumbers> findSpecific(Company relatedCompany , Location relatedLocation ) 
+     public List<SystemNumbers> findSpecific(Company relatedCompany , Location relatedLocation , Document relatedDocument ) 
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<SystemNumbers> q = cb.createQuery(SystemNumbers.class);
@@ -49,7 +52,8 @@ public class SystemNumbersController extends AbstractFacade<SystemNumbers>{
         //ParameterExpression<Product> p = cb.parameter(Product.class);
        
         q.where(cb.equal(c.get("relatedCompany"), relatedCompany)
-                ,cb.equal(c.get("relatedLocation"), relatedLocation));
+                ,cb.equal(c.get("relatedLocation"), relatedLocation)
+                ,cb.equal(c.get("document"), relatedDocument));
         
         /*CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(Design.class);
@@ -59,6 +63,6 @@ public class SystemNumbersController extends AbstractFacade<SystemNumbers>{
         return getEntityManager().createQuery(q).getResultList();
         
     }
+     
     
-
 }

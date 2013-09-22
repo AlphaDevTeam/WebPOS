@@ -66,7 +66,22 @@ public class UserHandler
     public void setCurrent(UserX current) {
         this.current = current;
     }
-    
+
+    public TerminalController getTerminalController() {
+        return terminalController;
+    }
+
+    public void setTerminalController(TerminalController terminalController) {
+        this.terminalController = terminalController;
+    }
+
+    public UserController getUserController() {
+        return userController;
+    }
+
+    public void setUserController(UserController userController) {
+        this.userController = userController;
+    }
     
     public String validateUser()
     {
@@ -105,6 +120,10 @@ public class UserHandler
                         
         }
         
+    }
+    
+    public List<UserX> getList(){
+        return getUserController().findAll();
     }
     
 
