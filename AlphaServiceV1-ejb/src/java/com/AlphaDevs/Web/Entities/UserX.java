@@ -1,6 +1,7 @@
 
 package com.AlphaDevs.Web.Entities;
 
+import com.AlphaDevs.Web.Enums.UserLevel;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -24,7 +25,9 @@ public class UserX implements Serializable
     
     private String userName;
     private String passWord;
-
+    @Enumerated(EnumType.STRING)
+    private UserLevel userLevel;
+    
     @OneToOne
     private Logger Logger;
     
@@ -47,9 +50,25 @@ public class UserX implements Serializable
         this.Logger = Logger;
     }
 
+    public UserX(String userName, String passWord, UserLevel userLevel, Logger Logger, Company associatedCompany) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.userLevel = userLevel;
+        this.Logger = Logger;
+        this.associatedCompany = associatedCompany;
+    }
+    
     public UserX(String userName, String passWord) {
         this.userName = userName;
         this.passWord = passWord;
+    }
+
+    public UserLevel getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(UserLevel userLevel) {
+        this.userLevel = userLevel;
     }
     
     public Company getAssociatedCompany() {
