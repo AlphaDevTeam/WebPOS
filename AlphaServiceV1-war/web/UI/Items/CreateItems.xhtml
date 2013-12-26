@@ -21,6 +21,11 @@
                     <h:outputLabel value="ItemDescription:" for="itemDescription" />
                     <h:inputText id="itemDescription" value="#{itemsHandler.current.itemDescription}" title="ItemDescription" />
                     
+                    <h:outputLabel value="unitOfMeasurement" for="unitOfMeasurement" />
+                    <h:selectOneMenu id="unitOfMeasurement" value="#{itemsHandler.current.unitOfMeasurement}" title="Unit Of Measurement" converter="#{unitsConvertor}" >
+                        <f:selectItems value="#{unitsHandler.list}"/>
+                    </h:selectOneMenu>
+                    
                     <h:outputLabel value="ItemLocation:" for="itemLocation" />
                     <h:selectOneMenu id="itemLocation" value="#{itemsHandler.current.itemLocation}" title="Location" converter="#{locationConvertor}" >
                         <f:selectItems value="#{locationHandler.list}"/>

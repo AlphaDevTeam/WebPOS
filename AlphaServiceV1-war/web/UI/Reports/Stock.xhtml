@@ -37,10 +37,19 @@
                         </f:facet>
                         <h:outputText value="#{item.id}"/>
                     </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Chart"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                        <p:meterGaugeChart seriesColors="cc6666,66cc66" showTickLabels="true" value="#{chartHelper.getChart(item.stockQty,item.sockItem.reorderLevel)}" style="width:400px;height:250px" title="#{item.sockItem}" label="#{item.sockItem.unitOfMeasurement}"/> 
+                    </p:column>
                 </p:dataTable>
             </h:form>
         </f:view>
-
+        
+        
+        
         
     </h:body>
 </html>

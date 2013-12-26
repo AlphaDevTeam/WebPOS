@@ -112,8 +112,7 @@ public class GRNHandler
         VirtualList = new ArrayList<GRNDetails>();
         
         cashAmount = 0;
-        
-        
+                
     }
     
     public String getGrnNumber(){
@@ -124,7 +123,7 @@ public class GRNHandler
             List<SystemNumbers> systemNumbers = systemNumbersController.findSpecific(loggedUser.getAssociatedCompany(), current.getLocation(), currentDocument);
             if(systemNumbers != null && !systemNumbers.isEmpty()){
                 currentSystemNumber  = systemNumbers.get(0);
-                //current.setGrnNo(currentSystemNumber.getDocumentSystemNo());
+                current.setGrnNo(currentSystemNumber.getDocumentSystemNo());
             }
             
         }

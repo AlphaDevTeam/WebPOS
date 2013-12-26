@@ -1,0 +1,136 @@
+
+USE `simplepos`;
+-- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
+--
+-- Host: localhost    Database: simplepos
+-- ------------------------------------------------------
+-- Server version	5.6.13
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `systemnumbers`
+--
+
+
+--
+-- Dumping data for table `systemnumbers`
+--
+
+LOCK TABLES `systemnumbers` WRITE;
+/*!40000 ALTER TABLE `systemnumbers` DISABLE KEYS */;
+INSERT INTO `systemnumbers` (`ID`, `DOCUMENT`, `DOCUMENTPREFIX`, `SYSTEMNUMBER`, `RELATEDLOCATION_ID`, `RELATEDCOMPANY_ID`) VALUES (1,'INVOICE','AH',1,1,1),(2,'GOOD_RECEIPT_NOTE','IN',1,1,1);
+/*!40000 ALTER TABLE `systemnumbers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `company`
+--
+
+--
+-- Dumping data for table `company`
+--
+
+LOCK TABLES `company` WRITE;
+/*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` (`ID`, `COMPANYDESCRIPTION`, `COMPANYNAME`) VALUES (1,'M','MComp');
+/*!40000 ALTER TABLE `company` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userx`
+--
+
+
+
+--
+-- Dumping data for table `userx`
+--
+
+LOCK TABLES `userx` WRITE;
+/*!40000 ALTER TABLE `userx` DISABLE KEYS */;
+INSERT INTO `userx` (`ID`, `PASSWORD`, `USERLEVEL`, `USERNAME`, `LOGGER_ID`, `ASSOCIATEDCOMPANY_ID`) VALUES (1,'123','EMPLOYEE','mihindu',1,1);
+/*!40000 ALTER TABLE `userx` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `terminal`
+--
+
+
+
+--
+-- Dumping data for table `terminal`
+--
+
+LOCK TABLES `terminal` WRITE;
+/*!40000 ALTER TABLE `terminal` DISABLE KEYS */;
+INSERT INTO `terminal` (`ID`, `TERMINALCODE`, `TERMINALIP`, `TERMINALNAME`, `LOGGER_ID`) VALUES (1,'1','127.0.0.1','d',1);
+/*!40000 ALTER TABLE `terminal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `location`
+--
+
+
+
+--
+-- Dumping data for table `location`
+--
+
+LOCK TABLES `location` WRITE;
+/*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` (`ID`, `CODE`, `DESCRIPTION`, `LOGGER_ID`) VALUES (1,'M','M1',5),(2,'sd','r2',9);
+/*!40000 ALTER TABLE `location` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `logger`
+--
+
+
+
+--
+-- Dumping data for table `logger`
+--
+
+LOCK TABLES `logger` WRITE;
+/*!40000 ALTER TABLE `logger` DISABLE KEYS */;
+INSERT INTO `logger` (`ID`, `DESCRIPTION`, `TRNNUMBER`, `TRNTIMESTAMP`, `TRNTYPE`, `TERMINAL_ID`, `USER_ID`) VALUES (1,'USer Created','USer','2012-01-01 00:00:00','',NULL,1),(2,'Create Customer Category','','2013-12-02 09:45:45','CUSTOMERCAT',1,1),(3,'Create Customer Category','','2013-12-02 09:45:46','CUSTOMERCAT',1,1),(4,'Create Supplier','dfsdf','2013-12-02 09:46:22','SUPPLIER',1,1),(5,'Create Location','M','2013-12-02 09:46:39','LOCATION',1,1),(6,'Create Item','m!02','2013-12-02 09:48:04','ITEM',1,1),(7,'Good Received Note','A-001','2013-12-02 09:53:21','GRN',1,1),(8,'Good Received Note','','2013-12-02 09:53:53','GRN',1,1),(9,'Create Location','sd','2013-12-02 10:04:48','LOCATION',1,1),(10,'Create Item','34234','2013-12-02 10:05:50','ITEM',1,1),(11,'Good Received Note','A-002','2013-12-02 10:06:20','GRN',1,1),(12,'Create Employee ','','2013-12-02 10:11:45','EMPLOYEE',1,1);
+/*!40000 ALTER TABLE `logger` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `systems`
+--
+
+
+--
+-- Dumping data for table `systems`
+--
+
+LOCK TABLES `systems` WRITE;
+/*!40000 ALTER TABLE `systems` DISABLE KEYS */;
+/*!40000 ALTER TABLE `systems` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-12-22 11:29:01

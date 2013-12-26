@@ -26,6 +26,8 @@ public class Items implements Serializable
     private String ItemName;
     private String ItemBarcode;
     private String ItemDescription;
+    @OneToOne
+    private Units unitOfMeasurement;
     
     @OneToOne
     private Product ItemProduct;
@@ -48,11 +50,12 @@ public class Items implements Serializable
     public Items() {
     }
 
-    public Items(String ItemCode, String ItemName, String ItemBarcode, String ItemDescription, Product ItemProduct, Design ItemDesign, Supplier ItemSupplier, double ItemCost, double UnitPrice, double ReorderLevel, Location ItemLocation, com.AlphaDevs.Web.Entities.Logger Logger) {
+    public Items(String ItemCode, String ItemName, String ItemBarcode, String ItemDescription, Units unitOfMeasurement, Product ItemProduct, Design ItemDesign, Supplier ItemSupplier, double ItemCost, double UnitPrice, double ReorderLevel, Location ItemLocation, Logger Logger) {
         this.ItemCode = ItemCode;
         this.ItemName = ItemName;
         this.ItemBarcode = ItemBarcode;
         this.ItemDescription = ItemDescription;
+        this.unitOfMeasurement = unitOfMeasurement;
         this.ItemProduct = ItemProduct;
         this.ItemDesign = ItemDesign;
         this.ItemSupplier = ItemSupplier;
@@ -63,7 +66,14 @@ public class Items implements Serializable
         this.Logger = Logger;
     }
 
-    
+    public Units getUnitOfMeasurement() {
+        return unitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(Units unitOfMeasurement) {
+        this.unitOfMeasurement = unitOfMeasurement;
+    }
+
     public String getItemBarcode() {
         return ItemBarcode;
     }
