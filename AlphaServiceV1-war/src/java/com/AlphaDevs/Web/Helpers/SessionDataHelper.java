@@ -27,6 +27,11 @@ public class SessionDataHelper {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().put("SessionDataObject",sessionData);
     }
+
+    public static void invalidateSessionData(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().clear();
+    }
     
     public static void addToSessionMap(String key, Object object){
         FacesContext context = FacesContext.getCurrentInstance();

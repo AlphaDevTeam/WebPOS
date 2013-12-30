@@ -3,6 +3,7 @@
 package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.UserX;
+import com.AlphaDevs.Web.Helpers.SessionDataHelper;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
@@ -99,6 +100,7 @@ public class InfoGrabber
     public String logoutUser()
     {
         FacesContext context = FacesContext.getCurrentInstance();
+        SessionDataHelper.invalidateSessionData();
         context.getExternalContext().invalidateSession();
         return "Login";
     }

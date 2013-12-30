@@ -2,55 +2,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title> Title</title>
         <link rel="stylesheet" type="text/css" href="UI/Reso/CoreStyles.css" />
     </h:head>
     <h:body>
+          <ui:composition template="./MainTemplateUI.xhtml">
+
+            <ui:define name="top">
+                Alpha Development Team - Web POS
+            </ui:define>
+
+
+            <ui:define name="content">
+                <h:form>
+                    <p:growl id="message"/>
+                    <h:commandButton value="Ss" action="UI/CustomerCategory/CreateCustomerCategory.xhtml"/>
+                    <h:commandButton value="Create Supplier" action="UI/Supplier/CreateSupplier.xhtml"/>
+                    <h:commandButton value="test" action="UI/CustomerCategory/ListCustomerCategory.xhtml"/>
+                    <h:commandButton value="SupLis" action="UI/Supplier/ListSupplier.xhtml"/>
+                    <h:commandButton value="Create GRN" action="UI/GRN/CreateGRN.xhtml"/>
+                    <h:commandButton value="Create Location" action="UI/Location/CreateLocation.xhtml"/>
+                    <h:commandButton value="List Location" action="UI/Location/ListLocation.xhtml"/>
+
+                    <h:commandButton value="Create Product" action="UI/Products/CreateProducts.xhtml"/>
+                    <h:commandButton value="List Products" action="UI/Products/ListProducts.xhtml"/>
+
+                    <h:commandButton value="Create Design" action="UI/Design/CreateDesign.xhtml"/>
+                    <h:commandButton value="List Designs" action="UI/Design/ListDesigns.xhtml"/>
+
+                    <h:commandButton value="Create Items" action="UI/Items/CreateItems.xhtml"/>
+                    <h:commandButton value="CashBook" action="UI/CashBook/CashBook.xhtml"/>
+                    <h:commandButton value="Grn Reprint" action="UI/Reprints/ReprintGRN.xhtml"/>
+                    <h:commandButton value="Customer Account" action="UI/Supplier/Account.xhtml"/>
+                    <h:commandButton value="Stock Report" action="UI/Reports/Stock.xhtml"/>
+                    <h:commandButton value="ItemBinCard" action="UI/Reports/BinCard.xhtml"/>
+                    <h:commandButton value="Return GRN" action="UI/GRN/ReturnGrn.xhtml"/>
+                    <h:commandButton value="Invoice" action="UI/Sales/Invoice.xhtml"/>
+                    <h:commandButton value="PropertyManager" action="UI/Property/PropertyManager.xhtml"/>
+                    <h:commandButton value="Employe" action="UI/Employee/CreateEmployee.xhtml"/>
+                    <h:commandButton value="Employe List" action="UI/Employee/ListEmployee.xhtml"/>
+                    <h:commandButton value="Job" action="UI/Job/CreateJob.xhtml"/>
+                    <h:commandButton value="Job List" action="UI/Job/ListJob.xhtml"/>
+
+
+
+                    <hr/>
+                    <br/>
+                    <h:commandButton value="Set System Numbers" action="Admin/UI/SystemNumbers/CreateSystemNumbers.xhtml"/>
+                    <h:commandButton value="List of System Numbers" action="Admin/UI/SystemNumbers/ListSystemNumbers.xhtml"/>
+                    <h:commandButton value="Set Systems " action="Admin/UI/Systems/CreateSystems.xhtml"/>
+                    <h:commandButton value="List of Systems" action="Admin/UI/Systems/ListSystems.xhtml"/>
+
+                    <h:commandButton value="Logout" action="#{infoGrabber.logoutUser}"/>
+                    
+                    <p:stack icon="./resources/Images/stack/stack.png">  
+                        <p:menuitem value="Aperture" icon="./resources/Images/stack/aperture.png" url="#"/>  
+                        <p:menuitem value="Photoshop" icon="./resources/Images/stack/photoshop.png" url="#"/>  
+                        <p:menuitem value="Coda" icon="./resources/Images/stack/coda.png" url="#"/>  
+                        <p:menuitem value="Safari" icon="./resources/Images/stack/safari.png" url="#" />  
+                        <p:menuitem value="Finder" icon="./resources/Images/stack/finder.png" url="#" /> 
+                        <p:menuitem value="Logout" icon="./resources/Images/stack/Log-Out-icon.png" action="#{infoGrabber.logoutUser}" /> 
+                        
+                    </p:stack>  
+                    
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                Alpha Development Team ( PVT ) Ltd
+            </ui:define>
+
+        </ui:composition>
         
-        <h:form>
-            <p:clock />
-            <p:growl id="message"/>
-            <h:commandButton value="Ss" action="UI/CustomerCategory/CreateCustomerCategory.xhtml"/>
-            <h:commandButton value="Create Supplier" action="UI/Supplier/CreateSupplier.xhtml"/>
-            <h:commandButton value="test" action="UI/CustomerCategory/ListCustomerCategory.xhtml"/>
-            <h:commandButton value="SupLis" action="UI/Supplier/ListSupplier.xhtml"/>
-            <h:commandButton value="Create GRN" action="UI/GRN/CreateGRN.xhtml"/>
-            <h:commandButton value="Create Location" action="UI/Location/CreateLocation.xhtml"/>
-            <h:commandButton value="List Location" action="UI/Location/ListLocation.xhtml"/>
-            
-            <h:commandButton value="Create Product" action="UI/Products/CreateProducts.xhtml"/>
-            <h:commandButton value="List Products" action="UI/Products/ListProducts.xhtml"/>
-            
-            <h:commandButton value="Create Design" action="UI/Design/CreateDesign.xhtml"/>
-            <h:commandButton value="List Designs" action="UI/Design/ListDesigns.xhtml"/>
-            
-            <h:commandButton value="Create Items" action="UI/Items/CreateItems.xhtml"/>
-            <h:commandButton value="CashBook" action="UI/CashBook/CashBook.xhtml"/>
-            <h:commandButton value="Grn Reprint" action="UI/Reprints/ReprintGRN.xhtml"/>
-            <h:commandButton value="Customer Account" action="UI/Supplier/Account.xhtml"/>
-            <h:commandButton value="Stock Report" action="UI/Reports/Stock.xhtml"/>
-            <h:commandButton value="ItemBinCard" action="UI/Reports/BinCard.xhtml"/>
-            <h:commandButton value="Return GRN" action="UI/GRN/ReturnGrn.xhtml"/>
-            <h:commandButton value="Invoice" action="UI/Sales/Invoice.xhtml"/>
-            <h:commandButton value="PropertyManager" action="UI/Property/PropertyManager.xhtml"/>
-            <h:commandButton value="Employe" action="UI/Employee/CreateEmployee.xhtml"/>
-            <h:commandButton value="Employe List" action="UI/Employee/ListEmployee.xhtml"/>
-            <h:commandButton value="Job" action="UI/Job/CreateJob.xhtml"/>
-            <h:commandButton value="Job List" action="UI/Job/ListJob.xhtml"/>
-            
-            
-            
-            <hr/>
-            <br/>
-            <h:commandButton value="Set System Numbers" action="Admin/UI/SystemNumbers/CreateSystemNumbers.xhtml"/>
-            <h:commandButton value="List of System Numbers" action="Admin/UI/SystemNumbers/ListSystemNumbers.xhtml"/>
-            <h:commandButton value="Set Systems " action="Admin/UI/Systems/CreateSystems.xhtml"/>
-            <h:commandButton value="List of Systems" action="Admin/UI/Systems/ListSystems.xhtml"/>
-            
-            <h:commandButton value="Logout" action="#{infoGrabber.logoutUser}"/>
-        </h:form>
     </h:body>
 </html>
 

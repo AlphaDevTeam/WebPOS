@@ -24,5 +24,7 @@
     <listener>
         <listener-class>com.AlphaDevs.Web.Helpers.SessionChecker</listener-class>
     </listener>
-    
+    <login-config>
+        <auth-method>CLIENT-CERT</auth-method>
+    </login-config>
 </web-app>
