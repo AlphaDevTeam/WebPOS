@@ -4,146 +4,153 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title> Title</title>
     </h:head>
     <h:body>
-              
-        <f:view>
-            <h:form>
-                <h1><h:outputText value="List"/></h1>
-                <p:dataTable id="GrnList" value="#{gRNHandler.grnList}" var="item" paginator="true" lazy="true" rows="5" >
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <p:commandLink value="#{item.id}" action="#{gRNHandler.preapareList(item)}"  update=":formDet:GrnDetails"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="CreditPeriod"/>
-                        </f:facet>
-                        <h:outputText value="#{item.creditPeriod}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="TotalAmount"/>
-                        </f:facet>
-                        <h:outputText value="#{item.totalAmount}"/>
-                    </p:column>
-                  
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="GrnDate"/>
-                        </f:facet>
-                        <h:outputText value="#{item.grnDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="GrnNo"/>
-                        </f:facet>
-                        <h:outputText value="#{item.grnNo}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="InvNo"/>
-                        </f:facet>
-                        <h:outputText value="#{item.invNo}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Location"/>
-                        </f:facet>
-                        <h:outputText value="#{item.location}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="PurchaseType"/>
-                        </f:facet>
-                        <h:outputText value="#{item.purchaseType}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Supplier"/>
-                        </f:facet>
-                        <h:outputText value="#{item.supplier}"/>
-                    </p:column>
-                    
-                    <c:forEach begin="0" end="#{propertyManagerHandler.all.size() -1 }" var="a">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{propertyManagerHandler.all.get(a).fieldName}"/>
-                            </f:facet>
-                            <h:outputText value="#{(a) >=  (item.extraz.size() ) ?  '-'  : item.extraz.get(a).propertyValue}"/>
-                        </p:column>
-                    </c:forEach> 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Logger"/>
-                        </f:facet>
-                        <h:outputText value="#{item.logger}"/>
-                    </p:column>
-                     <!--<p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Test Colom"/>
-                        </f:facet>
-                        <h:outputText value="#{item.extraz.get(0).propertyValue}"/>
-                    </p:column> -->
-                    
-                </p:dataTable>
-                
-            </h:form>
-        </f:view>
+        
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="GRN List"/></h1>
+                        <p:dataTable id="GrnList" value="#{gRNHandler.grnList}" var="item" paginator="true" lazy="true" rows="5" >
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <p:commandLink value="#{item.id}" action="#{gRNHandler.preapareList(item)}"  update=":formDet:GrnDetails"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CreditPeriod"/>
+                                </f:facet>
+                                <h:outputText value="#{item.creditPeriod}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="TotalAmount"/>
+                                </f:facet>
+                                <h:outputText value="#{item.totalAmount}"/>
+                            </p:column>
 
-        <hr/>
-        <f:view>
-            <h:form id="formDet" target="_new">
-                <h1><h:outputText value="List"/></h1>
-                <p:dataTable id="GrnDetails" value="#{gRNHandler.specificGrnList}" var="item">
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="RelatedGRN"/>
-                        </f:facet>
-                        <h:outputText value="#{item.relatedGRN}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="GrnItem"/>
-                        </f:facet>
-                        <h:outputText value="#{item.grnItem}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="GrnItemCost"/>
-                        </f:facet>
-                        <h:outputText value="#{item.grnItemCost}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="GrnItemDiscountPerc"/>
-                        </f:facet>
-                        <h:outputText value="#{item.grnItemDiscountPerc}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="GrnQty"/>
-                        </f:facet>
-                        <h:outputText value="#{item.grnQty}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <h:outputText value="#{item.id}"/>
-                    </p:column>
-                    
-                </p:dataTable>
-                <h:commandButton value="Print " action="#{gRNHandler.rePrintGRN()}"/>
-            </h:form>
-        </f:view>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnDate"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnNo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnNo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="InvNo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.invNo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Location"/>
+                                </f:facet>
+                                <h:outputText value="#{item.location}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="PurchaseType"/>
+                                </f:facet>
+                                <h:outputText value="#{item.purchaseType}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Supplier"/>
+                                </f:facet>
+                                <h:outputText value="#{item.supplier}"/>
+                            </p:column>
+
+                            <c:forEach begin="0" end="#{propertyManagerHandler.all.size() -1 }" var="a">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{propertyManagerHandler.all.get(a).fieldName}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{(a) >=  (item.extraz.size() ) ?  '-'  : item.extraz.get(a).propertyValue}"/>
+                                </p:column>
+                            </c:forEach> 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Logger"/>
+                                </f:facet>
+                                <h:outputText value="#{item.logger}"/>
+                            </p:column>
+                             <!--<p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Test Colom"/>
+                                </f:facet>
+                                <h:outputText value="#{item.extraz.get(0).propertyValue}"/>
+                            </p:column> -->
+
+                        </p:dataTable>
+
+                    </h:form>
+                </f:view>
+
+                <hr/>
+                <f:view>
+                    <h:form id="formDet" target="_new">
+                        <h1><h:outputText value="GRN Details"/></h1>
+                        <p:dataTable id="GrnDetails" value="#{gRNHandler.specificGrnList}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="RelatedGRN"/>
+                                </f:facet>
+                                <h:outputText value="#{item.relatedGRN}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItem"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItem}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemCost"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItemCost}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemDiscountPerc"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItemDiscountPerc}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnQty"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnQty}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                        <h:commandButton value="Print " action="#{gRNHandler.rePrintGRN()}"/>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+              
+        
 
     </h:body>
 </html>

@@ -11,15 +11,13 @@
     <h:body>
         <ui:composition template="./../../MainTemplateUI.xhtml">
 
-            <ui:define name="top">
-                top
-            </ui:define>
+            
 
             <ui:define name="content">
                 <f:view>
                     <h:form>
                         <p:growl id="Message" showDetail="true"/>
-                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h1><h:outputText value="Create Customer Category"/></h1>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Description:" for="description" />
                             <h:inputText id="description" value="#{customerCategoryHandler.current.description}" title="Description"  />
@@ -30,10 +28,7 @@
 
             </ui:define>
 
-            <ui:define name="bottom">
-                bottom
-            </ui:define>
-
+           
         </ui:composition>
         
     </h:body>

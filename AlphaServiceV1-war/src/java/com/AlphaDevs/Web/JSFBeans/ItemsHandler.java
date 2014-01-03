@@ -77,7 +77,7 @@ public class ItemsHandler
         stock.setStockLocation(current.getItemLocation());
         stock.setStockQty(0);
         stockController.create(stock);
-        return "#";
+        return "Home";
     }
     
     public List<Design> getListSpec()

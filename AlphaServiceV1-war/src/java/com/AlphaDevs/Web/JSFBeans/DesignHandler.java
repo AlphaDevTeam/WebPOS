@@ -2,9 +2,15 @@
 
 package com.AlphaDevs.Web.JSFBeans;
 
+import com.AlphaDevs.Web.Entities.CustomerBalance;
 import com.AlphaDevs.Web.Entities.Design;
+import com.AlphaDevs.Web.Entities.Logger;
 import com.AlphaDevs.Web.Entities.Product;
+import com.AlphaDevs.Web.Enums.TransactionTypes;
+import com.AlphaDevs.Web.Helpers.EntityHelper;
+import com.AlphaDevs.Web.Helpers.MessageHelper;
 import com.AlphaDevs.Web.SessionBean.DesignController;
+import com.AlphaDevs.Web.SessionBean.LoggerController;
 import com.AlphaDevs.Web.SessionBean.ProductController;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,10 +32,13 @@ import javax.faces.bean.SessionScoped;
 public class DesignHandler 
 {
     @EJB
+    private LoggerController loggerController;
+    @EJB
     private ProductController productController;
     @EJB
     private DesignController designController;
-     
+    
+    
     private Design current;
 
     /** Creates a new instance of DesignHandler */
@@ -64,8 +73,12 @@ public class DesignHandler
     
     public String persistDesign()
     {
+        Logger Log = EntityHelper.createLogger("Create Design", current.getDesignCode(), TransactionTypes.DESIGN);
+        loggerController.create(Log);
+        current.setLogger(Log);
+        MessageHelper.addSuccessMessage("Design Added!");
         designController.create(current);
-        return "#";
+        return "Home";
     }
 
 }

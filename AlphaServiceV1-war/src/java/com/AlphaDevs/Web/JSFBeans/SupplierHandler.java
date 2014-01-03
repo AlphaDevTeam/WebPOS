@@ -72,7 +72,7 @@ public class SupplierHandler
         CustBal.setSupplier(current);
         customerBalanceController.create(CustBal);
         MessageHelper.addSuccessMessage("Supplier Added!");
-        return "CreateSup";
+        return "Home";
     }
 
     public List<Supplier> allSuppliers()
