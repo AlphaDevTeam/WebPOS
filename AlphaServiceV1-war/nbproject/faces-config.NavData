@@ -2,12 +2,14 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="index.jsp" x="900" y="600" zoom="true"/>
+        <Node id="UI/Job/ListJob.xhtml" x="150" y="750" zoom="true"/>
         <Node id="UI/Location/CreateLocation.xhtml" x="1510" y="249" zoom="true"/>
+        <Node id="index.jsp" x="900" y="600" zoom="true"/>
         <Node id="UI/Reports/BinCard.xhtml" x="1650" y="150" zoom="true"/>
-        <Node id="UI/Supplier/CreateSupplier.xhtml" x="400" y="750" zoom="true"/>
         <Node id="UI/GRN/ReturnGrn.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="UI/Supplier/CreateSupplier.xhtml" x="400" y="750" zoom="true"/>
         <Node id="UI/Design/ListDesigns.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="UI/Employee/ListEmployee.xhtml" x="150" y="600" zoom="true"/>
         <Node id="UI/Property/PropertyManager.xhtml" x="150" y="900" zoom="true"/>
         <Node id="UI/Items/CreateItems.xhtml" x="639" y="81" zoom="true"/>
         <Node id="UI/Login.xhtml" x="121" y="751" zoom="true"/>
@@ -16,16 +18,29 @@
         <Node id="UI/Sales/Invoice.xhtml" x="650" y="750" zoom="true"/>
         <Node id="index2.jsp" x="150" y="450" zoom="true"/>
         <Node id="UI/Products/CreateProducts.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="Admin/UI/SystemNumbers/ListSystemNumbers.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="Admin/UI/SystemNumbers/CreateSystemNumbers.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="Admin/UI/Systems/ListSystems.xhtml" x="400" y="1050" zoom="true"/>
         <Node id="TestJSPJSF.jsp" x="900" y="300" zoom="true"/>
+        <Node id="Admin/UI/Systems/CreateSystems.xhtml" x="1900" y="150" zoom="true"/>
         <Node id="UI/CustomerCategory/ListCustomerCategory.xhtml" x="1150" y="300" zoom="true"/>
         <Node id="UI/Location/ListLocation.xhtml" x="1400" y="150" zoom="true"/>
         <Node id="UI/Reports/Stock.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="resources/Templates/TestTemplateClient.xhtml" x="150" y="1050" zoom="true"/>
         <Node id="UI/Products/ListProducts.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="resources/Templates/TestHTMLTemplateClient.xhtml" x="900" y="150" zoom="true"/>
         <Node id="UI/Supplier/ListSupplier.xhtml" x="1150" y="450" zoom="true"/>
         <Node id="Test.xhtml" x="271" y="498" zoom="true"/>
+        <Node id="resources/Templates/MainTemplate.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="UI/Employee/CreateEmployee.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="TestTemplateClient.xhtml" x="400" y="900" zoom="true"/>
         <Node id="UI/GRN/CreateGRN.xhtml" x="33" y="621" zoom="true"/>
+        <Node id="Admin/UI/Company/CreateCompany.xhtml" x="650" y="150" zoom="true"/>
         <Node id="UI/Design/CreateDesign.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="MainTemplateUI.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="UI/StockAdjestments/CreateStockAdjestments.xhtml" x="900" y="750" zoom="true"/>
         <Node id="index.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="UI/Job/CreateJob.xhtml" x="1400" y="450" zoom="true"/>
         <Node id="UI/CashBook/CashBook.xhtml" x="150" y="150" zoom="true"/>
         <Node id="UI/CustomerCategory/CreateCustomerCategory.xhtml" x="650" y="600" zoom="true"/>
     </Scope>

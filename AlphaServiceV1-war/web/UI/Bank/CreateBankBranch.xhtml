@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+            <ui:define name="content">
+                   <f:view>
+                        <h:form>
+                            <h1><h:outputText value="Create Branch"/></h1>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="RelatedBank:" for="relatedBank" />
+                                <h:selectOneMenu id="relatedBank" value="#{bankBranchHandler.current.relatedBank}" title="RelatedBank" converter="#{bankConvertor}"  >
+                                    <f:selectItems value="#{bankHandler.list}"/>
+                                </h:selectOneMenu>
+                                <h:outputLabel value="BrnachCode:" for="brnachCode" />
+                                <h:inputText id="brnachCode" value="#{bankBranchHandler.current.brnachCode}" title="BrnachCode" />
+                                <h:outputLabel value="BranchName:" for="branchName" />
+                                <h:inputText id="branchName" value="#{bankBranchHandler.current.branchName}" title="BranchName" />
+                                <p:commandButton value="Save"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </f:view>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+

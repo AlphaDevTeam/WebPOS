@@ -19,9 +19,9 @@
             <ui:define name="content">
                 <h:form>
                     <p:growl id="message"/>
-                    <h:commandButton value="Ss" action="UI/CustomerCategory/CreateCustomerCategory.xhtml"/>
+                    <h:commandButton value="Create Customer Category" action="UI/CustomerCategory/CreateCustomerCategory.xhtml"/>
                     <h:commandButton value="Create Supplier" action="UI/Supplier/CreateSupplier.xhtml"/>
-                    <h:commandButton value="test" action="UI/CustomerCategory/ListCustomerCategory.xhtml"/>
+                    <h:commandButton value="List of Customer Category" action="UI/CustomerCategory/ListCustomerCategory.xhtml"/>
                     <h:commandButton value="SupLis" action="UI/Supplier/ListSupplier.xhtml"/>
                     <h:commandButton value="Create GRN" action="UI/GRN/CreateGRN.xhtml"/>
                     <h:commandButton value="Create Location" action="UI/Location/CreateLocation.xhtml"/>
@@ -47,15 +47,17 @@
                     <h:commandButton value="Job" action="UI/Job/CreateJob.xhtml"/>
                     <h:commandButton value="Job List" action="UI/Job/ListJob.xhtml"/>
                     <h:commandButton value="Stock Adjestments" action="UI/StockAdjestments/CreateStockAdjestments.xhtml"/>
-
-
+                    <h:commandButton value="Create Bank" action="UI/Bank/CreateBank.xhtml"/>
+                    <h:commandButton value="Create Bank Branch" action="UI/Bank/CreateBankBranch.xhtml"/>
+                    
                     <hr/>
                     <br/>
                     <h:commandButton value="Set System Numbers" action="Admin/UI/SystemNumbers/CreateSystemNumbers.xhtml"/>
                     <h:commandButton value="List of System Numbers" action="Admin/UI/SystemNumbers/ListSystemNumbers.xhtml"/>
                     <h:commandButton value="Set Systems " action="Admin/UI/Systems/CreateSystems.xhtml"/>
                     <h:commandButton value="List of Systems" action="Admin/UI/Systems/ListSystems.xhtml"/>
-
+                    
+                    
                     <h:commandButton value="Logout" action="#{infoGrabber.logoutUser}"/>
                     
                     <p:stack icon="./resources/Images/stack/stack.png">  
