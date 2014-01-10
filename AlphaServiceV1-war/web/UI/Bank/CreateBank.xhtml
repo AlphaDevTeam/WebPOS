@@ -23,16 +23,9 @@
                             <p:commandButton value="Add" action="#{bankHandler.addBank()}" update="virtualList,panel,:mainForm:messages" />
                         </h:panelGrid>
                         
-                        <p:dataTable id="virtualList" editable="true" value="#{bankHandler.virtualList}" var="item" selection="#{bankHandler.selectedBank}" selectionMode="single" rowKey="#{item.bankCode}">
+                        <p:dataTable id="virtualList" paginator="true"  editable="true" value="#{bankHandler.virtualList}" var="item" selection="#{bankHandler.selectedBank}" selectionMode="single" rowKey="#{item.bankCode}">
                             <p:ajax event="rowEdit" listener="#{bankHandler.onEdit}" update="virtualList,:mainForm:messages" />  
                             <p:ajax event="rowEditCancel" listener="#{bankHandler.onCancel}" update="virtualList,:mainForm:messages" />  
-
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Bank ID"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.id}" style="width:20%"/>
-                                </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Bank Code"/>

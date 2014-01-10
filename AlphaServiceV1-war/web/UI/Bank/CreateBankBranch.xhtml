@@ -12,9 +12,10 @@
         <ui:composition template="./../../MainTemplateUI.xhtml">
             <ui:define name="content">
                    <f:view>
-                        <h:form>
+                        <h:form id="mainForm">
+                        <p:growl id="messages" showDetail="true"/>  
                             <h1><h:outputText value="Create Branch"/></h1>
-                            <h:panelGrid columns="2">
+                            <h:panelGrid columns="2" id="panel">
                                 <h:outputLabel value="RelatedBank:" for="relatedBank" />
                                 <h:selectOneMenu id="relatedBank" value="#{bankBranchHandler.current.relatedBank}" title="RelatedBank" converter="#{bankConvertor}"  >
                                     <f:selectItems value="#{bankHandler.list}"/>
@@ -23,8 +24,76 @@
                                 <h:inputText id="brnachCode" value="#{bankBranchHandler.current.brnachCode}" title="BrnachCode" />
                                 <h:outputLabel value="BranchName:" for="branchName" />
                                 <h:inputText id="branchName" value="#{bankBranchHandler.current.branchName}" title="BranchName" />
-                                <p:commandButton value="Save"/>
+                                <p:commandButton value="Add" action="#{bankBranchHandler.addBankBranch()}" update="virtualList,panel,:mainForm:messages" />
                             </h:panelGrid>
+                            
+                            <p:dataTable id="virtualList" paginator="true"  editable="true" value="#{bankBranchHandler.virtualList}" var="item" selection="#{bankBranchHandler.selectedBankBranch}" selectionMode="single" rowKey="#{item.brnachCode}">
+                                <p:ajax event="rowEdit" listener="#{bankBranchHandler.onEdit}" update="virtualList,:mainForm:messages" />  
+                                <p:ajax event="rowEditCancel" listener="#{bankBranchHandler.onCancel}" update="virtualList,:mainForm:messages" />  
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Bank Brnach Code"/>
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{item.brnachCode}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText value="#{item.brnachCode}" style="width:100%"/>  
+                                            </f:facet>  
+                                        </p:cellEditor>
+
+                                    </p:column>
+                                    <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Bank Brnach Name"/>
+                                            </f:facet>
+                                            <p:cellEditor>  
+                                                <f:facet name="output">  
+                                                    <h:outputText value="#{item.branchName}" />  
+                                                </f:facet>  
+                                                <f:facet name="input">  
+                                                    <p:inputText value="#{item.branchName}" style="width:100%"/>  
+                                                </f:facet>  
+                                            </p:cellEditor>
+
+                                     </p:column>
+                                     <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Bank Name"/>
+                                            </f:facet>
+                                            <p:cellEditor>  
+                                                <f:facet name="output">  
+                                                    <h:outputText value="#{item.relatedBank.bankName}" />  
+                                                </f:facet>  
+                                                <f:facet name="input" >  
+                                                    <p:inputText value="#{item.relatedBank.bankName}" style="width:100%"/>  
+                                                </f:facet>  
+                                            </p:cellEditor>
+
+                                     </p:column>
+
+                                    <f:facet name="footer">  
+                                        <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                                          onclick="confirmation.show()"/>  
+                                    </f:facet>  
+
+                                    <p:column headerText="Options" style="width:50px">  
+                                        <p:rowEditor />  
+                                    </p:column>  
+
+
+                                </p:dataTable>
+                                <p:commandButton value="Save" action="#{bankBranchHandler.saveList()}" update="virtualList,panel,:mainForm:messages" />
+                                <p:confirmDialog id="confirmDialog" message="Are you sure about deleting item? "  header="Are you sure ?" severity="alert" widgetVar="confirmation">  
+
+                                        <p:commandButton id="confirm" value="Yes Sure" update="virtualList" oncomplete="confirmation.hide()"  
+                                                         actionListener="#{bankBranchHandler.removeSelectedItem}" />  
+                                        <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button" />   
+
+                               </p:confirmDialog>  
+                            
+                            
                         </h:form>
                     </f:view>
             </ui:define>

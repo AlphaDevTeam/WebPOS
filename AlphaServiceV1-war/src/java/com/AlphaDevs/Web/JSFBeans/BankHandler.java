@@ -40,20 +40,18 @@ public class BankHandler {
         }
         
         virtualList = new ArrayList<Bank>();
-        
+                
+    }
+    
+    public void loadData(){
+        virtualList = new ArrayList<Bank>();
         if(bankController != null){
             for(Bank bank : bankController.findAll()){
                 virtualList.add(bank);
                 System.out.println("Added Bank to List :" + bank);
             }
-        }
-        
-        
-    }
-    
-    public void loadData(){
-        
-        
+            MessageHelper.addSuccessMessage("Bank Data Loaded");
+        }        
     }
 
     public BankController getBankController() {
@@ -164,8 +162,6 @@ public class BankHandler {
     
     public void onEdit(RowEditEvent event) 
     {   
-        
-        MessageHelper.addSuccessMessage(((Bank) event.getObject()).getBankCode() + " Updated!");
         for(Bank bank: getVirtualList())
         {
             if(bank.getBankCode() == null ? ((Bank)event.getObject()).getBankCode() == null : bank.getBankCode().equals(((Bank)event.getObject()).getBankCode()))
@@ -175,7 +171,7 @@ public class BankHandler {
                 
             }
         }
-        
+        MessageHelper.addSuccessMessage(((Bank) event.getObject()).getBankCode() + " Updated!");
     }  
     public void onCancel(RowEditEvent event) 
     {  
