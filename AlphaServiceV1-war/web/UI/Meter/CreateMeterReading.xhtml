@@ -14,7 +14,7 @@
                 <f:view>
                     <h:form>
                         <h1><h:outputText value="Meter Reading"/></h1>
-                        <h:panelGrid columns="2">
+                        <h:panelGrid id="readingPanel" columns="2">
                             <h:outputLabel value="Ref Number" for="RefNum" />
                             <h:inputText id="RefNum" value="#{meterReadingHandler.current.referenceNumber}" title="Ref Number" required="true" />
                             <h:outputLabel value="Date" for="Date" />  
@@ -23,22 +23,35 @@
                             </p:calendar> 
                             <h:outputLabel value="Location" for="location" />  
                             <p:selectOneMenu id="location" value="#{meterReadingHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}"  required="true" >
-                                <f:selectItem itemLabel="Select One" itemValue="#{meterReadingHandler.current.relatedLocation}" />  
+                                <f:selectItem itemLabel="Select One"  />  
                                 <f:selectItems value="#{locationHandler.list}"/>
-                                <!--<p:ajax update="grnNo" />--> 
+                                <p:ajax update="lastReading" /> 
                             </p:selectOneMenu>
                             <h:outputLabel value="Item" for="relatedItem" />
                             <p:selectOneMenu id="relatedItem" value="#{meterReadingHandler.current.relatedItem}" label="Item" converter="#{itemConvertor}" required="true" >
-                                <f:selectItem itemLabel="Select One" itemValue="#{meterReadingHandler.current.relatedItem}" />  
+                                <f:selectItem itemLabel="Select One" />  
                                 <f:selectItems value="#{itemsHandler.listOfLiquids}"/>
+                                <p:ajax update="lastReading" /> 
                             </p:selectOneMenu>
                             <h:outputLabel value="Reading:" for="reading" />
-                            <h:inputText id="reading" value="#{meterReadingHandler.current.reading}" title="Reading">
+                            <h:inputText id="reading" value="#{meterReadingHandler.current.reading}" title="Reading" readonly="true" required="true">
                                 <f:convertNumber type="number"  />
                             </h:inputText>
                             <h:outputLabel value="Note:" for="note" />
                             <h:inputText id="note" value="#{meterReadingHandler.current.note}" title="Note" />
+                            
+                            <h:outputLabel value="Last Reading" for="lastReading" />
+                            <h:inputText id="lastReading" value="#{meterReadingHandler.lastReading}" title="Last Reading" readonly="true" required="true"/>
+                            
+                            <h:outputLabel value="Current Reading" for="currentReading" />
+                            <h:inputText id="currentReading" value="#{meterReadingHandler.currentReading}" title="Current Reading" required="true" >
+                                  <f:convertNumber type="number"  />
+                                  <p:ajax event="keyup" listener="#{meterReadingHandler.calculateReading()}" update="reading,lastReading" />  
+                                   
+                            </h:inputText>
+                            
                             <h:commandButton value="Save" action="#{meterReadingHandler.saveMeterReading()}" />
+                            
                         </h:panelGrid>
                     </h:form>
                 </f:view>

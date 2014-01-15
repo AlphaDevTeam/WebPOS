@@ -3,6 +3,8 @@
 package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.ItemBincard;
+import com.AlphaDevs.Web.Entities.Items;
+import com.AlphaDevs.Web.Entities.Location;
 import com.AlphaDevs.Web.Entities.Logger;
 import com.AlphaDevs.Web.Entities.MeterReading;
 import com.AlphaDevs.Web.Entities.Stock;
@@ -16,6 +18,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
@@ -28,7 +31,7 @@ import javax.faces.bean.RequestScoped;
  */
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class MeterReadingHandler {
    
     @EJB
@@ -44,6 +47,7 @@ public class MeterReadingHandler {
     private MeterReadingController meterReadingController;
 
     private MeterReading current;
+    private double currentReading;
     
     public MeterReadingHandler() {
         current = new MeterReading();
@@ -69,6 +73,47 @@ public class MeterReadingHandler {
         return getMeterReadingController().findAll();
     }
     
+    public double getLastReading(){
+        //System.out.println("S" + getCurrent().getRelatedItem() + " - " + getCurrent().getRelatedLocation());
+        return getMeterReadingController().findReadingByItem(getCurrent().getRelatedItem(),getCurrent().getRelatedLocation());
+    }
+
+    public ItemBincardController getItemBincardController() {
+        return itemBincardController;
+    }
+
+    public void setItemBincardController(ItemBincardController itemBincardController) {
+        this.itemBincardController = itemBincardController;
+    }
+
+    public StockController getStockController() {
+        return stockController;
+    }
+
+    public void setStockController(StockController stockController) {
+        this.stockController = stockController;
+    }
+
+    public LoggerController getLoggerController() {
+        return loggerController;
+    }
+
+    public void setLoggerController(LoggerController loggerController) {
+        this.loggerController = loggerController;
+    }
+
+    public double getCurrentReading() {
+        return currentReading;
+    }
+
+    public void setCurrentReading(double currentReading) {
+        this.currentReading = currentReading;
+    }
+    public void calculateReading(){
+        //System.out.println("awas"  + getLastReading() + " -- " + getCurrentReading());
+        getCurrent().setReading(getCurrentReading() - getLastReading());
+    }
+    
     public String saveMeterReading(){
         
         Logger Log = EntityHelper.createLogger("Meter Reading", current.getNote(), TransactionTypes.READINGS);
@@ -90,14 +135,10 @@ public class MeterReadingHandler {
         itemBincardController.create(itemBin);
         
         meterReadingController.create(current);
-//        itemsController.create(current);
-//         new Stock();
-//        stock.setSockItem(current);
-//        stock.setStockLocation(current.getItemLocation());
-//        stock.setStockQty(0);
-//        stockController.create(stock);
         return "Home";
         
     }
+    
+     
     
 }
