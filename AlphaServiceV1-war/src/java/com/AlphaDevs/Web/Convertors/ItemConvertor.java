@@ -32,14 +32,26 @@ public class ItemConvertor implements Converter
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) 
     {
-        return itemsController.find(Long.valueOf(value));
+        if(value.isEmpty()){
+            return null;
+        }else{
+            return itemsController.find(Long.valueOf(value));
+        }
+        
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        return ((Items) value).getId().toString();
+        if(value == null || "null".equals(value.toString())){
+            System.out.println("Null");
+            return "";
+        }else{
+            System.out.println("Not Null" + value.toString());
+            return ((Items) value).getId().toString();
+        }
+        
     }
-
+    
     
 }

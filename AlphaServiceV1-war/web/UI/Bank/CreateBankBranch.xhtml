@@ -67,7 +67,12 @@
                                                     <h:outputText value="#{item.relatedBank.bankName}" />  
                                                 </f:facet>  
                                                 <f:facet name="input" >  
-                                                    <p:inputText value="#{item.relatedBank.bankName}" style="width:100%"/>  
+                                                    <h:selectOneMenu value="#{item.relatedBank.bankName}" >  
+                                                        <f:selectItems value="#{bankHandler.list}"  
+                                                            var="bank"   
+                                                            itemLabel="#{bank}"  
+                                                            itemValue="#{bank}" />  
+                                                    </h:selectOneMenu>                          
                                                 </f:facet>  
                                             </p:cellEditor>
 

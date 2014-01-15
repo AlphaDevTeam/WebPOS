@@ -29,8 +29,10 @@
                             </h:selectOneMenu>
                             -->
 
-                             <h:outputLabel value="GrnDate:" for="grnDate" />  
-                             <p:calendar value="#{gRNHandler.current.grnDate}" pattern="MM/dd/yyyy" />  
+                             <h:outputLabel value="GrnDate:" for="Date" />  
+                             <p:calendar id="Date" value="#{gRNHandler.current.grnDate}" pattern="MM/dd/yyyy" title="GRN Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                             </p:calendar>
 
 
                             <h:outputLabel value="GrnNo:" for="grnNo" />
@@ -38,10 +40,11 @@
                             <h:outputLabel value="InvNo:" for="invNo" />
                             <h:inputText id="invNo" value="#{gRNHandler.current.invNo}" title="InvNo" />
                             <h:outputLabel value="Location:" for="location" />
-                            <h:selectOneMenu id="location" value="#{gRNHandler.current.location}" title="Location" converter="#{locationConvertor}" >
+                            <p:selectOneMenu id="location" value="#{gRNHandler.current.location}" label="Location " converter="#{locationConvertor}" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{gRNHandler.current.location}" />  
                                 <f:selectItems value="#{locationHandler.list}"/>
                                 <p:ajax update="grnNo" /> 
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
                             <h:outputLabel value="PurchaseType:" for="purchaseType" />
                             <h:inputText id="purchaseType" value="#{gRNHandler.current.purchaseType}" title="PurchaseType" />
                             <h:outputLabel value="Supplier:" for="supplier" />

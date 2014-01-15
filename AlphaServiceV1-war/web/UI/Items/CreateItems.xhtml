@@ -15,7 +15,7 @@
                 <f:view>
                     <h:form>
                         <h1><h:outputText value="Create Item"/></h1>
-                        <h:panelGrid columns="2">
+                        <h:panelGrid columns="2" id="panel">
                             <h:outputLabel value="ItemBarcode:" for="itemBarcode" />
                             <h:inputText id="itemBarcode" value="#{itemsHandler.current.itemBarcode}" title="ItemBarcode" />
                             <h:outputLabel value="ItemCode:" for="itemCode" />
@@ -37,11 +37,12 @@
                             <h:outputLabel value="ItemName:" for="itemName" />
                             <h:inputText id="itemName" value="#{itemsHandler.current.itemName}" title="ItemName" />
                             <h:outputLabel value="ItemProduct:" for="itemProduct" />
-                            <h:selectOneMenu id="itemProduct" value="#{itemsHandler.current.itemProduct}" title="Product" converter="#{productConvertor}" >
-                                <f:selectItems value="#{productHandler.list}"/>
-                                <p:ajax update="itemProduct,tchan,itemDesign" /> 
+                            <p:selectOneMenu id="itemProduct" value="#{itemsHandler.current.itemProduct}" label="Product" converter="#{productConvertor}" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{itemsHandler.current.itemProduct}" />  
+                                <f:selectItems value="#{productHandler.list}" />
+                                <p:ajax update="itemProduct,tchan,itemDesign,panel" /> 
 
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
 
                             <h:outputLabel id="tchan" value="ItemDesign: #{itemsHandler.current.itemProduct}" for="itemDesign" />
                             <h:selectOneMenu id="itemDesign" value="#{itemsHandler.current.itemDesign}" title="Design" converter="#{designConvertor}" >

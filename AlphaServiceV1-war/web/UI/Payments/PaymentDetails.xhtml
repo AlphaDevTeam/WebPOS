@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="TrnType:" for="trnType" />
+                            <h:inputText id="trnType" value="#{paymentDetailsHandler.current.trnType}" title="TrnType" />
+                                                        
+                            <h:outputLabel value="CashAmount:" for="cashAmount" />
+                            <h:inputText id="cashAmount" value="#{paymentDetailsHandler.current.cashAmount}" title="CashAmount" />
+                            <h:outputLabel value="CreditCardAmount:" for="creditCardAmount" />
+                            <h:inputText id="creditCardAmount" value="#{paymentDetailsHandler.current.creditCardAmount}" title="CreditCardAmount" />
+                            <h:outputLabel value="ChequeAmount:" for="chequeAmount" />
+                            <h:inputText id="chequeAmount" value="#{paymentDetailsHandler.current.chequeAmount}" title="ChequeAmount" />
+                            <h:outputLabel value="CreditAmount:" for="creditAmount" />
+                            <h:inputText id="creditAmount" value="#{paymentDetailsHandler.current.creditAmount}" title="CreditAmount" />
+                            
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

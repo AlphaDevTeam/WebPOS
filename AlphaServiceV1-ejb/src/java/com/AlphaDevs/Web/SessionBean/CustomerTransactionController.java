@@ -2,10 +2,15 @@
 package com.AlphaDevs.Web.SessionBean;
 
 import com.AlphaDevs.Web.Entities.CustomerTransaction;
+import com.AlphaDevs.Web.Entities.Supplier;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -35,5 +40,15 @@ public class CustomerTransactionController extends AbstractFacade<CustomerTransa
         return em;
     }
 
-    
+    public List<CustomerTransaction> findItemByUnit(Supplier supplier) 
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<CustomerTransaction> q = cb.createQuery(CustomerTransaction.class);
+        Root<CustomerTransaction> c = q.from(CustomerTransaction.class);
+        q.select(c);
+        q.where(cb.equal(c.get("supplier"), supplier));
+        
+        return getEntityManager().createQuery(q).getResultList();
+        
+    }
 }

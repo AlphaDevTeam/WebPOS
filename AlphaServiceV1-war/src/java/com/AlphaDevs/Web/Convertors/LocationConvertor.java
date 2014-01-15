@@ -32,13 +32,23 @@ public class LocationConvertor implements Converter
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) 
     {
-        return locationController.find(Long.valueOf(value));
+        if(value.isEmpty()){
+            return null;
+        }else
+        {
+            return locationController.find(Long.valueOf(value));
+        }
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        return ((Location) value).getId().toString();
+        if(value == null){
+            return "";
+        }else{
+            return ((Location) value).getId().toString();
+        }
+        
     }
 
 }

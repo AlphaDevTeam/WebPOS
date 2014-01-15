@@ -6,6 +6,9 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -35,6 +38,18 @@ public class UnitsController extends AbstractFacade<Units> {
 
     public void persist(Object object) {
         em.persist(object);
+    }
+    
+    public Units findUnitsByCode(String unitCode) 
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Units> q = cb.createQuery(Units.class);
+        Root<Units> c = q.from(Units.class);
+        q.select(c);
+        q.where(cb.equal(c.get("unitCode"), unitCode));
+        
+        return getEntityManager().createQuery(q).getSingleResult();
+        
     }
 
 }

@@ -15,12 +15,32 @@
                 <f:view>
                     <h:form>
                         <h1><h:outputText value="Supplier / Customer Account"/></h1>
-                        <p:dataTable value="#{customerTransactionHandler.list}" var="item">
+                        
+                        <p:selectOneMenu id="Customer" value="#{customerTransactionHandler.current.supplier}" label="Customer" converter="#{supplierConvertor}" >
+                            <f:selectItem itemLabel="Select One" itemValue="#{customerTransactionHandler.current.supplier}" /> 
+                            <f:selectItems value="#{supplierHandler.allSuppliers()}"  />
+                            <p:ajax update="accountTable" /> 
+                        </p:selectOneMenu>
+                        
+                        <p:dataTable id="accountTable" value="#{customerTransactionHandler.selectedList}" var="item">
+                            
+                            <p:column rendered="false">
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Date"/>
+                                </f:facet>
+                                <h:outputText value="#{item.date}"/>
+                            </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Logger"/>
+                                    <h:outputText value="Supplier"/>
                                 </f:facet>
-                                <h:outputText value="#{item.logger}"/>
+                                <h:outputText value="#{item.supplier}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
@@ -29,6 +49,12 @@
                                 <h:outputText value="#{item.description}"/>
                             </p:column>
                             <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Logger"/>
+                                </f:facet>
+                                <h:outputText value="#{item.logger}"/>
+                            </p:column>
+                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="CR"/>
                                 </f:facet>
@@ -39,25 +65,12 @@
                                     <h:outputText value="DR"/>
                                 </f:facet>
                                 <h:outputText value="#{item.DR}"/>
-                            </p:column>
+                            </p:column>    
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Balance"/>
                                 </f:facet>
                                 <h:outputText value="#{item.balance}"/>
-                            </p:column>
-
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Supplier"/>
-                                </f:facet>
-                                <h:outputText value="#{item.supplier}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Id"/>
-                                </f:facet>
-                                <h:outputText value="#{item.id}"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

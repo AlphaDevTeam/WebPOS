@@ -6,12 +6,14 @@ import com.AlphaDevs.Web.Entities.Design;
 import com.AlphaDevs.Web.Entities.Items;
 import com.AlphaDevs.Web.Entities.Logger;
 import com.AlphaDevs.Web.Entities.Stock;
+import com.AlphaDevs.Web.Entities.Units;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.SessionBean.DesignController;
 import com.AlphaDevs.Web.SessionBean.ItemsController;
 import com.AlphaDevs.Web.SessionBean.LoggerController;
 import com.AlphaDevs.Web.SessionBean.StockController;
+import com.AlphaDevs.Web.SessionBean.UnitsController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -33,6 +35,8 @@ import javax.faces.bean.SessionScoped;
 public class ItemsHandler 
 {
     @EJB
+    private UnitsController unitsController;
+    @EJB
     private LoggerController loggerController;
     @EJB
     private DesignController designController;
@@ -41,6 +45,7 @@ public class ItemsHandler
     
     @EJB
     private ItemsController itemsController;
+    
     
     
     private Items current;
@@ -65,6 +70,14 @@ public class ItemsHandler
     {
         return itemsController.findAll();
     }
+    
+     public List<Items> getListOfLiquids()
+    {
+        Units searchUnit = unitsController.findUnitsByCode("L");
+        System.out.println("Found :" + searchUnit);
+        return itemsController.findItemByUnit(searchUnit);
+    }
+    
     
     public String persistItem()
     {

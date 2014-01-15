@@ -41,10 +41,23 @@ public class CustomerTransactionHandler
     public void setCurrent(CustomerTransaction current) {
         this.current = current;
     }
+
+    public CustomerTransactionController getCustomerTransactionController() {
+        return customerTransactionController;
+    }
+
+    public void setCustomerTransactionController(CustomerTransactionController customerTransactionController) {
+        this.customerTransactionController = customerTransactionController;
+    }
     
     public List<CustomerTransaction> getList()
     {
         return customerTransactionController.findAll();
     }
+    
+    public List<CustomerTransaction> getSelectedList(){
+        return getCustomerTransactionController().findItemByUnit(getCurrent().getSupplier());
+    }
+
 
 }

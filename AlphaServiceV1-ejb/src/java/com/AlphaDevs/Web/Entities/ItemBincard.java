@@ -4,6 +4,7 @@ package com.AlphaDevs.Web.Entities;
 
 import com.AlphaDevs.Web.Enums.BillStatus;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -23,17 +24,15 @@ public class ItemBincard implements Serializable
 
     @OneToOne
     private Items item;
-    
     private String Description;
     private double Qty;
     private double Balance;
-    
     private String TrnNumber;
-    
     @OneToOne
     private Logger log;
-    
     private BillStatus billStat;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date relatedDate;
 
     public ItemBincard() {
     }
@@ -57,6 +56,25 @@ public class ItemBincard implements Serializable
         this.billStat = billStat;
     }
 
+    public ItemBincard(Items item, String Description, double Qty, double Balance, String TrnNumber, Logger log, BillStatus billStat, Date relatedDate) {
+        this.item = item;
+        this.Description = Description;
+        this.Qty = Qty;
+        this.Balance = Balance;
+        this.TrnNumber = TrnNumber;
+        this.log = log;
+        this.billStat = billStat;
+        this.relatedDate = relatedDate;
+    }
+    
+    public Date getRelatedDate() {
+        return relatedDate;
+    }
+
+    public void setRelatedDate(Date relatedDate) {
+        this.relatedDate = relatedDate;
+    }
+ 
     public BillStatus getBillStat() {
         return billStat;
     }

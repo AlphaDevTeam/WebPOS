@@ -215,6 +215,7 @@ public class GRNHandler
            ItemBincard itemBin = new ItemBincard();
            itemBin.setDescription("Good Received Note - " + current.getGrnNo());
            itemBin.setItem(grnDet.getGrnItem());
+           itemBin.setRelatedDate(current.getGrnDate());
            itemBin.setTrnNumber(current.getInvNo());
            itemBin.setQty(grnDet.getGrnQty());
            itemBin.setLog(log);

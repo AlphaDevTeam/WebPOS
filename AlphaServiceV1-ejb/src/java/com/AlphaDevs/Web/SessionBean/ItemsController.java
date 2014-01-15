@@ -4,6 +4,7 @@ package com.AlphaDevs.Web.SessionBean;
 import com.AlphaDevs.Web.Entities.Design;
 import com.AlphaDevs.Web.Entities.Items;
 import com.AlphaDevs.Web.Entities.Product;
+import com.AlphaDevs.Web.Entities.Units;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -57,6 +58,18 @@ public class ItemsController extends AbstractFacade<Items>
         Root<Design> root = cq.from(Design.class);
         cq.select(cq.from(Design.class)).where(cb.equal(root.get("product"), prod));
         */
+        return getEntityManager().createQuery(q).getResultList();
+        
+    }
+    
+    public List<Items> findItemByUnit(Units units) 
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Items> q = cb.createQuery(Items.class);
+        Root<Items> c = q.from(Items.class);
+        q.select(c);
+        q.where(cb.equal(c.get("unitOfMeasurement"), units));
+        
         return getEntityManager().createQuery(q).getResultList();
         
     }

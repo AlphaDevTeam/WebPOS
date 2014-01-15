@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Meter Reading"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Ref Number" for="RefNum" />
+                            <h:inputText id="RefNum" value="#{meterReadingHandler.current.referenceNumber}" title="Ref Number" required="true" />
+                            <h:outputLabel value="Date" for="Date" />  
+                            <p:calendar id="Date" value="#{meterReadingHandler.current.relatedDate}" pattern="MM/dd/yyyy" title="Date" required="true">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                            </p:calendar> 
+                            <h:outputLabel value="Location" for="location" />  
+                            <p:selectOneMenu id="location" value="#{meterReadingHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}"  required="true" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{meterReadingHandler.current.relatedLocation}" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <!--<p:ajax update="grnNo" />--> 
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Item" for="relatedItem" />
+                            <p:selectOneMenu id="relatedItem" value="#{meterReadingHandler.current.relatedItem}" label="Item" converter="#{itemConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{meterReadingHandler.current.relatedItem}" />  
+                                <f:selectItems value="#{itemsHandler.listOfLiquids}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Reading:" for="reading" />
+                            <h:inputText id="reading" value="#{meterReadingHandler.current.reading}" title="Reading">
+                                <f:convertNumber type="number"  />
+                            </h:inputText>
+                            <h:outputLabel value="Note:" for="note" />
+                            <h:inputText id="note" value="#{meterReadingHandler.current.note}" title="Note" />
+                            <h:commandButton value="Save" action="#{meterReadingHandler.saveMeterReading()}" />
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

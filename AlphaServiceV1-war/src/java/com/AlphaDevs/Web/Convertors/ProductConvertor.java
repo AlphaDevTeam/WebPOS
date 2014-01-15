@@ -31,13 +31,24 @@ public class ProductConvertor implements Converter
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) 
     {
-        return productController.find(Long.valueOf(value));
+        if(value.isEmpty()){
+            System.out.println("Emopty");
+            return null;
+        }else{
+            System.out.println("Not Empty");
+            return productController.find(Long.valueOf(value));
+        }
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        return ((Product)value).getId().toString();
+        if(value == null){
+            return "";
+        }else{
+            return ((Product)value).getId().toString();
+        }
+        
     }
 
 }

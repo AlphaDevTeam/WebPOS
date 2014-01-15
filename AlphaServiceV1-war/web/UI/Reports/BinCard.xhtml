@@ -3,62 +3,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
-        <f:view>
-            <h:form>
-                <h1><h:outputText value="List"/></h1>
-                <p:dataTable value="#{itemBinCardHandler.list}" var="item">
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Balance"/>
-                        </f:facet>
-                        <h:outputText value="#{item.balance}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Description"/>
-                        </f:facet>
-                        <h:outputText value="#{item.description}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Qty"/>
-                        </f:facet>
-                        <h:outputText value="#{item.qty}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="TrnNumber"/>
-                        </f:facet>
-                        <h:outputText value="#{item.trnNumber}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Item"/>
-                        </f:facet>
-                        <h:outputText value="#{item.item}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Log"/>
-                        </f:facet>
-                        <h:outputText value="#{item.log}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <h:outputText value="#{item.id}"/>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </f:view>
-
+         <ui:composition template="./../../MainTemplateUI.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Item Bin Card"/></h1>
+                        
+                        <p:selectOneMenu id="Item" value="#{itemBinCardHandler.current.item}" label="Item" converter="#{itemConvertor}" >
+                            <f:selectItem itemLabel="Select One" itemValue="#{itemBinCardHandler.current.item}" /> 
+                            <f:selectItems value="#{itemsHandler.list}"  />
+                            <p:ajax update="BinCardTable" /> 
+                        </p:selectOneMenu>
+                        
+                        <p:calendar id="Date" value="#{itemBinCardHandler.current.relatedDate}" pattern="MM/dd/yyyy" >
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                        </p:calendar>
+                        
+                        <p:dataTable id="BinCardTable" value="#{itemBinCardHandler.selectedList}" var="item">
+                            <p:column rendered="false">
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Date"/>
+                                </f:facet>
+                                <h:outputText value="#{item.relatedDate}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Item"/>
+                                </f:facet>
+                                <h:outputText value="#{item.item}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="TrnNumber"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trnNumber}"/>
+                            </p:column>
+                             <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Log"/>
+                                </f:facet>
+                                <h:outputText value="#{item.log}"/>
+                            </p:column>
+                            <p:column>
+                               <f:facet name="header">
+                                   <h:outputText value="Qty"/>
+                               </f:facet>
+                               <h:outputText value="#{item.qty}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Balance"/>
+                                </f:facet>
+                                <h:outputText value="#{item.balance}"/>
+                            </p:column>
+                            
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

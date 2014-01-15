@@ -3,99 +3,158 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <f:view>
-            <h:form>
-                <h1><h:outputText value="Create/Edit"/></h1>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="BillNo:" for="billNo" />
-                    <h:inputText id="billNo" value="#{invoiceHandler.current.billNo}" title="BillNo" />
-                    <h:outputLabel value="BillStat:" for="billStat" />
-                    <h:inputText id="billStat" value="#{invoiceHandler.current.billStat}" title="BillStat" />
-                    <h:outputLabel value="Customer:" for="customer" />
-                    <h:inputText id="customer" value="#{invoiceHandler.current.customer}" title="Customer" />
-                    <h:outputLabel value="Location:" for="location" />
-                    <h:inputText id="location" value="#{invoiceHandler.current.location}" title="Location" />
-                    <h:outputLabel value="Logger:" for="logger" />
-                    <h:inputText id="logger" value="#{invoiceHandler.current.logger}" title="Logger" />
-                    <h:outputLabel value="RefNo:" for="refNo" />
-                    <h:inputText id="refNo" value="#{invoiceHandler.current.refNo}" title="RefNo" />
-                    <h:outputLabel value="TotalAmount:" for="totalAmount" />
-                    <h:inputText id="totalAmount" value="#{invoiceHandler.current.totalAmount}" title="TotalAmount" />
-                    <h:outputLabel value="TrnDate:" for="trnDate" />
-                    <h:inputText id="trnDate" value="#{invoiceHandler.current.trnDate}" title="TrnDate" />
-                    <h:outputLabel value="Id:" for="id" />
-                    <h:inputText id="id" value="#{invoiceHandler.current.id}" title="Id" />
-                </h:panelGrid>
-                <hr/>
-                
-                <h:form>
-                    <h1><h:outputText value="Create/Edit"/></h1>
-                    <h:panelGrid columns="2">
-                        <h:outputLabel value="Invoice:" for="invoice" />
+        
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    
+                    <h:form id="mainForm" target="_new">
+                        <p:growl id="messages" showDetail="true"/>  
+                        <h1><h:outputText value="Invoice"/></h1>
+                        <h:panelGrid columns="6" id="invPanel">
+                            
+                            <h:outputLabel value="Bill Number" for="billNo" />
+                            <h:inputText id="billNo" value="#{invoiceHandler.current.billNo}" title="Bill Number" readonly="#{systemsHandler.current.isINVNumberAutoGenarated}" required="true" />
+                            
+                            <h:outputLabel value="Total Amount:" for="totalAmount" />
+                            <h:inputText id="totalAmount" value="#{invoiceHandler.current.totalAmount}" title="TotalAmount" readonly="true" />
+                          
+                             <h:outputLabel value="Invoice Date" for="InvDate" />  
+                             <p:calendar id="InvDate" value="#{invoiceHandler.current.trnDate}" pattern="MM/dd/yyyy" title="Invoice Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                             </p:calendar>
+
+                            <h:outputLabel value="Inv Ref Number" for="invRefNo" />
+                            <h:inputText id="invRefNo" value="#{invoiceHandler.current.refNo}" title="Inv Ref Number"  />
+                            
+                            <h:outputLabel value="Location:" for="location" />
+                            <p:selectOneMenu id="location" value="#{invoiceHandler.current.location}" label="Location " converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{invoiceHandler.current.location}" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="billNo" /> 
+                            </p:selectOneMenu>
+                            
+                            <h:outputLabel value="Customer" for="customer" />
+                            <p:selectOneMenu id="customer" value="#{invoiceHandler.current.customer}" label="Customer" converter="#{supplierConvertor}" required="true" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Select One" itemValue="#{invoiceHandler.current.customer}" />  
+                                <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
+                            </p:selectOneMenu>
+
+
+                            <h:outputLabel value="Item" for="acItem" />
+                            
+                            <p:autoComplete id="acItem" value="#{invoiceHandler.currentDetails.item}"   
+                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                                <p:ajax event="itemSelect" listener="#{invoiceHandler.handleSelect}" update="itemCost" />  
+                            </p:autoComplete>  
+                            
+                            <h:outputLabel value="Qty" for="itemQty" />
+                            <p:inputText id="itemQty" title="Qty" value="#{invoiceHandler.currentDetails.itemQty}" required="true"/>
+
+                            <h:outputLabel value="Cost" for="itemCost" />
+                            <p:inputText id="itemCost" title="Item Cost" value="#{invoiceHandler.currentDetails.price}" />
+
+                            <c:forEach begin="0" end="#{(invoiceHandler.propList.size() - 1)}" var="index">
+                                <h:outputText value="#{invoiceHandler.propList.get(index).propertyName}"/>
+                                <p:inputText value="#{invoiceHandler.propList.get(index).propertyValue}" />
+                            </c:forEach> 
+
+                            <p:commandButton value="Add" action="#{invoiceHandler.addItem()}" update="virtualList,invPanel,:mainForm:messages"  /> 
+                        </h:panelGrid>
+
+                        <p:dataTable  id="virtualList" editable="true" value="#{invoiceHandler.virtualList}" var="item" selection="#{invoiceHandler.selectedInvoiceDetails}" selectionMode="single" rowKey="#{item.item}">
+                            <p:ajax event="rowEdit" listener="#{invoiceHandler.onEdit}" update=":mainForm:messages,:mainForm:totalAmount,:mainForm:invPanel" />  
+                            <p:ajax event="rowEditCancel" listener="#{invoiceHandler.onCancel}" update=":mainForm:messages,:mainForm:totalAmount,:mainForm:invPanel" />  
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Invoice Item"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.item}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Unit Price"/>
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{item.price}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{item.price}" style="width:100%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor>
+
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Qty"/>
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{item.itemQty}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{item.itemQty}" style="width:100%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor>
+
+                                </p:column>
+                                
+                                <f:facet name="footer">  
+                                    <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                                      onclick="confirmation.show()"/>  
+                                </f:facet>  
+
+                                <p:column headerText="Options" style="width:50px">  
+                                    <p:rowEditor />  
+                                </p:column>  
+
+
+                            </p:dataTable>
+
+                        <p:confirmDialog id="confirmDialog" message="Are you sure about deleting item? "  
+                                header="Are you sure ?" severity="alert" widgetVar="confirmation">  
+
+                                <p:commandButton id="confirm" value="Yes Sure" update=":mainForm:messages,:mainForm:totalAmount,virtualList" oncomplete="confirmation.hide()"  
+                                                 actionListener="#{invoiceHandler.removeSelectedItem()}" />  
+                                <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button" />   
+
+                                </p:confirmDialog>   
+
+                        <br/>
+                        <hr/>
                         
-                        <p:autoComplete id="acItem" value="#{invoiceDetailsHandler.current.item}"   
-                                    completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
-                        <p:ajax event="itemSelect" listener="#{invoiceDetailsHandler.handleSelect}" update="price" />  
-                    </p:autoComplete>  
-                        
-                        <h:outputLabel value="ItemQty:" for="itemQty" />
-                        <h:inputText id="itemQty" value="#{invoiceDetailsHandler.current.itemQty}" title="ItemQty" />
-                        <h:outputLabel value="Price:" for="price" />
-                        <h:inputText id="price" value="#{invoiceDetailsHandler.current.price}" title="Price" />
-                        <h:outputLabel value="Id:" for="id" />
-                        <h:inputText id="id" value="#{invoiceDetailsHandler.current.id}" title="Id" />
-                    </h:panelGrid>
-                </h:form>
-                
-                
-                <h:form>
-                    <h1><h:outputText value="List"/></h1>
-                    <p:dataTable value="#{invoiceDetailsHandler.virtualInvDetails}" var="item">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Invoice"/>
-                            </f:facet>
-                            <h:outputText value="#{item.invoice}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Item"/>
-                            </f:facet>
-                            <h:outputText value="#{item.item}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="ItemQty"/>
-                            </f:facet>
-                            <h:outputText value="#{item.itemQty}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Price"/>
-                            </f:facet>
-                            <h:outputText value="#{item.price}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Id"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
+                        <p:accordionPanel activeIndex="-1">  
+                            <p:tab title="Payments" >  
+                                <h:panelGrid columns="4" cellpadding="10">  
+                                    <h:outputLabel value="Cash Amount:" for="cashAmount" />
+                                    <h:inputText id="cashAmount" value="#{invoiceHandler.paymentDetails.cashAmount}" title="Cash Amount" />
+                                    <h:outputLabel value="Credit Card Amount:" for="creditCardAmount" />
+                                    <h:inputText id="creditCardAmount" value="#{invoiceHandler.paymentDetails.creditCardAmount}" title="Credit Card Amount" />
+                                    <h:outputLabel value="Cheque Amount:" for="chequeAmount" />
+                                    <h:inputText id="chequeAmount" value="#{invoiceHandler.paymentDetails.chequeAmount}" title="Cheque Amount" />
+                                    <h:outputLabel value="Credit Amount:" for="creditAmount" />
+                                    <h:inputText id="creditAmount" value="#{invoiceHandler.paymentDetails.creditAmount}" title="Credit Amount" />
+                                    
+                                    <p:commandButton value="Save" action="#{invoiceHandler.saveInvoice()}" />
+                                </h:panelGrid>  
+                            </p:tab>  
+                        </p:accordionPanel>
 
-
-
-
-                
-            </h:form>
-        </f:view>
-
+                    </h:form>
+                    
+                </f:view>
+            </ui:define>
+        </ui:composition>
+        
     </h:body>
 </html>
 

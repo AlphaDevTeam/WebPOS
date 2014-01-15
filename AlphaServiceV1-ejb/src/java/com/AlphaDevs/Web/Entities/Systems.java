@@ -24,6 +24,7 @@ public class Systems implements Serializable {
     private Long id;
     private String Header;
     private boolean isGRNnumberAutoGenarated;
+    private boolean isINVNumberAutoGenarated;
     
     @OneToOne
     private Company relatedCompany;
@@ -53,8 +54,15 @@ public class Systems implements Serializable {
     public void setIsGRNnumberAutoGenarated(boolean isGRNnumberAutoGenarated) {
         this.isGRNnumberAutoGenarated = isGRNnumberAutoGenarated;
     }
+
+    public boolean isIsINVNumberAutoGenarated() {
+        return isINVNumberAutoGenarated;
+    }
+
+    public void setIsINVNumberAutoGenarated(boolean isINVNumberAutoGenarated) {
+        this.isINVNumberAutoGenarated = isINVNumberAutoGenarated;
+    }
     
-   
     
     public Long getId() {
         return id;

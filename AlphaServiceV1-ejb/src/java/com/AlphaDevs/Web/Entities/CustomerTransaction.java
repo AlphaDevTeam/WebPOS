@@ -4,6 +4,7 @@ package com.AlphaDevs.Web.Entities;
 
 import com.AlphaDevs.Web.Enums.BillStatus;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -27,7 +28,8 @@ public class CustomerTransaction implements Serializable {
     private double CR;
     private double DR;
     private double Balance;
-    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date date;
     private BillStatus billStat;
     
     @OneToOne
@@ -36,6 +38,25 @@ public class CustomerTransaction implements Serializable {
     public CustomerTransaction() {
     }
 
+    public CustomerTransaction(Supplier supplier, String Description, double CR, double DR, double Balance, Date date, BillStatus billStat, Logger Logger) {
+        this.supplier = supplier;
+        this.Description = Description;
+        this.CR = CR;
+        this.DR = DR;
+        this.Balance = Balance;
+        this.date = date;
+        this.billStat = billStat;
+        this.Logger = Logger;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
     public com.AlphaDevs.Web.Entities.Logger getLogger() {
         return Logger;
     }

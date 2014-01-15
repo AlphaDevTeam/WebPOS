@@ -33,13 +33,21 @@ public class SupplierConvertor implements Converter
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) 
     {
-        return supplierController.find(Long.valueOf(value));
+        if(value.isEmpty()){
+            return null;
+        }else{
+            return supplierController.find(Long.valueOf(value));
+        }
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        return ((Supplier) value).getId().toString();
+        if(value == null){
+            return "";
+        }else{
+            return ((Supplier) value).getId().toString();
+        }
     }
 
 }

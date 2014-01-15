@@ -2,12 +2,16 @@
 
 package com.AlphaDevs.Web.Entities;
 
+import com.AlphaDevs.Web.Enums.Document;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,19 +28,85 @@ public class PaymentDetails implements Serializable
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     
     private Long id;
+    @Enumerated(EnumType.STRING)
     private TransactionTypes TrnType;
+    @OneToOne
     private Logger loger;
-
+    @Enumerated(EnumType.STRING)
+    private Document documentType;
+    private double cashAmount;
+    private double creditCardAmount;
+    private double chequeAmount;
+    private double creditAmount;
+    
     public PaymentDetails() {
     }
 
-    public PaymentDetails(TransactionTypes TrnType, Logger loger) {
+    public PaymentDetails(TransactionTypes TrnType, Logger loger, Document documentType, double cashAmount, double creditCardAmount, double chequeAmount, double creditAmount) {
         this.TrnType = TrnType;
         this.loger = loger;
+        this.documentType = documentType;
+        this.cashAmount = cashAmount;
+        this.creditCardAmount = creditCardAmount;
+        this.chequeAmount = chequeAmount;
+        this.creditAmount = creditAmount;
     }
-    
-    
-    
+
+    public TransactionTypes getTrnType() {
+        return TrnType;
+    }
+
+    public void setTrnType(TransactionTypes TrnType) {
+        this.TrnType = TrnType;
+    }
+
+    public Logger getLoger() {
+        return loger;
+    }
+
+    public void setLoger(Logger loger) {
+        this.loger = loger;
+    }
+
+    public Document getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(Document documentType) {
+        this.documentType = documentType;
+    }
+
+    public double getCashAmount() {
+        return cashAmount;
+    }
+
+    public void setCashAmount(double cashAmount) {
+        this.cashAmount = cashAmount;
+    }
+
+    public double getCreditCardAmount() {
+        return creditCardAmount;
+    }
+
+    public void setCreditCardAmount(double creditCardAmount) {
+        this.creditCardAmount = creditCardAmount;
+    }
+
+    public double getChequeAmount() {
+        return chequeAmount;
+    }
+
+    public void setChequeAmount(double chequeAmount) {
+        this.chequeAmount = chequeAmount;
+    }
+
+    public double getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(double creditAmount) {
+        this.creditAmount = creditAmount;
+    }
 
     public Long getId() {
         return id;

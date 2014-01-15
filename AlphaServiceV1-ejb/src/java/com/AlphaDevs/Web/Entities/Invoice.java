@@ -16,7 +16,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Invoice implements Serializable 
+public class Invoice  implements Serializable 
 {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,8 +40,11 @@ public class Invoice implements Serializable
     @OneToOne
     private Logger Logger;
         
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice" , cascade = CascadeType.PERSIST)
     private List<InvoiceDetails> InvDetails;
+    
+    @OneToMany
+    private List<Properties> extraz;
 
     public Invoice() {
     }
@@ -119,6 +122,22 @@ public class Invoice implements Serializable
 
     public void setTrnDate(Date TrnDate) {
         this.TrnDate = TrnDate;
+    }
+
+    public List<InvoiceDetails> getInvDetails() {
+        return InvDetails;
+    }
+
+    public void setInvDetails(List<InvoiceDetails> InvDetails) {
+        this.InvDetails = InvDetails;
+    }
+
+    public List<Properties> getExtraz() {
+        return extraz;
+    }
+
+    public void setExtraz(List<Properties> extraz) {
+        this.extraz = extraz;
     }
 
     
