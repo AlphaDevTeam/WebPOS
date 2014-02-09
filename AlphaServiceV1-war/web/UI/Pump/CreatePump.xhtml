@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+
+
+            <ui:define name="content">
+                <f:view>
+                    
+                    <h:form id="managePumpForm">
+                        <p:growl id="message"/>
+                        <h1><h:outputText value="Manage Pump"/></h1>
+                        <p:focus for="pumpCode"/>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="PumpCode:" for="pumpCode" />
+                            <h:inputText id="pumpCode" value="#{pumpHandler.current.pumpCode}" title="PumpCode" required="true"/>
+                            <h:outputLabel value="Description:" for="description" />
+                            <h:inputText id="description" value="#{pumpHandler.current.description}" title="Description" />
+                            <h:outputLabel value="RelatedItem:" for="relatedItem" />
+                            <p:selectOneMenu id="relatedItem" value="#{pumpHandler.current.relatedItem}"  label="RelatedItem" required="true" converter="#{itemConvertor}" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{itemsHandler.listOfLiquids}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="RelatedLocation:" for="relatedLocation" />
+                            <p:selectOneMenu id="relatedLocation" value="#{pumpHandler.current.relatedLocation}" label="RelatedLocation" converter="#{locationConvertor}" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{pumpHandler.current.relatedLocation}" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="LastReading:" for="lastReading" />
+                            <h:inputText id="lastReading" value="#{pumpHandler.current.lastReading}" title="LastReading" required="true" />
+                            <h:commandButton value="Save" action="#{pumpHandler.savePump()}"/>
+                            <p:commandButton value="Save and Stay" update="managePumpForm,message" action="#{pumpHandler.savePumpAndStay()}"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+         
+
+        </ui:composition>
+
+    </body>
+</html>

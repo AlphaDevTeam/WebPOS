@@ -17,12 +17,12 @@
                         <h1><h:outputText value="Supplier / Customer Account"/></h1>
                         
                         <p:selectOneMenu id="Customer" value="#{customerTransactionHandler.current.supplier}" label="Customer" converter="#{supplierConvertor}" >
-                            <f:selectItem itemLabel="Select One" itemValue="#{customerTransactionHandler.current.supplier}" /> 
+                            <f:selectItem itemLabel="Select One"  /> 
                             <f:selectItems value="#{supplierHandler.allSuppliers()}"  />
                             <p:ajax update="accountTable" /> 
                         </p:selectOneMenu>
                         
-                        <p:dataTable id="accountTable" value="#{customerTransactionHandler.selectedList}" var="item">
+                        <p:dataTable id="accountTable" paginator="true" lazy="true" rows="15"   value="#{customerTransactionHandler.selectedList}" var="item">
                             
                             <p:column rendered="false">
                                 <f:facet name="header">
@@ -73,6 +73,23 @@
                                 <h:outputText value="#{item.balance}"/>
                             </p:column>
                         </p:dataTable>
+                        
+                        <p:panel header="Export All Data">  
+                            <h:commandButton  value="XLS">  
+                               <p:dataExporter type="xls" target="accountTable" fileName="accountTableXLS" />  
+                            </h:commandButton>  
+                            <h:commandButton value="PDF">  
+                               <p:dataExporter type="pdf" target="accountTable" fileName="accountTablePDF" />  
+                            </h:commandButton>  
+                            <h:commandButton value="XML">  
+                               <p:dataExporter type="xml" target="accountTable" fileName="accountTableXML" />  
+                            </h:commandButton>  
+                            <h:commandButton value="CSV">  
+                               <p:dataExporter type="csv" target="accountTable" fileName="accountTableCSV" />  
+                            </h:commandButton>  
+                            
+                        </p:panel>  
+                        
                     </h:form>
                 </f:view>
             </ui:define>

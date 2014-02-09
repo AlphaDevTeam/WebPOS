@@ -49,8 +49,12 @@
                     <h:commandButton value="Stock Adjestments" action="UI/StockAdjestments/CreateStockAdjestments.xhtml"/>
                     <h:commandButton value="Create Bank" action="UI/Bank/CreateBank.xhtml"/>
                     <h:commandButton value="Create Bank Branch" action="UI/Bank/CreateBankBranch.xhtml"/>
-                    <h:commandButton value="Create Bank Branch" action="UI/Bank/ListBankBranch.xhtml"/>
-                    <h:commandButton value="Create Bank Branch" action="UI/Meter/CreateMeterReading.xhtml"/>
+                    <h:commandButton value="List Bank Branch" action="UI/Bank/ListBankBranch.xhtml"/>
+                    <h:commandButton value="Meter Reading" action="UI/Meter/CreateMeterReading.xhtml"/>
+                    <h:commandButton value="Cash Payment Voucher" action="UI/Payment/CreateCashPaymentVoucher.xhtml"/>
+                    <h:commandButton value="Manage Pump" action="#{pumpHandler.createPumpCreateLink()}"/>
+                    <h:commandButton value="Manage Pump Correct" action="UI/Pump/CreatePump.xhtml"/>
+                    <h:commandButton value="List Pump" action="#{pumpHandler.createPumpListLink()}"/>
                     
                     <hr/>
                     <br/>

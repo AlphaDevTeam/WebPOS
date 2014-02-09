@@ -45,38 +45,20 @@ public class Supplier implements Serializable
     private Extras extra;
     
     private float creditLimit;
-    private int inactive;
+    private boolean inactive;
     
     @OneToOne
     private Logger Logger;
     
     @OneToOne(mappedBy = "supplier")
     private CustomerBalance customerBalance;
+    
+    private String vatNumber;
 
     public Supplier() {
     }
 
-    public Supplier(CustomerCategory custcategory, String firstName, String lastName, String custCode, String custNIC, String Street, String City, String AddressState, String ZipCode, String Mobile, String Phone, String Fax, String EmailAddress, String URL, Extras extra, float creditLimit, int inactive) {
-        this.custcategory = custcategory;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.custCode = custCode;
-        this.custNIC = custNIC;
-        this.Street = Street;
-        this.City = City;
-        this.AddressState = AddressState;
-        this.ZipCode = ZipCode;
-        this.Mobile = Mobile;
-        this.Phone = Phone;
-        this.Fax = Fax;
-        this.EmailAddress = EmailAddress;
-        this.URL = URL;
-        this.extra = extra;
-        this.creditLimit = creditLimit;
-        this.inactive = inactive;
-    }
-
-    public Supplier(CustomerCategory custcategory, String firstName, String lastName, String custCode, String custNIC, String Street, String City, String AddressState, String ZipCode, String Mobile, String Phone, String Fax, String EmailAddress, String URL, Extras extra, float creditLimit, int inactive, com.AlphaDevs.Web.Entities.Logger Logger) {
+    public Supplier(CustomerCategory custcategory, String firstName, String lastName, String custCode, String custNIC, String Street, String City, String AddressState, String ZipCode, String Mobile, String Phone, String Fax, String EmailAddress, String URL, Extras extra, float creditLimit, boolean inactive, Logger Logger, CustomerBalance customerBalance, String vatNumber) {
         this.custcategory = custcategory;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,6 +77,32 @@ public class Supplier implements Serializable
         this.creditLimit = creditLimit;
         this.inactive = inactive;
         this.Logger = Logger;
+        this.customerBalance = customerBalance;
+        this.vatNumber = vatNumber;
+    }
+    
+    public boolean isInactive() {
+        return inactive;
+    }
+
+    public void setInactive(boolean inactive) {
+        this.inactive = inactive;
+    }
+
+    public CustomerBalance getCustomerBalance() {
+        return customerBalance;
+    }
+
+    public void setCustomerBalance(CustomerBalance customerBalance) {
+        this.customerBalance = customerBalance;
+    }
+
+    public String getVatNumber() {
+        return vatNumber;
+    }
+
+    public void setVatNumber(String vatNumber) {
+        this.vatNumber = vatNumber;
     }
 
     public com.AlphaDevs.Web.Entities.Logger getLogger() {
@@ -225,14 +233,6 @@ public class Supplier implements Serializable
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public int getInactive() {
-        return inactive;
-    }
-
-    public void setInactive(int inactive) {
-        this.inactive = inactive;
     }
 
     public String getLastName() {

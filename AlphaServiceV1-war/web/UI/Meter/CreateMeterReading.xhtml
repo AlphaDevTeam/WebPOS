@@ -25,12 +25,12 @@
                             <p:selectOneMenu id="location" value="#{meterReadingHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}"  required="true" >
                                 <f:selectItem itemLabel="Select One"  />  
                                 <f:selectItems value="#{locationHandler.list}"/>
-                                <p:ajax update="lastReading" /> 
+                                <p:ajax update="lastReading,relatedPump" /> 
                             </p:selectOneMenu>
-                            <h:outputLabel value="Item" for="relatedItem" />
-                            <p:selectOneMenu id="relatedItem" value="#{meterReadingHandler.current.relatedItem}" label="Item" converter="#{itemConvertor}" required="true" >
+                            <h:outputLabel value="Pump " for="relatedPump" />
+                            <p:selectOneMenu id="relatedPump" value="#{meterReadingHandler.current.relatedPump}" label="Pump" converter="#{pumpConvertor}" required="true" >
                                 <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{itemsHandler.listOfLiquids}"/>
+                                <f:selectItems value="#{meterReadingHandler.pumpListAccordingToLocation}"/>
                                 <p:ajax update="lastReading" /> 
                             </p:selectOneMenu>
                             <h:outputLabel value="Reading:" for="reading" />

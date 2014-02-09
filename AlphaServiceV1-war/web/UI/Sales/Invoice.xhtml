@@ -52,10 +52,10 @@
                             
                             <p:autoComplete id="acItem" value="#{invoiceHandler.currentDetails.item}"   
                                             completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
-                                <p:ajax event="itemSelect" listener="#{invoiceHandler.handleSelect}" update="itemCost" />  
+                                <p:ajax event="itemSelect" listener="#{invoiceHandler.handleSelect}" update="itemCost,QtyDisplay" />  
                             </p:autoComplete>  
                             
-                            <h:outputLabel value="Qty" for="itemQty" />
+                            <h:outputLabel id="QtyDisplay"  value="#{empty invoiceHandler.currentDetails.item.unitOfMeasurement ? 'Qty' : 'Qty ('.concat(invoiceHandler.currentDetails.item.unitOfMeasurement).concat(')') }"  for="itemQty" />
                             <p:inputText id="itemQty" title="Qty" value="#{invoiceHandler.currentDetails.itemQty}" required="true"/>
 
                             <h:outputLabel value="Cost" for="itemCost" />

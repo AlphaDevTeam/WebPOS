@@ -29,7 +29,7 @@ public class MeterReading implements Serializable {
     private Long id;
     private String Note;
     @OneToOne
-    private Items relatedItem;
+    private Pump relatedPump;
     private double reading;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date relatedDate;
@@ -42,31 +42,9 @@ public class MeterReading implements Serializable {
     public MeterReading() {
     }
 
-    public MeterReading(String Note, Items relatedItem, double reading) {
+    public MeterReading(String Note, Pump relatedPump, double reading, Date relatedDate, String referenceNumber, Logger logger, Location relatedLocation) {
         this.Note = Note;
-        this.relatedItem = relatedItem;
-        this.reading = reading;
-    }
-
-    public MeterReading(String Note, Items relatedItem, double reading, Logger logger) {
-        this.Note = Note;
-        this.relatedItem = relatedItem;
-        this.reading = reading;
-        this.logger = logger;
-    }
-
-    public MeterReading(String Note, Items relatedItem, double reading, Date relatedDate, String referenceNumber, Logger logger) {
-        this.Note = Note;
-        this.relatedItem = relatedItem;
-        this.reading = reading;
-        this.relatedDate = relatedDate;
-        this.referenceNumber = referenceNumber;
-        this.logger = logger;
-    }
-
-    public MeterReading(String Note, Items relatedItem, double reading, Date relatedDate, String referenceNumber, Logger logger, Location relatedLocation) {
-        this.Note = Note;
-        this.relatedItem = relatedItem;
+        this.relatedPump = relatedPump;
         this.reading = reading;
         this.relatedDate = relatedDate;
         this.referenceNumber = referenceNumber;
@@ -115,14 +93,14 @@ public class MeterReading implements Serializable {
         this.Note = Note;
     }
 
-    public Items getRelatedItem() {
-        return relatedItem;
+    public Pump getRelatedPump() {
+        return relatedPump;
     }
 
-    public void setRelatedItem(Items relatedItem) {
-        this.relatedItem = relatedItem;
+    public void setRelatedPump(Pump relatedPump) {
+        this.relatedPump = relatedPump;
     }
-
+    
     public double getReading() {
         return reading;
     }

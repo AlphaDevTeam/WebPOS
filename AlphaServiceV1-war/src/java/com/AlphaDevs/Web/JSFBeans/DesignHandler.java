@@ -73,6 +73,7 @@ public class DesignHandler
     
     public String persistDesign()
     {
+        
         Logger Log = EntityHelper.createLogger("Create Design", current.getDesignCode(), TransactionTypes.DESIGN);
         loggerController.create(Log);
         current.setLogger(Log);

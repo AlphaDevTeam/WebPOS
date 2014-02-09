@@ -3,71 +3,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form> 
-            <h:commandButton value="Print" action="#{cashbookHandler.printReport}"/>
-            <h:commandButton value="Print Down" action="#{cashbookHandler.printReportDownload}"/>
-            <p:commandButton value="Prime Print " ajax="false"  action="#{cashbookHandler.printReportDownload}"/>
-                    <h:outputLabel value="Item" for="acItem" />
-                    <p:autoComplete id="acItem" value="#{gRNHandler.currentDetails.grnItem}" 
-                                    completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" converter="#{itemConvertor}"/>  
-                    
-                    <f:view>
-                        <h:form>
-                            <h1><h:outputText value="List"/></h1>
-                            <p:dataTable value="#{cashbookHandler.list}" var="item">
-                                
-                                
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Id"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.id}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Description"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.description}"/>
-                                </p:column>
-                                 <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="CR"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.CR}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="DR"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.DR}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Balance"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.balance}"/>
-                                </p:column>
-                               
-                                
-                                
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Location"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.location}"/>
-                                </p:column>
-                                
-                            </p:dataTable>
-                        </h:form>
-                    </f:view>
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+            <ui:define name="content">
+                <h:form> 
+                    <h:commandButton value="Print" action="#{cashbookHandler.printReport}"/>
+                    <h:commandButton value="Print Down" action="#{cashbookHandler.printReportDownload}"/>
+                    <p:commandButton value="Prime Print " ajax="false"  action="#{cashbookHandler.printReportDownload}"/>
+                            <h:outputLabel value="Item" for="acItem" />
+                            <p:autoComplete id="acItem" value="#{gRNHandler.currentDetails.grnItem}" 
+                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" converter="#{itemConvertor}"/>  
+                            <f:view>
+                                <h:form>
+                                    <h1><h:outputText value="List"/></h1>
+                                    <p:dataTable value="#{cashbookHandler.list}" var="item">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Id"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.id}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Description"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.description}"/>
+                                        </p:column>
+                                         <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="CR"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.CR}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="DR"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.DR}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Balance"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.balance}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Location"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.location}"/>
+                                        </p:column>
 
-                    
-       </h:form>
+                                    </p:dataTable>
+                                </h:form>
+                            </f:view>
+                   </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 
