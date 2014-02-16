@@ -268,7 +268,7 @@ public class GRN implements Serializable
 
     @Override
     public String toString() {
-        return getGrnNo();
+        return "(" + getGrnNo() + "/" + getInvNo() + ")" ;
     }
     
 }

@@ -15,7 +15,10 @@ import java.util.List;
 public enum Document {
     
     INVOICE("Invoice"),
-    GOOD_RECEIPT_NOTE("Grn");
+    GOOD_RECEIPT_NOTE("Grn"),
+    METER_READING("Meter"),
+    CASH_PAYMENT_CUST("CashPaymentCust"),
+    CASH_RECEIPT_CUST("CashRecieptCust");
     
     private String fieldName;
     private Document(String feild){

@@ -172,14 +172,7 @@ public class Invoice  implements Serializable
     @Override
     public String toString() 
     {
-        if(getRefNo().equalsIgnoreCase("") || getRefNo() == null)
-        {
-            return getBillNo();
-        }
-        else
-        {
-            return getBillNo() + "(" + getRefNo() + ")";            
-        }
+        return "(" + getBillNo() + "/" + getRefNo() + ")";            
         
     }
 

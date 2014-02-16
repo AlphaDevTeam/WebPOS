@@ -1,9 +1,10 @@
 
+
 package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.CashBook;
 import com.AlphaDevs.Web.Entities.CashBookBalance;
-import com.AlphaDevs.Web.Entities.CashPaymentVoucher;
+import com.AlphaDevs.Web.Entities.CashReceivedVoucher;
 import com.AlphaDevs.Web.Entities.CustomerBalance;
 import com.AlphaDevs.Web.Entities.CustomerTransaction;
 import com.AlphaDevs.Web.Entities.Logger;
@@ -15,7 +16,7 @@ import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.Helpers.SessionDataHelper;
 import com.AlphaDevs.Web.SessionBean.CashBookBalanceController;
-import com.AlphaDevs.Web.SessionBean.CashPaymentVoucherController;
+import com.AlphaDevs.Web.SessionBean.CashReceivedVoucherController;
 import com.AlphaDevs.Web.SessionBean.CashbookController;
 import com.AlphaDevs.Web.SessionBean.CustomerBalanceController;
 import com.AlphaDevs.Web.SessionBean.CustomerTransactionController;
@@ -26,7 +27,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
+import javax.faces.bean.SessionScoped;
 
 /**
  *
@@ -39,8 +40,12 @@ import javax.faces.bean.RequestScoped;
  */
 
 @ManagedBean
-@RequestScoped
-public class CashPaymentVoucherHandler {
+@SessionScoped
+public class CashReceiptsVoucherHandler {
+   
+    @EJB
+    private CashReceivedVoucherController cashReceivedVoucherController;
+    
     @EJB
     private SystemNumbersController systemNumbersController;
     @EJB
@@ -53,20 +58,24 @@ public class CashPaymentVoucherHandler {
     private CustomerBalanceController customerBalanceController;
     @EJB
     private LoggerController loggerController;
-    @EJB
-    private CashPaymentVoucherController cashPaymentVoucherController;
-
-    private CashPaymentVoucher current;
     
+    
+    private CashReceivedVoucher current;
     private SystemNumbers currentSystemNumber;
     private Document currentDocument;
     
-    public CashPaymentVoucherHandler() {
-        
-        setCurrentDocument(Document.CASH_PAYMENT_CUST);
-        if(current == null){
-            current = new CashPaymentVoucher();
-        }
+
+    public CashReceiptsVoucherHandler() {
+        setCurrentDocument(Document.CASH_RECEIPT_CUST);
+        current = new CashReceivedVoucher();
+    }
+
+    public CashReceivedVoucherController getCashReceivedVoucherController() {
+        return cashReceivedVoucherController;
+    }
+
+    public void setCashReceivedVoucherController(CashReceivedVoucherController cashReceivedVoucherController) {
+        this.cashReceivedVoucherController = cashReceivedVoucherController;
     }
 
     public SystemNumbersController getSystemNumbersController() {
@@ -117,6 +126,14 @@ public class CashPaymentVoucherHandler {
         this.loggerController = loggerController;
     }
 
+    public CashReceivedVoucher getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(CashReceivedVoucher current) {
+        this.current = current;
+    }
+
     public SystemNumbers getCurrentSystemNumber() {
         return currentSystemNumber;
     }
@@ -133,51 +150,28 @@ public class CashPaymentVoucherHandler {
         this.currentDocument = currentDocument;
     }
     
-    
-
-    public CashPaymentVoucherController getCashPaymentVoucherController() {
-        return cashPaymentVoucherController;
-    }
-
-    public void setCashPaymentVoucherController(CashPaymentVoucherController cashPaymentVoucherController) {
-        this.cashPaymentVoucherController = cashPaymentVoucherController;
-    }
-
-    public CashPaymentVoucher getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(CashPaymentVoucher current) {
-        this.current = current;
-    }
-    
-    public List<CashPaymentVoucher> getList(){
-        return getCashPaymentVoucherController().findAll();
-    }
-     
-    public String getPaymentNumber(){
+    public String getReceiptNumber(){
         setCurrentSystemNumber(null);
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
         UserX loggedUser = (UserX) sessionMap.get("User");
-        if(loggedUser != null && getCurrent().getPaymentLocation() != null){
-            List<SystemNumbers> systemNumbers = getSystemNumbersController().findSpecific(loggedUser.getAssociatedCompany(), getCurrent().getPaymentLocation(), getCurrentDocument());
+        if(loggedUser != null && getCurrent().getReceiptLocation() != null){
+            List<SystemNumbers> systemNumbers = getSystemNumbersController().findSpecific(loggedUser.getAssociatedCompany(), getCurrent().getReceiptLocation(), getCurrentDocument());
             if(systemNumbers != null && !systemNumbers.isEmpty()){
                 setCurrentSystemNumber(systemNumbers.get(0));
-                getCurrent().setPaymentNumber(getCurrentSystemNumber().getDocumentSystemNo());
+                getCurrent().setReceiptNumber(getCurrentSystemNumber().getDocumentSystemNo());
             }
-            
         }
         return  getCurrentSystemNumber() != null ? getCurrentSystemNumber().getDocumentSystemNo() : "";
     }
     
-    public void setPaymentNumber(String billNumber){
-        getCurrent().setPaymentNumber(billNumber);
+    public void setReceiptNumber(String receiptNumber){
+        getCurrent().setReceiptNumber(receiptNumber);
     }    
     
-    public String createPayment(){
+    public String createReceipt(){
         
         //Creating Logger
-        Logger log = EntityHelper.createLogger("Cash Payament Voucher - " + getCurrent().getPaymentDescription() , getCurrent().getPaymentNumber(), TransactionTypes.CASHPAY);
+        Logger log = EntityHelper.createLogger("Cash Receipt Voucher - " + getCurrent().getReceiptDescription() , getCurrent().getReceiptNumber(), TransactionTypes.CASHREC);
         loggerController.create(log);
         getCurrent().setRelatedLogger(log);
         
@@ -185,23 +179,23 @@ public class CashPaymentVoucherHandler {
         
         //Customer Transaction
         CustomerTransaction custTran = new CustomerTransaction();
-        custTran.setDescription("Cash Payament Voucher - " + current.getPaymentNumber() + "-" + getCurrent().getPaymentRefNumber() + " - "+ getCurrent().getPaymentDescription());
-        custTran.setSupplier(current.getRelatedSupplier());
-        custTran.setDR(getCurrent().getPaymentAmount());
-        custTran.setCR(0);
+        custTran.setDescription("Cash Receipt Voucher - " + getCurrent().getReceiptNumber() + "-" + getCurrent().getReceiptRefNumber()+ " - "+ getCurrent().getReceiptDescription());
+        custTran.setSupplier(getCurrent().getRelatedSupplier());
+        custTran.setDR(0);
+        custTran.setCR(getCurrent().getReceiptAmount());
         
         //Getting Cust Balance
         CustomerBalance Balance = customerBalanceController.getCustomerBalanceObject(getCurrent().getRelatedSupplier());
         if(Balance != null)
         {
-            Balance.setBalance(Balance.getBalance() + getCurrent().getPaymentAmount() );
+            Balance.setBalance(Balance.getBalance() - getCurrent().getReceiptAmount() );
             customerBalanceController.edit(Balance);
             custTran.setBalance(Balance.getBalance());
             
         }
         else
         {
-            custTran.setBalance(getCurrent().getPaymentAmount());
+            custTran.setBalance(getCurrent().getReceiptAmount());
         }
         
         custTran.setLogger(log);
@@ -209,23 +203,23 @@ public class CashPaymentVoucherHandler {
         
         //Cashbook
         CashBook cashBook = new CashBook();
-        cashBook.setDescription("Cash Payament Voucher - " + current.getPaymentNumber() + "-" + getCurrent().getPaymentRefNumber() + " - "+ getCurrent().getPaymentDescription());
-        cashBook.setCR(getCurrent().getPaymentAmount());
-        cashBook.setDR(0);
-        cashBook.setLocation(getCurrent().getPaymentLocation());
+        cashBook.setDescription("Cash Receipt Voucher - " + getCurrent().getReceiptNumber()+ "-" + getCurrent().getReceiptRefNumber() + " - "+ getCurrent().getReceiptDescription());
+        cashBook.setCR(0);
+        cashBook.setDR(getCurrent().getReceiptAmount());
+        cashBook.setLocation(getCurrent().getReceiptLocation());
         cashBook.setLogger(log);
 
-        CashBookBalance cashBalance = cashBookBalanceController.getCashBookBalanceObject(getCurrent().getPaymentLocation(), BillStatus.TAX);
+        CashBookBalance cashBalance = cashBookBalanceController.getCashBookBalanceObject(getCurrent().getReceiptLocation(), BillStatus.TAX);
         
         if(cashBalance != null)
         {
-            cashBalance.setCashBalance(cashBalance.getCashBalance() - getCurrent().getPaymentAmount());
+            cashBalance.setCashBalance(cashBalance.getCashBalance() + getCurrent().getReceiptAmount());
             cashBookBalanceController.edit(cashBalance);
             cashBook.setBalance(cashBalance.getCashBalance());            
         }
         else
         {
-            cashBook.setBalance(getCurrent().getPaymentAmount());
+            cashBook.setBalance(getCurrent().getReceiptAmount());
         }
 
         cashbookController.create(cashBook);
@@ -234,8 +228,9 @@ public class CashPaymentVoucherHandler {
         getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
         getSystemNumbersController().edit(getCurrentSystemNumber());
         
-        getCashPaymentVoucherController().create(current);
+        getCashReceivedVoucherController().create(current);
         
         return "Home";
     }
+
 }

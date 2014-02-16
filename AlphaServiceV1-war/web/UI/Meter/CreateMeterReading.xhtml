@@ -12,11 +12,13 @@
 
             <ui:define name="content">
                 <f:view>
-                    <h:form>
+                    <p:focus for="meterReadingForm:RefNum"/>
+                    <h:form id="meterReadingForm">
+                        <p:growl id="messages" showDetail="true"/>  
                         <h1><h:outputText value="Meter Reading"/></h1>
                         <h:panelGrid id="readingPanel" columns="2">
                             <h:outputLabel value="Ref Number" for="RefNum" />
-                            <h:inputText id="RefNum" value="#{meterReadingHandler.current.referenceNumber}" title="Ref Number" required="true" />
+                            <h:inputText id="RefNum" value="#{meterReadingHandler.referenceNumber}" title="Ref Number" required="true" />
                             <h:outputLabel value="Date" for="Date" />  
                             <p:calendar id="Date" value="#{meterReadingHandler.current.relatedDate}" pattern="MM/dd/yyyy" title="Date" required="true">
                                  <f:convertDateTime pattern="MM/dd/yyyy" />  
@@ -25,7 +27,7 @@
                             <p:selectOneMenu id="location" value="#{meterReadingHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}"  required="true" >
                                 <f:selectItem itemLabel="Select One"  />  
                                 <f:selectItems value="#{locationHandler.list}"/>
-                                <p:ajax update="lastReading,relatedPump" /> 
+                                <p:ajax update="lastReading,relatedPump,RefNum" /> 
                             </p:selectOneMenu>
                             <h:outputLabel value="Pump " for="relatedPump" />
                             <p:selectOneMenu id="relatedPump" value="#{meterReadingHandler.current.relatedPump}" label="Pump" converter="#{pumpConvertor}" required="true" >
@@ -50,7 +52,8 @@
                                    
                             </h:inputText>
                             
-                            <h:commandButton value="Save" action="#{meterReadingHandler.saveMeterReading()}" />
+                            <p:commandButton value="Save and Stay" action="#{meterReadingHandler.saveMeterReadingAndStay()}" update="meterReadingForm,messages" />
+                            <p:commandButton value="Save" action="#{meterReadingHandler.saveMeterReadingAndMoveToHome()}" />
                             
                         </h:panelGrid>
                     </h:form>

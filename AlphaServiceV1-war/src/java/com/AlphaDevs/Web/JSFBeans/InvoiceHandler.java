@@ -14,11 +14,14 @@ import com.AlphaDevs.Web.Entities.PaymentDetails;
 import com.AlphaDevs.Web.Entities.Properties;
 import com.AlphaDevs.Web.Entities.PropertyManager;
 import com.AlphaDevs.Web.Entities.Stock;
+import com.AlphaDevs.Web.Entities.SystemNumbers;
+import com.AlphaDevs.Web.Entities.UserX;
 import com.AlphaDevs.Web.Enums.BillStatus;
 import com.AlphaDevs.Web.Enums.Document;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.Helpers.MessageHelper;
+import com.AlphaDevs.Web.Helpers.SessionDataHelper;
 import com.AlphaDevs.Web.SessionBean.CashBookBalanceController;
 import com.AlphaDevs.Web.SessionBean.CashbookController;
 import com.AlphaDevs.Web.SessionBean.CustomerBalanceController;
@@ -30,8 +33,10 @@ import com.AlphaDevs.Web.SessionBean.PaymentDetailsController;
 import com.AlphaDevs.Web.SessionBean.PropertiesController;
 import com.AlphaDevs.Web.SessionBean.PropertyManagerController;
 import com.AlphaDevs.Web.SessionBean.StockController;
+import com.AlphaDevs.Web.SessionBean.SystemNumbersController;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -53,6 +58,8 @@ import org.primefaces.event.SelectEvent;
 @SessionScoped
 public class InvoiceHandler 
 { 
+    @EJB
+    private SystemNumbersController systemNumbersController;
     @EJB
     private PaymentDetailsController paymentDetailsController;
     @EJB
@@ -76,6 +83,7 @@ public class InvoiceHandler
     @EJB
     private InvoiceController invoiceController;
     
+    private SystemNumbers currentSystemNumber;
     
     private Invoice current;
     private InvoiceDetails currentDetails;
@@ -83,8 +91,12 @@ public class InvoiceHandler
     private InvoiceDetails selectedInvoiceDetails;
     private PaymentDetails paymentDetails;
     
+    private Document currentDocument;
+    
     public InvoiceHandler() 
     {
+        setCurrentDocument(Document.INVOICE);
+        
         if(current == null)
         {
             current = new Invoice();
@@ -99,6 +111,30 @@ public class InvoiceHandler
         paymentDetails = new PaymentDetails();
     }
 
+    public Document getCurrentDocument() {
+        return currentDocument;
+    }
+
+    public final void setCurrentDocument(Document currentDocument) {
+        this.currentDocument = currentDocument;
+    }
+    
+    public SystemNumbersController getSystemNumbersController() {
+        return systemNumbersController;
+    }
+
+    public void setSystemNumbersController(SystemNumbersController systemNumbersController) {
+        this.systemNumbersController = systemNumbersController;
+    }
+
+    public SystemNumbers getCurrentSystemNumber() {
+        return currentSystemNumber;
+    }
+
+    public void setCurrentSystemNumber(SystemNumbers currentSystemNumber) {
+        this.currentSystemNumber = currentSystemNumber;
+    }
+    
     public PaymentDetailsController getPaymentDetailsController() {
         return paymentDetailsController;
     }
@@ -236,6 +272,26 @@ public class InvoiceHandler
     {   
         currentDetails.setPrice(currentDetails.getItem().getUnitPrice());
     }  
+    
+    public String getBillNumber(){
+        setCurrentSystemNumber(null);
+        Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
+        UserX loggedUser = (UserX) sessionMap.get("User");
+        if(loggedUser != null && getCurrent().getLocation() != null){
+            List<SystemNumbers> systemNumbers = getSystemNumbersController().findSpecific(loggedUser.getAssociatedCompany(), getCurrent().getLocation(), getCurrentDocument());
+            if(systemNumbers != null && !systemNumbers.isEmpty()){
+                setCurrentSystemNumber(systemNumbers.get(0));
+                getCurrent().setBillNo(getCurrentSystemNumber().getDocumentSystemNo());
+            }
+            
+        }
+        return  getCurrentSystemNumber() != null ? getCurrentSystemNumber().getDocumentSystemNo() : "";
+        
+    }
+    
+    public void setBillNumber(String billNumbere){
+        getCurrent().setBillNo(billNumbere);
+    }
     
     public List<Properties> getPropList(){
         
@@ -419,6 +475,7 @@ public class InvoiceHandler
         }
         else
         {
+            Balance = new CustomerBalance(getCurrent().getCustomer(), 0);
             //custTran.setBalance(paymentDetails.getCashAmount());
         }
         
@@ -473,11 +530,15 @@ public class InvoiceHandler
             
         }
         
+        
+        
         //Increment the the Document No 
-//        currentSystemNumber.setSystemNumber(currentSystemNumber.getSystemNumber() + 1);
-//        systemNumbersController.edit(currentSystemNumber);
-//       
-//        printReportDownload();
+        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+        getSystemNumbersController().edit(getCurrentSystemNumber());
+       
+        
+        //printReportDownload();
+        
         current = new Invoice();
         currentDetails = new InvoiceDetails();
         virtualList = new ArrayList<InvoiceDetails>();

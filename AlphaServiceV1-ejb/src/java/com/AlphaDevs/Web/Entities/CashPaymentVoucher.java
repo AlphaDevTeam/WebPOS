@@ -145,7 +145,7 @@ public class CashPaymentVoucher implements Serializable {
 
     @Override
     public String toString() {
-        return "com.AlphaDevs.Web.Entities.CashPaymentVoucher[ id=" + id + " ]";
+        return getPaymentNumber();
     }
 
 }

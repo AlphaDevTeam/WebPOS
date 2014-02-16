@@ -21,7 +21,7 @@
                         <h:panelGrid columns="6" id="invPanel">
                             
                             <h:outputLabel value="Bill Number" for="billNo" />
-                            <h:inputText id="billNo" value="#{invoiceHandler.current.billNo}" title="Bill Number" readonly="#{systemsHandler.current.isINVNumberAutoGenarated}" required="true" />
+                            <h:inputText id="billNo" value="#{invoiceHandler.billNumber}" title="Bill Number" readonly="#{systemsHandler.current.isINVNumberAutoGenarated}" required="true" />
                             
                             <h:outputLabel value="Total Amount:" for="totalAmount" />
                             <h:inputText id="totalAmount" value="#{invoiceHandler.current.totalAmount}" title="TotalAmount" readonly="true" />
