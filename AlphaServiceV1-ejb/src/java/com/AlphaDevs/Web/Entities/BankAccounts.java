@@ -24,16 +24,37 @@ public class BankAccounts implements Serializable {
     private Long id;
     private String accountCode;
     private String accountName;
+    private String accountNumber;
     @OneToOne
     private BankBranch relatedBranch;
-
+    
+    private Location relatedLocation;
+    
     public BankAccounts() {
     }
 
-    public BankAccounts(String accountCode, String accountName, BankBranch relatedBranch) {
+    public BankAccounts(String accountCode, String accountName, String accountNumber, BankBranch relatedBranch, Location relatedLocation) {
         this.accountCode = accountCode;
         this.accountName = accountName;
+        this.accountNumber = accountNumber;
         this.relatedBranch = relatedBranch;
+        this.relatedLocation = relatedLocation;
+    }
+    
+    public Location getRelatedLocation() {
+        return relatedLocation;
+    }
+
+    public void setRelatedLocation(Location relatedLocation) {
+        this.relatedLocation = relatedLocation;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public BankAccounts(String accountCode, String accountName) {

@@ -120,6 +120,7 @@ public class BankBranchHandler {
         
         for(BankBranch bankBranch : getVirtualList())
         {
+            
             getBankBranchController().create(bankBranch);
         }
                 

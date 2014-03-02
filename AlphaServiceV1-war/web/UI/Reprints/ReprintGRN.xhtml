@@ -80,7 +80,7 @@
                                     <f:facet name="header">
                                         <h:outputText value="#{propertyManagerHandler.all.get(a).fieldName}"/>
                                     </f:facet>
-                                    <h:outputText value="#{(a) >=  (item.extraz.size() ) ?  '-'  : item.extraz.get(a).propertyValue}"/>
+                                    <h:outputText value="#{(a) ->  (item.extraz.size() ) ?  '-'  : item.extraz.get(a).propertyValue}"/>
                                 </p:column>
                             </c:forEach> 
                             <p:column>
@@ -89,12 +89,12 @@
                                 </f:facet>
                                 <h:outputText value="#{item.logger}"/>
                             </p:column>
-                             <!--<p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Test Colom"/>
                                 </f:facet>
                                 <h:outputText value="#{item.extraz.get(0).propertyValue}"/>
-                            </p:column> -->
+                            </p:column>
 
                         </p:dataTable>
 

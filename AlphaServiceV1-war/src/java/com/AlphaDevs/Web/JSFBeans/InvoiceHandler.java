@@ -90,13 +90,13 @@ public class InvoiceHandler
     private List<InvoiceDetails> virtualList;
     private InvoiceDetails selectedInvoiceDetails;
     private PaymentDetails paymentDetails;
-    
+    private boolean isBypassStock;
     private Document currentDocument;
     
     public InvoiceHandler() 
     {
         setCurrentDocument(Document.INVOICE);
-        
+        setIsBypassStock(false);
         if(current == null)
         {
             current = new Invoice();
@@ -111,6 +111,14 @@ public class InvoiceHandler
         paymentDetails = new PaymentDetails();
     }
 
+    public boolean isIsBypassStock() {
+        return isBypassStock;
+    }
+
+    public void setIsBypassStock(boolean isBypassStock) {
+        this.isBypassStock = isBypassStock;
+    }
+    
     public Document getCurrentDocument() {
         return currentDocument;
     }
@@ -440,20 +448,22 @@ public class InvoiceHandler
         for(InvoiceDetails invDetails : getVirtualList())
         {
            invDetails.setInvoice(current);
+           if(!isIsBypassStock()){
+               Stock  stock = stockController.findSpecific(invDetails.getItem());
+               stock.setStockQty((float) (stock.getStockQty() - invDetails.getItemQty()));
+               getStockController().edit(stock);
+
+               ItemBincard itemBin = new ItemBincard();
+               itemBin.setDescription("Invoice - " + current.getBillNo());
+               itemBin.setItem(invDetails.getItem());
+               itemBin.setRelatedDate(current.getTrnDate());
+               itemBin.setTrnNumber(current.getRefNo());
+               itemBin.setQty(invDetails.getItemQty()* -1);
+               itemBin.setLog(log);
+               itemBin.setBalance(stock.getStockQty());
+               getItemBincardController().create(itemBin);
+           }
            
-           Stock  stock = stockController.findSpecific(invDetails.getItem());
-           stock.setStockQty((float) (stock.getStockQty() - invDetails.getItemQty()));
-           getStockController().edit(stock);
-           
-           ItemBincard itemBin = new ItemBincard();
-           itemBin.setDescription("Invoice - " + current.getBillNo());
-           itemBin.setItem(invDetails.getItem());
-           itemBin.setRelatedDate(current.getTrnDate());
-           itemBin.setTrnNumber(current.getRefNo());
-           itemBin.setQty(invDetails.getItemQty()* -1);
-           itemBin.setLog(log);
-           itemBin.setBalance(stock.getStockQty());
-           getItemBincardController().create(itemBin);
            
         }
         

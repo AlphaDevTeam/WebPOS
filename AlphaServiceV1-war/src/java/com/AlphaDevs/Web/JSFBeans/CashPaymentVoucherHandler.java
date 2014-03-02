@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 
 /**
@@ -39,7 +40,7 @@ import javax.faces.bean.RequestScoped;
  */
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class CashPaymentVoucherHandler {
     @EJB
     private SystemNumbersController systemNumbersController;
@@ -163,6 +164,7 @@ public class CashPaymentVoucherHandler {
             List<SystemNumbers> systemNumbers = getSystemNumbersController().findSpecific(loggedUser.getAssociatedCompany(), getCurrent().getPaymentLocation(), getCurrentDocument());
             if(systemNumbers != null && !systemNumbers.isEmpty()){
                 setCurrentSystemNumber(systemNumbers.get(0));
+                System.out.println("Set Payment Number");
                 getCurrent().setPaymentNumber(getCurrentSystemNumber().getDocumentSystemNo());
             }
             

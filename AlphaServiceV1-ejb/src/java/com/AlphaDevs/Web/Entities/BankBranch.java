@@ -96,7 +96,7 @@ public class BankBranch implements Serializable {
 
     @Override
     public String toString() {
-        return "com.AlphaDevs.Web.Entities.BankBranches[ id=" + id + " ]";
+        return getBrnachCode() + " - " + getBranchName();
     }
     
 }

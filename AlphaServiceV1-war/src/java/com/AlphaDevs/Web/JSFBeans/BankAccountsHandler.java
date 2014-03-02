@@ -51,4 +51,9 @@ public class BankAccountsHandler {
     public List<BankAccounts> getList(){
         return getBankAccountsController().findAll();
     }
+    
+    public String persistBankAccount(){
+        getBankAccountsController().create(getCurrent());
+        return "Home";
+    }
 }

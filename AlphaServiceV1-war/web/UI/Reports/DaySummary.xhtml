@@ -14,7 +14,18 @@
             <ui:define name="content">
                 <f:view>
                     <h:form>
-                        <p:dataTable value="#{daySummaryHandler.data}" var="item">
+                        
+                        <h:outputLabel value="GrnDate:" for="Date" />  
+                        <p:calendar id="Date" value="#{daySummaryHandler.relatedDate}" pattern="MM/dd/yyyy" title="GRN Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                        </p:calendar>
+                        <h:outputLabel value="Location :" for="paymentLocation" />
+                        <p:selectOneMenu id="paymentLocation" value="#{daySummaryHandler.relatedLocation}" label="Location" converter="#{locationConvertor}"  >
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>
+                        <p:commandButton value="save" update="dataTable"/>  
+                        <p:dataTable id="dataTable" value="#{daySummaryHandler.data}" var="item">
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Description"/>

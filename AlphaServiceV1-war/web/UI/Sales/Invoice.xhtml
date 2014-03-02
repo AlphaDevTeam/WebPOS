@@ -67,6 +67,10 @@
                             </c:forEach> 
 
                             <p:commandButton value="Add" action="#{invoiceHandler.addItem()}" update="virtualList,invPanel,:mainForm:messages"  /> 
+                            
+                            <p:selectBooleanCheckbox value="#{invoiceHandler.isBypassStock}" label="Bypass Stock" />
+                            
+                            
                         </h:panelGrid>
 
                         <p:dataTable  id="virtualList" editable="true" value="#{invoiceHandler.virtualList}" var="item" selection="#{invoiceHandler.selectedInvoiceDetails}" selectionMode="single" rowKey="#{item.item}">
