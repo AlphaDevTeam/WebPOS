@@ -28,27 +28,30 @@ public class GRNPaymentDetails implements Serializable
     private double ChequeAmount;
     @OneToOne
     private Logger logger;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cheques relatedCheque;
+    
     public GRNPaymentDetails() {
     }
 
-    public GRNPaymentDetails(GRN relatedGrn, double TotalAmount, double CashAmount, double CreditCardAmount, double ChequeAmount) {
-        this.relatedGrn = relatedGrn;
-        this.TotalAmount = TotalAmount;
-        this.CashAmount = CashAmount;
-        this.CreditCardAmount = CreditCardAmount;
-        this.ChequeAmount = ChequeAmount;
-    }
-
-    public GRNPaymentDetails(GRN relatedGrn, double TotalAmount, double CashAmount, double CreditCardAmount, double ChequeAmount, Logger logger) {
+    public GRNPaymentDetails(GRN relatedGrn, double TotalAmount, double CashAmount, double CreditCardAmount, double ChequeAmount, Logger logger, Cheques relatedCheque) {
         this.relatedGrn = relatedGrn;
         this.TotalAmount = TotalAmount;
         this.CashAmount = CashAmount;
         this.CreditCardAmount = CreditCardAmount;
         this.ChequeAmount = ChequeAmount;
         this.logger = logger;
+        this.relatedCheque = relatedCheque;
     }
 
+    public Cheques getRelatedCheque() {
+        return relatedCheque;
+    }
+
+    public void setRelatedCheque(Cheques relatedCheque) {
+        this.relatedCheque = relatedCheque;
+    }
+    
     public Logger getLogger() {
         return logger;
     }

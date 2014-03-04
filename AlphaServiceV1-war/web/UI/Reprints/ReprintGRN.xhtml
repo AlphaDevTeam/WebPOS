@@ -80,7 +80,7 @@
                                     <f:facet name="header">
                                         <h:outputText value="#{propertyManagerHandler.all.get(a).fieldName}"/>
                                     </f:facet>
-                                    <h:outputText value="#{(a) ->  (item.extraz.size() ) ?  '-'  : item.extraz.get(a).propertyValue}"/>
+                                    <h:outputText value="#{(a) >  (item.extraz.size() ) ?  '-'  : item.extraz.get(a).propertyValue}"/>
                                 </p:column>
                             </c:forEach> 
                             <p:column>

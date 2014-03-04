@@ -3,6 +3,7 @@ package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.*;
 import com.AlphaDevs.Web.Enums.BillStatus;
+import com.AlphaDevs.Web.Enums.ChequeStatus;
 import com.AlphaDevs.Web.Enums.Document;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
@@ -44,6 +45,8 @@ import org.primefaces.event.SelectEvent;
 @SessionScoped
 public class GRNHandler 
 {
+    @EJB
+    private ChequesController chequesController;
     @EJB
     private SystemNumbersController systemNumbersController;
     @EJB
@@ -109,9 +112,12 @@ public class GRNHandler
         {
             paymentDetails = new GRNPaymentDetails();
         }
+        paymentDetails.setRelatedCheque(new Cheques());
         VirtualList = new ArrayList<GRNDetails>();
         
         cashAmount = 0;
+        
+        
                 
     }
     
@@ -130,6 +136,142 @@ public class GRNHandler
         
         return  currentSystemNumber != null ? currentSystemNumber.getDocumentSystemNo() : "";
         
+    }
+
+    public ChequesController getChequesController() {
+        return chequesController;
+    }
+
+    public void setChequesController(ChequesController chequesController) {
+        this.chequesController = chequesController;
+    }
+
+    public SystemNumbersController getSystemNumbersController() {
+        return systemNumbersController;
+    }
+
+    public void setSystemNumbersController(SystemNumbersController systemNumbersController) {
+        this.systemNumbersController = systemNumbersController;
+    }
+
+    public PropertiesController getPropertiesController() {
+        return propertiesController;
+    }
+
+    public void setPropertiesController(PropertiesController propertiesController) {
+        this.propertiesController = propertiesController;
+    }
+
+    public PropertyManagerController getPropertyManagerController() {
+        return propertyManagerController;
+    }
+
+    public void setPropertyManagerController(PropertyManagerController propertyManagerController) {
+        this.propertyManagerController = propertyManagerController;
+    }
+
+    public GRNPaymentDetailsController getgRNPaymentDetailsController() {
+        return gRNPaymentDetailsController;
+    }
+
+    public void setgRNPaymentDetailsController(GRNPaymentDetailsController gRNPaymentDetailsController) {
+        this.gRNPaymentDetailsController = gRNPaymentDetailsController;
+    }
+
+    public CashBookBalanceController getCashBookBalanceController() {
+        return cashBookBalanceController;
+    }
+
+    public void setCashBookBalanceController(CashBookBalanceController cashBookBalanceController) {
+        this.cashBookBalanceController = cashBookBalanceController;
+    }
+
+    public CustomerBalanceController getCustomerBalanceController() {
+        return customerBalanceController;
+    }
+
+    public void setCustomerBalanceController(CustomerBalanceController customerBalanceController) {
+        this.customerBalanceController = customerBalanceController;
+    }
+
+    public LoggerController getLoggerController() {
+        return loggerController;
+    }
+
+    public void setLoggerController(LoggerController loggerController) {
+        this.loggerController = loggerController;
+    }
+
+    public CashbookController getCashbookController() {
+        return cashbookController;
+    }
+
+    public void setCashbookController(CashbookController cashbookController) {
+        this.cashbookController = cashbookController;
+    }
+
+    public ItemBincardController getItemBincardController() {
+        return itemBincardController;
+    }
+
+    public void setItemBincardController(ItemBincardController itemBincardController) {
+        this.itemBincardController = itemBincardController;
+    }
+
+    public CustomerTransactionController getCustomerTransactionController() {
+        return customerTransactionController;
+    }
+
+    public void setCustomerTransactionController(CustomerTransactionController customerTransactionController) {
+        this.customerTransactionController = customerTransactionController;
+    }
+
+    public StockController getStockController() {
+        return stockController;
+    }
+
+    public void setStockController(StockController stockController) {
+        this.stockController = stockController;
+    }
+
+    public GrnDetailsController getGrnDetailsController() {
+        return grnDetailsController;
+    }
+
+    public void setGrnDetailsController(GrnDetailsController grnDetailsController) {
+        this.grnDetailsController = grnDetailsController;
+    }
+
+    public SystemsController getSystemsController() {
+        return systemsController;
+    }
+
+    public void setSystemsController(SystemsController systemsController) {
+        this.systemsController = systemsController;
+    }
+
+    public GRNController getgRNController() {
+        return gRNController;
+    }
+
+    public void setgRNController(GRNController gRNController) {
+        this.gRNController = gRNController;
+    }
+
+    public Document getCurrentDocument() {
+        return currentDocument;
+    }
+
+    public void setCurrentDocument(Document currentDocument) {
+        this.currentDocument = currentDocument;
+    }
+
+    public SystemNumbers getCurrentSystemNumber() {
+        return currentSystemNumber;
+    }
+
+    public void setCurrentSystemNumber(SystemNumbers currentSystemNumber) {
+        this.currentSystemNumber = currentSystemNumber;
     }
     
     public void setGrnNumber(String grnNumber){
@@ -189,7 +331,7 @@ public class GRNHandler
         Logger log = EntityHelper.createLogger("Good Received Note" , current.getGrnNo(), TransactionTypes.GRN);
         loggerController.create(log);
         
-        
+        getCurrent().setgRNPaymentDetails(paymentDetails);
         current.setBillStatus(BillStatus.TAX);
         
         current.setgRNDetailss(VirtualList);
@@ -248,10 +390,18 @@ public class GRNHandler
         custTran.setLogger(log);
         customerTransactionController.create(custTran);
         
-        paymentDetails.setTotalAmount(current.getTotalAmount());
-        paymentDetails.setLogger(log);
-        paymentDetails.setRelatedGrn(current);
-        gRNPaymentDetailsController.create(paymentDetails);
+        
+        
+        getCurrent().getgRNPaymentDetails().setTotalAmount(current.getTotalAmount());
+        getCurrent().getgRNPaymentDetails().setLogger(log);
+        getCurrent().getgRNPaymentDetails().setRelatedGrn(current);
+        gRNPaymentDetailsController.create(getCurrent().getgRNPaymentDetails());
+        
+        if(getCurrent().getgRNPaymentDetails().getRelatedCheque().getChequeAmount() > 0){
+            getCurrent().getgRNPaymentDetails().getRelatedCheque().setStatus(ChequeStatus.PENDING);
+            getCurrent().getgRNPaymentDetails().getRelatedCheque().setRelatedLocation(getCurrent().getLocation());
+            getChequesController().create(getCurrent().getgRNPaymentDetails().getRelatedCheque());
+        }
         if ( paymentDetails.getCashAmount() > 0 )
         {
             CustomerTransaction custTranPaid = new CustomerTransaction();

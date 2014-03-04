@@ -116,7 +116,7 @@ public class BankAccounts implements Serializable {
 
     @Override
     public String toString() {
-        return "com.AlphaDevs.Web.Entities.BankAccounts[ id=" + id + " ]";
+        return getAccountNumber() + "-" + getAccountName();
     }
     
 }

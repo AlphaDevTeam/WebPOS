@@ -22,13 +22,7 @@
                             <h:inputText id="creditPeriod" value="#{gRNHandler.current.creditPeriod}" title="CreditPeriod" />
                             <h:outputLabel value="TotalAmount:" for="totalAmount" />
                             <h:inputText id="totalAmount" value="#{gRNHandler.current.totalAmount}" title="TotalAmount" readonly="true" />
-                            <h:outputLabel value="BillStatus:" for="billStatus" />
-                            <!--
-                            <h:selectOneMenu id="billStatus" value="#{gRNHandler.current.billStatus}" title="billStatus"  >
-                                <f:selectItems value="#{gRNHandler.current.billStatus.values()}"/>
-                            </h:selectOneMenu>
-                            -->
-
+                            
                              <h:outputLabel value="GrnDate:" for="Date" />  
                              <p:calendar id="Date" value="#{gRNHandler.current.grnDate}" pattern="MM/dd/yyyy" title="GRN Date">
                                  <f:convertDateTime pattern="MM/dd/yyyy" />  
@@ -68,13 +62,10 @@
                                 <h:outputText value="#{gRNHandler.propListTest.get(a).propertyName}"/>
                                 <p:inputText value="#{gRNHandler.propListTest.get(a).propertyValue}" />
                             </c:forEach> 
-
+                            
                             <p:commandButton value="Add" action="#{gRNHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
-
-
-
-                        </h:panelGrid>
-
+                    </h:panelGrid>
+                        <h:commandButton value="Save" action="#{gRNHandler.addTEst()}" />
                         <p:dataTable  id="virtualList" editable="true" value="#{gRNHandler.virtualList}" var="item" selection="#{gRNHandler.selectedGrnData}" selectionMode="single" rowKey="#{item.grnItem}">
                             <p:ajax event="rowEdit" listener="#{gRNHandler.onEdit}" update=":mainForm:messages,:mainForm:totalAmount" />  
                             <p:ajax event="rowEditCancel" listener="#{gRNHandler.onCancel}" update=":mainForm:messages,:mainForm:totalAmount" />  
@@ -148,17 +139,45 @@
                                 </p:confirmDialog>   
 
                         <hr/>
-                        <h:outputText value="Cash" />
-                        <p:inputText id="cashValue" value="#{gRNHandler.paymentDetails.cashAmount}" required="true"/>
-
-                        <h:outputText value="CreditCard" />
-                        <p:inputText id="ccValue" value="#{gRNHandler.paymentDetails.creditCardAmount}" required="true"/>
-
-                        <h:outputText value="Cheque" />
-                        <p:inputText id="chequeValue" value="#{gRNHandler.paymentDetails.chequeAmount}" required="true"/>
                         
-                        <h:commandButton value="Save" action="#{gRNHandler.addTEst()}"/>
-
+                        <p:accordionPanel activeIndex="-1">  
+                            <p:tab title="Payments" >  
+                                <h:form>
+                                    <p:accordionPanel activeIndex="0">  
+                                        <p:tab title="Cash">  
+                                            <h:outputLabel value="Amount:" for="cashAmount" />
+                                            <h:inputText id="cashAmount" value="#{gRNHandler.paymentDetails.cashAmount}" title="Cash Amount" />
+                                        </p:tab>  
+                         
+                                        <p:tab title="Credit Card" >  
+                                            <h:outputLabel value="Amount:" for="creditCardAmount" />
+                                            <h:inputText id="creditCardAmount" value="#{gRNHandler.paymentDetails.creditCardAmount}" title="Credit Card Amount" />
+                                        </p:tab>
+                                        <p:tab title="Cheques" >  
+                                                <p:panelGrid columns="4">
+                                                <h:outputLabel value="ChequeNumber:" for="chequeNumber" />
+                                                <h:inputText id="chequeNumber" value="#{gRNHandler.paymentDetails.relatedCheque.chequeNumber}"  title="ChequeNumber" />
+                                                <h:outputLabel value="ChequeNote:" for="chequeNote" />
+                                                <h:inputText id="chequeNote" value="#{gRNHandler.paymentDetails.relatedCheque.chequeNote}" title="ChequeNote" />
+                                                <h:outputLabel value="ChequeDate:" for="chequeDate" />
+                                                <p:calendar id="chequeDate" value="#{gRNHandler.paymentDetails.relatedCheque.chequeDate}" pattern="MM/dd/yyyy" title="Cheque Date">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />  
+                                                </p:calendar>
+                                                <h:outputLabel value="RelatedBankAccount:" for="relatedBankAccount" />
+                                                <p:selectOneMenu id="relatedBankAccount" value="#{gRNHandler.paymentDetails.relatedCheque.relatedBankAccount}" label="RelatedBankAccount" converter="#{bankAccountConvertor}" >
+                                                    <f:selectItem itemLabel="Select One" />  
+                                                    <f:selectItems value="#{bankAccountsHandler.list}"/>
+                                                </p:selectOneMenu>
+                                                <h:outputLabel value="ChequeAmount:" for="chequeAmount" />
+                                                <h:inputText id="chequeAmount" value="#{gRNHandler.paymentDetails.relatedCheque.chequeAmount}" title="ChequeAmount" />
+                                             </p:panelGrid>
+                                        </p:tab>
+                                    </p:accordionPanel>     
+                                 </h:form>
+                            </p:tab>  
+                            
+                        </p:accordionPanel>
+                        
                     </h:form>
                 </f:view>
             </ui:define>
