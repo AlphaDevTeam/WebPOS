@@ -26,11 +26,6 @@ public class BankAccountConvertor implements Converter {
     @EJB
     private BankAccountsController bankAccountsController;
 
-    
-    
-    public BankAccountConvertor() {
-    }
-
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if(value.isEmpty()){

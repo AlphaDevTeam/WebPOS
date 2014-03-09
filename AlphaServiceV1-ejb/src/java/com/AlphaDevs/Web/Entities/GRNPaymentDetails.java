@@ -29,10 +29,10 @@ public class GRNPaymentDetails implements Serializable
     @OneToOne
     private Logger logger;
     
-    @OneToOne(mappedBy = "gRNPaymentDetails")
+    @OneToOne
     private Cheques relatedCheque;
     
-    @OneToOne(mappedBy = "relatedGRNPaymentDetails")
+    @OneToOne
     private CreditCardReceipts relatedCreditCardReceipts;
     
     public GRNPaymentDetails() {

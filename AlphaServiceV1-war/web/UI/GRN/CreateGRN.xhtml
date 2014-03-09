@@ -150,8 +150,23 @@
                                         </p:tab>  
                          
                                         <p:tab title="Credit Card" >  
-                                            <h:outputLabel value="Amount:" for="creditCardAmount" />
-                                            <h:inputText id="creditCardAmount" value="#{gRNHandler.paymentDetails.creditCardAmount}" title="Credit Card Amount" />
+                                            <h:form>
+                                                <h:panelGrid columns="4">
+                                                    <h:outputLabel value="Card Number : " for="cardNumber" />
+                                                    <h:inputText id="cardNumber" value="#{gRNHandler.receivedCreditCardReceipts.cardNumber}" title="Card Number" />
+                                                    <h:outputLabel value="Note : " for="note" />
+                                                    <h:inputText id="note" value="#{gRNHandler.receivedCreditCardReceipts.note}" title="Note" />
+                                                    <h:outputLabel value="Amount : " for="amount" />
+                                                    <h:inputText id="amount" value="#{gRNHandler.receivedCreditCardReceipts.amount}" title="Amount" />
+                                                    <h:outputLabel value="Terminal : " for="relatedTerminal" />
+                                                    <p:selectOneMenu id="relatedTerminal" value="#{gRNHandler.receivedCreditCardReceipts.relatedTerminal}" converter="#{creditCardTerminalConvertor}" label="Terminal" >
+                                                        <f:selectItem itemLabel="Select One" />  
+                                                        <f:selectItems value="#{creditCardTerminalHandler.list}"/>
+                                                    </p:selectOneMenu>
+                                                    
+                                                </h:panelGrid>
+                                            </h:form>
+
                                         </p:tab>
                                         <p:tab title="Cheques" >  
                                             <p:panelGrid columns="4">

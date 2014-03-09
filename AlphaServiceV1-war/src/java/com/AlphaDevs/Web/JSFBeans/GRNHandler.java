@@ -356,6 +356,9 @@ public class GRNHandler
         getCurrent().setgRNDetailss(VirtualList);
         getCurrent().setLogger(log);
         
+        getCurrent().setgRNPaymentDetails(getPaymentDetails());
+        getgRNController().create(getCurrent());
+        
         for (Properties properties : getCurrent().getExtraz()) {
             System.out.println("Trying Saving ... " + properties.getPropertyName() + " : " + properties.getPropertyValue());
             properties.setRelatedGRNs(getCurrent());
@@ -434,6 +437,7 @@ public class GRNHandler
                     relatedCreditCardReceipt.setReceiptStatus(CreditCardReceiptStatus.RECEIVED);
                     relatedCreditCardReceipt.setRelatedLocation(getCurrent().getLocation());
                     relatedCreditCardReceipt.setRelatedGRNPaymentDetails(getPaymentDetails());
+                    relatedCreditCardReceipt.setRelatedLogger(log);
                     getPaymentDetails().setCreditCardAmount(relatedCreditCardReceipt.getAmount());
                     getPaymentDetails().setRelatedCreditCardReceipts(relatedCreditCardReceipt);
                     getCreditCardReceiptsController().create(relatedCreditCardReceipt);
@@ -480,8 +484,7 @@ public class GRNHandler
         }
         
         //getgRNPaymentDetailsController().create(getPaymentDetails());
-        getCurrent().setgRNPaymentDetails(getPaymentDetails());
-        getgRNController().create(getCurrent());
+       
         
         //Increment the the Document No 
         if(getCurrentSystemNumber() != null){
@@ -489,7 +492,7 @@ public class GRNHandler
             getSystemNumbersController().edit(getCurrentSystemNumber());
         }
         
-       
+        getgRNController().edit(getCurrent());
         printReportDownload();
         setCurrent(new GRN());
         currentDetails = new GRNDetails();
