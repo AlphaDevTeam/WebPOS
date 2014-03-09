@@ -4,6 +4,7 @@ package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.Design;
 import com.AlphaDevs.Web.Entities.Items;
+import com.AlphaDevs.Web.Entities.Location;
 import com.AlphaDevs.Web.Entities.Logger;
 import com.AlphaDevs.Web.Entities.Stock;
 import com.AlphaDevs.Web.Entities.Units;
@@ -71,11 +72,15 @@ public class ItemsHandler
         return itemsController.findAll();
     }
     
-     public List<Items> getListOfLiquids()
+     public List<Items> getListOfLiquids(Location location)
     {
-        Units searchUnit = unitsController.findUnitsByCode("L");
-        System.out.println("Found :" + searchUnit);
-        return itemsController.findItemByUnit(searchUnit);
+        if(location != null){
+            Units searchUnit = unitsController.findUnitsByCode("L");
+            return itemsController.findItemByUnit(searchUnit,location);
+        }else{
+            return new ArrayList<Items>();
+        }
+        
     }
     
     

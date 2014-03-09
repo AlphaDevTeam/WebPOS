@@ -31,12 +31,22 @@ public class BankConvertor implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return bankController.find(Long.valueOf(value));
+        if(value.isEmpty()){
+            return null;
+        }else{
+            return bankController.find(Long.valueOf(value));
+        }
+        
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Bank)value).getId().toString();
+        if(value == null || "null".equals(value.toString())){
+            return "";
+        }else{
+            return ((Bank)value).getId().toString();
+        }
+        
     }
 
 }

@@ -3,8 +3,10 @@ package com.AlphaDevs.Web.SessionBean;
 
 import com.AlphaDevs.Web.Entities.Design;
 import com.AlphaDevs.Web.Entities.Items;
+import com.AlphaDevs.Web.Entities.Location;
 import com.AlphaDevs.Web.Entities.Product;
 import com.AlphaDevs.Web.Entities.Units;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -62,15 +64,20 @@ public class ItemsController extends AbstractFacade<Items>
         
     }
     
-    public List<Items> findItemByUnit(Units units) 
+    public List<Items> findItemByUnit(Units units , Location itemLocation) 
     {
+        System.out.println("Location Rece: " + itemLocation.getId() + " - findItemByUnit");
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Items> q = cb.createQuery(Items.class);
         Root<Items> c = q.from(Items.class);
         q.select(c);
-        q.where(cb.equal(c.get("unitOfMeasurement"), units));
+        q.where(cb.equal(c.get("unitOfMeasurement"), units),cb.equal(c.get("ItemLocation"), itemLocation));
+        if(getEntityManager().createQuery(q).getResultList() == null){
+            return new ArrayList<Items>();
+        }else{
+            return getEntityManager().createQuery(q).getResultList();
+        }
         
-        return getEntityManager().createQuery(q).getResultList();
         
     }
     

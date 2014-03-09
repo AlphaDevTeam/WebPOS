@@ -61,7 +61,7 @@ public class GRN implements Serializable
     @OneToOne
     private Logger logger;
     
-    @OneToOne(mappedBy = "relatedGrn",cascade= CascadeType.ALL)
+    @OneToOne(mappedBy = "relatedGrn",cascade = CascadeType.ALL)
     private GRNPaymentDetails gRNPaymentDetails;
     
     

@@ -33,6 +33,11 @@ public class UnitsConvertor implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Units) value).getId().toString();
+        if(value == null || "null".equals(value.toString())){
+            return "";
+        }else{
+            return ((Units) value).getId().toString();
+        }
+        
     }
 }

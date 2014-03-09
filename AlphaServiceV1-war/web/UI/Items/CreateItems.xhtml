@@ -6,64 +6,73 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>WeB PoS - #{systemsHandler.current.header}</title>
     </h:head>
     <h:body>
-        
+
         <ui:composition template="./../../MainTemplateUI.xhtml">
             <ui:define name="content">
                 <f:view>
                     <h:form>
-                        <h1><h:outputText value="Create Item"/></h1>
+                        <h1><h:outputText value="Manage Items"/></h1>
                         <h:panelGrid columns="2" id="panel">
-                            <h:outputLabel value="ItemBarcode:" for="itemBarcode" />
-                            <h:inputText id="itemBarcode" value="#{itemsHandler.current.itemBarcode}" title="ItemBarcode" />
-                            <h:outputLabel value="ItemCode:" for="itemCode" />
-                            <h:inputText id="itemCode" value="#{itemsHandler.current.itemCode}" title="ItemCode" />
-                            <h:outputLabel value="ItemCost:" for="itemCost" />
-                            <h:inputText id="itemCost" value="#{itemsHandler.current.itemCost}" title="ItemCost" />
-                            <h:outputLabel value="ItemDescription:" for="itemDescription" />
-                            <h:inputText id="itemDescription" value="#{itemsHandler.current.itemDescription}" title="ItemDescription" />
+                            <h:outputLabel value="Item Barcode : " for="itemBarcode" />
+                            <h:inputText id="itemBarcode" value="#{itemsHandler.current.itemBarcode}" title="Item Barcode" />
+                            <h:outputLabel value="Item Code : " for="itemCode" />
+                            <h:inputText id="itemCode" value="#{itemsHandler.current.itemCode}" title="Item Code" />
+                            <h:outputLabel value="Cost : " for="itemCost" />
+                            <h:inputText id="itemCost" value="#{itemsHandler.current.itemCost}" title="Cost" required="true" />
+                            <h:outputLabel value="Description : " for="itemDescription"  />
+                            <h:inputText id="itemDescription" value="#{itemsHandler.current.itemDescription}" title="Description" required="true" />
 
-                            <h:outputLabel value="unitOfMeasurement" for="unitOfMeasurement" />
-                            <h:selectOneMenu id="unitOfMeasurement" value="#{itemsHandler.current.unitOfMeasurement}" title="Unit Of Measurement" converter="#{unitsConvertor}" >
+                            <h:outputLabel value="UOM : " for="unitOfMeasurement" />
+                            <h:selectOneMenu id="unitOfMeasurement" value="#{itemsHandler.current.unitOfMeasurement}" title="Unit Of Measurement" required="true" converter="#{unitsConvertor}" >
                                 <f:selectItems value="#{unitsHandler.list}"/>
                             </h:selectOneMenu>
 
-                            <h:outputLabel value="ItemLocation:" for="itemLocation" />
-                            <h:selectOneMenu id="itemLocation" value="#{itemsHandler.current.itemLocation}" title="Location" converter="#{locationConvertor}" >
-                                <f:selectItems value="#{locationHandler.list}"/>
-                            </h:selectOneMenu>
-                            <h:outputLabel value="ItemName:" for="itemName" />
-                            <h:inputText id="itemName" value="#{itemsHandler.current.itemName}" title="ItemName" />
-                            <h:outputLabel value="ItemProduct:" for="itemProduct" />
-                            <p:selectOneMenu id="itemProduct" value="#{itemsHandler.current.itemProduct}" label="Product" converter="#{productConvertor}" >
-                                <f:selectItem itemLabel="Select One" itemValue="#{itemsHandler.current.itemProduct}" />  
-                                <f:selectItems value="#{productHandler.list}" />
-                                <p:ajax update="itemProduct,tchan,itemDesign,panel" /> 
+                            <h:outputLabel value="Capacity : " for="itemCapacity" />
+                            <h:inputText id="itemCapacity" value="#{itemsHandler.current.capacity}" title="Capacity" />
 
+                            <h:outputLabel value="Location : " for="itemLocation" />
+                            <p:selectOneMenu id="itemLocation" value="#{itemsHandler.current.itemLocation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Item : " for="itemName" />
+                            <h:inputText id="itemName" value="#{itemsHandler.current.itemName}" title="Item" required="true"  />
+
+                            <h:outputLabel value="Product : " for="itemProduct" />
+                            <p:selectOneMenu id="itemProduct" value="#{itemsHandler.current.itemProduct}" label="Product" converter="#{productConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{productHandler.list}" />
+                                <p:ajax update="itemProduct,itemDesign" /> 
                             </p:selectOneMenu>
 
-                            <h:outputLabel id="tchan" value="ItemDesign: #{itemsHandler.current.itemProduct}" for="itemDesign" />
-                            <h:selectOneMenu id="itemDesign" value="#{itemsHandler.current.itemDesign}" title="Design" converter="#{designConvertor}" >
+                            <h:outputLabel id="designText" value="Design : " for="itemDesign" />
+                            <p:selectOneMenu id="itemDesign" value="#{itemsHandler.current.itemDesign}" label="Design" required="true" converter="#{designConvertor}" >
+                                <f:selectItem itemLabel="Select One" />  
                                 <f:selectItems value="#{itemsHandler.listSpec}"/>
-                            </h:selectOneMenu>
+                            </p:selectOneMenu>
 
-                            <h:outputLabel value="ItemSupplier:" for="itemSupplier" />
-                            <h:selectOneMenu id="itemSupplier" value="#{itemsHandler.current.itemSupplier}" title="Product" converter="#{supplierConvertor}" >
+                            <h:outputLabel value="Supplier : " for="itemSupplier" />
+                            <p:selectOneMenu id="itemSupplier" value="#{itemsHandler.current.itemSupplier}" label="Supplier" converter="#{supplierConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
                                 <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
-                            </h:selectOneMenu>
-                            <h:outputLabel value="ReorderLevel:" for="reorderLevel" />
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Reorder Level : " for="reorderLevel" />
                             <h:inputText id="reorderLevel" value="#{itemsHandler.current.reorderLevel}" title="ReorderLevel" />
-                            <h:outputLabel value="UnitPrice:" for="unitPrice" />
-                            <h:inputText id="unitPrice" value="#{itemsHandler.current.unitPrice}" title="UnitPrice" />
+
+                            <h:outputLabel value="Unit Price :" for="unitPrice" />
+                            <h:inputText id="unitPrice" value="#{itemsHandler.current.unitPrice}" title="UnitPrice" required="true" />
+
                             <h:commandButton value="Save" action="#{itemsHandler.persistItem()}"/>
                         </h:panelGrid>
                     </h:form>
                 </f:view>
             </ui:define>
         </ui:composition>
-      
+
     </h:body>
 </html>
 

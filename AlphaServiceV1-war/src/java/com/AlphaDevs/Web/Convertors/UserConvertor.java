@@ -31,12 +31,22 @@ public class UserConvertor implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) 
     {
-        return userController.find(Long.valueOf(value));
+        if(value.isEmpty()){
+            return null;
+        }else{
+            return userController.find(Long.valueOf(value));
+        }
+        
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        return ((UserX) value).getId().toString();
+        if(value == null || "null".equals(value.toString())){
+            return "";
+        }else{
+            return ((UserX) value).getId().toString();
+        }
+        
     }
 }

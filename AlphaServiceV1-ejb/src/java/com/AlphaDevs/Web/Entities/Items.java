@@ -46,11 +46,12 @@ public class Items implements Serializable
     
     @OneToOne
     private Logger Logger;
+    private double capacity;
 
     public Items() {
     }
 
-    public Items(String ItemCode, String ItemName, String ItemBarcode, String ItemDescription, Units unitOfMeasurement, Product ItemProduct, Design ItemDesign, Supplier ItemSupplier, double ItemCost, double UnitPrice, double ReorderLevel, Location ItemLocation, Logger Logger) {
+    public Items(String ItemCode, String ItemName, String ItemBarcode, String ItemDescription, Units unitOfMeasurement, Product ItemProduct, Design ItemDesign, Supplier ItemSupplier, double ItemCost, double UnitPrice, double ReorderLevel, Location ItemLocation, Logger Logger, double capacity) {
         this.ItemCode = ItemCode;
         this.ItemName = ItemName;
         this.ItemBarcode = ItemBarcode;
@@ -64,6 +65,15 @@ public class Items implements Serializable
         this.ReorderLevel = ReorderLevel;
         this.ItemLocation = ItemLocation;
         this.Logger = Logger;
+        this.capacity = capacity;
+    }
+
+    public double getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(double capacity) {
+        this.capacity = capacity;
     }
 
     public Units getUnitOfMeasurement() {

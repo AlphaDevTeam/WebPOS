@@ -44,10 +44,8 @@ public class ItemConvertor implements Converter
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
         if(value == null || "null".equals(value.toString())){
-            System.out.println("Null");
             return "";
         }else{
-            System.out.println("Not Null" + value.toString());
             return ((Items) value).getId().toString();
         }
         

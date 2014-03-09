@@ -26,12 +26,13 @@
                             <h:outputLabel value="RelatedItem:" for="relatedItem" />
                             <p:selectOneMenu id="relatedItem" value="#{pumpHandler.current.relatedItem}"  label="RelatedItem" required="true" converter="#{itemConvertor}" >
                                 <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{itemsHandler.listOfLiquids}"/>
+                                <f:selectItems value="#{itemsHandler.listOfLiquids(pumpHandler.current.relatedLocation)}"/>
                             </p:selectOneMenu>
                             <h:outputLabel value="RelatedLocation:" for="relatedLocation" />
                             <p:selectOneMenu id="relatedLocation" value="#{pumpHandler.current.relatedLocation}" label="RelatedLocation" converter="#{locationConvertor}" >
                                 <f:selectItem itemLabel="Select One" itemValue="#{pumpHandler.current.relatedLocation}" />  
                                 <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="relatedItem" /> 
                             </p:selectOneMenu>
                             <h:outputLabel value="LastReading:" for="lastReading" />
                             <h:inputText id="lastReading" value="#{pumpHandler.current.lastReading}" title="LastReading" required="true" />

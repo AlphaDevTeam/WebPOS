@@ -27,11 +27,21 @@ public class CompanyConvertor implements Converter{
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return companyController.find(Long.valueOf(value));
+        if(value.isEmpty()){
+            return null;
+        }else{
+            return companyController.find(Long.valueOf(value));
+        }
+        
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Company ) value ).getId().toString();
+        if(value == null || "null".equals(value.toString())){
+            return "";
+        }else{
+            return ((Company ) value ).getId().toString();
+        }
+        
     }
 }

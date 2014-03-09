@@ -5,14 +5,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title> Title</title>
+        <title>WeB PoS - #{systemsHandler.current.header}</title>
         <link rel="stylesheet" type="text/css" href="UI/Reso/CoreStyles.css" />
     </h:head>
     <h:body>
           <ui:composition template="./MainTemplateUI.xhtml">
 
             <ui:define name="top">
-                Alpha Development Team - Web POS
+                Alpha Development Team - Web POS - #{systemsHandler.current.header}
             </ui:define>
 
 
@@ -58,6 +58,9 @@
                     <h:commandButton value="List Pump" action="#{pumpHandler.createPumpListLink()}"/>
                     <h:commandButton value="Cash Receipt Voucher" action="UI/Receipts/CreateCashReceiptsVoucher.html"/>
                     <h:commandButton value="Create Bank Accounts" action="UI/Bank/CreateBankAccount.xhtml"/>
+                    <h:commandButton value="Manage Expenses" action="UI/Expenses/ManageExpenses.xhtml"/>
+                    <h:commandButton value="Cash Receipts Voucher Expenses" action="UI/Expenses/CreateCashReceiptsVoucherExpenses.xhtml"/>
+                    <h:commandButton value="Cash Payment Voucher Expenses" action="UI/Expenses/CreateCashPaymentExpenses.xhtml"/>
                     
                     <hr/>
                     <br/>

@@ -31,15 +31,23 @@ public class DesignConvertor implements Converter
     }
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component, String value) 
-    {
-        return designController.find(Long.valueOf(value));
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        if (value.isEmpty()) {
+            return null;
+        } else {
+            return designController.find(Long.valueOf(value));
+        }
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        return ((Design)value).getId().toString();
+        if(value == null || "null".equals(value.toString())){
+            return "";
+        }else{
+            return ((Design)value).getId().toString();
+        }
+        
     }
 
 }

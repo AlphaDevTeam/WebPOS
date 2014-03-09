@@ -32,10 +32,8 @@ public class ProductConvertor implements Converter
     public Object getAsObject(FacesContext context, UIComponent component, String value) 
     {
         if(value.isEmpty()){
-            System.out.println("Emopty");
             return null;
         }else{
-            System.out.println("Not Empty");
             return productController.find(Long.valueOf(value));
         }
     }
@@ -43,7 +41,7 @@ public class ProductConvertor implements Converter
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        if(value == null){
+        if(value == null || "null".equals(value.toString())){
             return "";
         }else{
             return ((Product)value).getId().toString();

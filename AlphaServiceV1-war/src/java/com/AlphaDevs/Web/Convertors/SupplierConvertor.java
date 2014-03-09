@@ -43,7 +43,7 @@ public class SupplierConvertor implements Converter
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) 
     {
-        if(value == null){
+        if(value == null || "null".equals(value.toString())){
             return "";
         }else{
             return ((Supplier) value).getId().toString();

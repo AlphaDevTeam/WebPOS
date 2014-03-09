@@ -58,9 +58,14 @@ public class StockController extends AbstractFacade<Stock>
         Root<Design> root = cq.from(Design.class);
         cq.select(cq.from(Design.class)).where(cb.equal(root.get("product"), prod));
         */
-        return getEntityManager().createQuery(q).getSingleResult();
+        if(getEntityManager().createQuery(q).getSingleResult() != null){
+            return getEntityManager().createQuery(q).getSingleResult();
+        }else{
+            return new Stock();
+        }
+        
         
     }
-
+   
     
 }

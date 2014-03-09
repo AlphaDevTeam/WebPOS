@@ -1,8 +1,9 @@
 
+
 package com.AlphaDevs.Web.Convertors;
 
-import com.AlphaDevs.Web.Entities.Location;
-import com.AlphaDevs.Web.SessionBean.LocationController;
+import com.AlphaDevs.Web.Entities.Expenses;
+import com.AlphaDevs.Web.SessionBean.ExpensesController;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -12,21 +13,22 @@ import javax.faces.convert.Converter;
 
 /**
  *
- * @author Mihindu Gajaba Karunarathne
- * Alpha Development Team (Pvt) Ltd
+ * @author Mihindu Gajaba Karunarathne 
+ * 
+ * Alpha Development Team ( Pvt ) Ltd
+ * www.AlphaDevs.com
+ * Info@AlphaDevs.com
  * 
  */
 
 @ManagedBean
 @RequestScoped
-public class LocationConvertor implements Converter
-{
+public class ExpensesConvertor implements Converter {
     @EJB
-    private LocationController locationController;
-    
+    private ExpensesController expensesController;
 
-    /** Creates a new instance of LocationConvertor */
-    public LocationConvertor() {
+    
+    public ExpensesConvertor() {
     }
 
     @Override
@@ -34,9 +36,8 @@ public class LocationConvertor implements Converter
     {
         if(value.isEmpty()){
             return null;
-        }else
-        {
-            return locationController.find(Long.valueOf(value));
+        }else{
+            return expensesController.find(Long.valueOf(value));
         }
     }
 
@@ -46,9 +47,8 @@ public class LocationConvertor implements Converter
         if(value == null || "null".equals(value.toString())){
             return "";
         }else{
-            return ((Location) value).getId().toString();
+            return ((Expenses) value).getId().toString();
         }
-        
     }
 
 }

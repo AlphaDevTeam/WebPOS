@@ -93,12 +93,8 @@ public class GRNHandler
         
         currentDocument = Document.GOOD_RECEIPT_NOTE;
                 
-        if (current == null)
-        {
+        if (current == null){
             current = new GRN();
-            System.out.println("Property Handler Created");
-            System.out.println("Constructor GRN");
-            
         }
         if(currentDetails == null)
         {
@@ -125,11 +121,11 @@ public class GRNHandler
         currentSystemNumber = null;
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
         UserX loggedUser = (UserX) sessionMap.get("User");
-        if(loggedUser != null && current.getLocation() != null){
-            List<SystemNumbers> systemNumbers = systemNumbersController.findSpecific(loggedUser.getAssociatedCompany(), current.getLocation(), currentDocument);
+        if(loggedUser != null && getCurrent().getLocation() != null){
+            List<SystemNumbers> systemNumbers = systemNumbersController.findSpecific(loggedUser.getAssociatedCompany(), getCurrent().getLocation(), currentDocument);
             if(systemNumbers != null && !systemNumbers.isEmpty()){
                 currentSystemNumber  = systemNumbers.get(0);
-                current.setGrnNo(currentSystemNumber.getDocumentSystemNo());
+                getCurrent().setGrnNo(currentSystemNumber.getDocumentSystemNo());
             }
             
         }
@@ -275,7 +271,7 @@ public class GRNHandler
     }
     
     public void setGrnNumber(String grnNumber){
-        current.setGrnNo(grnNumber);
+        getCurrent().setGrnNo(grnNumber);
     }
 
     public GRNPaymentDetails getPaymentDetails() {
@@ -318,135 +314,141 @@ public class GRNHandler
         currentDetails.setGrnItemCost(currentDetails.getGrnItem().getItemCost());
     }  
     
-    public String addTEst()
-    {
-        //GRN grn = new GRN();
+    public String addTEst(){
         
-        if(getVirtualList().isEmpty())
-        {
+        
+        if (getVirtualList().isEmpty()) {
             MessageHelper.addErrorMessage("Error", "No Items Found!");
             return "";
         }
-        
-        Logger log = EntityHelper.createLogger("Good Received Note" , current.getGrnNo(), TransactionTypes.GRN);
+
+        Logger log = EntityHelper.createLogger("Good Received Note", getCurrent().getGrnNo(), TransactionTypes.GRN);
         loggerController.create(log);
-        
+
         getCurrent().setgRNPaymentDetails(paymentDetails);
-        current.setBillStatus(BillStatus.TAX);
+        getCurrent().setBillStatus(BillStatus.TAX);
+
+        getCurrent().setgRNDetailss(VirtualList);
+        getCurrent().setLogger(log);
         
-        current.setgRNDetailss(VirtualList);
-        current.setLogger(log);
-        gRNController.create(current);
-        
-        for(Properties properties : current.getExtraz()){
+        gRNController.create(getCurrent());
+
+
+        for (Properties properties : getCurrent().getExtraz()) {
             System.out.println("Trying Saving ... " + properties.getPropertyName() + " : " + properties.getPropertyValue());
-            properties.setRelatedGRNs(current);
+            properties.setRelatedGRNs(getCurrent());
             propertiesController.create(properties);
             System.out.println("Done");
         }
-        
-        for(GRNDetails grnDet : getVirtualList())
-        {
-           grnDet.setRelatedGRN(current);
-           //grnDetailsController.create(grnDet); 
-           
-           Stock  stock = stockController.findSpecific(grnDet.getGrnItem());
-           stock.setStockQty(stock.getStockQty() + grnDet.getGrnQty());
-           stockController.edit(stock);
-           
-           ItemBincard itemBin = new ItemBincard();
-           itemBin.setDescription("Good Received Note - " + current.getGrnNo());
-           itemBin.setItem(grnDet.getGrnItem());
-           itemBin.setRelatedDate(current.getGrnDate());
-           itemBin.setTrnNumber(current.getInvNo());
-           itemBin.setQty(grnDet.getGrnQty());
-           itemBin.setLog(log);
-           itemBin.setBalance(stock.getStockQty());
-           itemBincardController.create(itemBin);
-           
+
+        for (GRNDetails grnDet : getVirtualList()) {
+            grnDet.setRelatedGRN(getCurrent());
+            //grnDetailsController.create(grnDet); 
+
+            Stock stock = stockController.findSpecific(grnDet.getGrnItem());
+            stock.setStockQty(stock.getStockQty() + grnDet.getGrnQty());
+            stockController.edit(stock);
+
+            ItemBincard itemBin = new ItemBincard();
+            itemBin.setDescription("Good Received Note - " + getCurrent().getGrnNo());
+            itemBin.setItem(grnDet.getGrnItem());
+            itemBin.setRelatedDate(getCurrent().getGrnDate());
+            itemBin.setTrnNumber(getCurrent().getInvNo());
+            itemBin.setQty(grnDet.getGrnQty());
+            itemBin.setLog(log);
+            itemBin.setBalance(stock.getStockQty());
+            itemBincardController.create(itemBin);
+
         }
-        
+
         //Customer Transaction
         CustomerTransaction custTran = new CustomerTransaction();
-        custTran.setDescription("GRN - " + current.getGrnNo());
-        custTran.setSupplier(current.getSupplier());
-        custTran.setDR(current.getTotalAmount());
+        custTran.setDescription("GRN - " + getCurrent().getGrnNo());
+        custTran.setSupplier(getCurrent().getSupplier());
+        custTran.setDR(getCurrent().getTotalAmount());
         custTran.setCR(0);
-        
+
         //Getting Cust Balance
-        CustomerBalance Balance = customerBalanceController.getCustomerBalanceObject(current.getSupplier());
-        if(Balance != null)
-        {
-            Balance.setBalance(Balance.getBalance() + current.getTotalAmount() );
+        CustomerBalance Balance = customerBalanceController.getCustomerBalanceObject(getCurrent().getSupplier());
+        if (Balance != null) {
+            Balance.setBalance(Balance.getBalance() + getCurrent().getTotalAmount());
             customerBalanceController.edit(Balance);
             custTran.setBalance(Balance.getBalance());
+
+        } else {
+            Balance= new CustomerBalance(getCurrent().getSupplier(), getCurrent().getTotalAmount());
+            getCustomerBalanceController().create(Balance);
             
-        }
-        else
-        {
             custTran.setBalance(paymentDetails.getCashAmount());
         }
-        
+
         custTran.setLogger(log);
         customerTransactionController.create(custTran);
-        
-        
-        
-        getCurrent().getgRNPaymentDetails().setTotalAmount(current.getTotalAmount());
-        getCurrent().getgRNPaymentDetails().setLogger(log);
-        getCurrent().getgRNPaymentDetails().setRelatedGrn(current);
-        gRNPaymentDetailsController.create(getCurrent().getgRNPaymentDetails());
-        
-        if(getCurrent().getgRNPaymentDetails().getRelatedCheque().getChequeAmount() > 0){
-            getCurrent().getgRNPaymentDetails().getRelatedCheque().setStatus(ChequeStatus.PENDING);
-            getCurrent().getgRNPaymentDetails().getRelatedCheque().setRelatedLocation(getCurrent().getLocation());
-            getChequesController().create(getCurrent().getgRNPaymentDetails().getRelatedCheque());
-        }
-        if ( paymentDetails.getCashAmount() > 0 )
-        {
-            CustomerTransaction custTranPaid = new CustomerTransaction();
-            custTranPaid.setDescription("PAID - " + current.getGrnNo());
-            custTranPaid.setSupplier(current.getSupplier());
-            custTranPaid.setDR(0);
-            custTranPaid.setCR(paymentDetails.getCashAmount());
 
-            Balance.setBalance(Balance.getBalance() - paymentDetails.getCashAmount());
-            customerBalanceController.edit(Balance);
-            custTranPaid.setBalance(Balance.getBalance());
-            custTranPaid.setLogger(log);
-            customerTransactionController.create(custTranPaid);
+
+        if (getCurrent() != null && getCurrent().getgRNPaymentDetails() != null) {
             
-            //Cashbook
-            CashBook cashBook = new CashBook();
-            cashBook.setDescription("Purchase - " + current.getGrnNo() );
-            cashBook.setCR(paymentDetails.getCashAmount());
-            cashBook.setDR(0);
-            cashBook.setLocation(current.getLocation());
-            cashBook.setLogger(log);
+            getCurrent().getgRNPaymentDetails().setTotalAmount(getCurrent().getTotalAmount());
+            getCurrent().getgRNPaymentDetails().setLogger(log);
+            getCurrent().getgRNPaymentDetails().setRelatedGrn(getCurrent());
 
-            CashBookBalance cashBalance = cashBookBalanceController.getCashBookBalanceObject(current.getLocation(), current.getBillStatus());
-            if(cashBalance != null)
-            {
-                cashBalance.setCashBalance(cashBalance.getCashBalance() - paymentDetails.getCashAmount() );
-                cashBookBalanceController.edit(cashBalance);
-                cashBook.setBalance(cashBalance.getCashBalance());            
+            if(getCurrent().getgRNPaymentDetails().getRelatedCheque() != null && getCurrent().getgRNPaymentDetails().getRelatedCheque().getChequeAmount() != null ){
+                Cheques relatedCheque = getCurrent().getgRNPaymentDetails().getRelatedCheque();
+                if (relatedCheque.getChequeAmount() > 0) {
+                    relatedCheque.setStatus(ChequeStatus.PENDING);
+                    relatedCheque.setRelatedLocation(getCurrent().getLocation());
+                    getChequesController().create(relatedCheque);
+                }else{
+                    getCurrent().getgRNPaymentDetails().setRelatedCheque(null);
+                }
             }
-            else
-            {
-                cashBook.setBalance(paymentDetails.getCashAmount());
+            gRNPaymentDetailsController.create(getCurrent().getgRNPaymentDetails());
+
+            
+            if (paymentDetails.getCashAmount() > 0) {
+                CustomerTransaction custTranPaid = new CustomerTransaction();
+                custTranPaid.setDescription("PAID - " + getCurrent().getGrnNo());
+                custTranPaid.setSupplier(getCurrent().getSupplier());
+                custTranPaid.setDR(0);
+                custTranPaid.setCR(paymentDetails.getCashAmount());
+
+                Balance.setBalance(Balance.getBalance() - paymentDetails.getCashAmount());
+                customerBalanceController.edit(Balance);
+                custTranPaid.setBalance(Balance.getBalance());
+                custTranPaid.setLogger(log);
+                customerTransactionController.create(custTranPaid);
+
+                //Cashbook
+                CashBook cashBook = new CashBook();
+                cashBook.setDescription("Purchase - " + getCurrent().getGrnNo());
+                cashBook.setCR(paymentDetails.getCashAmount());
+                cashBook.setDR(0);
+                cashBook.setLocation(getCurrent().getLocation());
+                cashBook.setLogger(log);
+
+                CashBookBalance cashBalance = cashBookBalanceController.getCashBookBalanceObject(getCurrent().getLocation(), getCurrent().getBillStatus());
+                if (cashBalance != null) {
+                    cashBalance.setCashBalance(cashBalance.getCashBalance() - paymentDetails.getCashAmount());
+                    cashBookBalanceController.edit(cashBalance);
+                    cashBook.setBalance(cashBalance.getCashBalance());
+                } else {
+                    cashBook.setBalance(paymentDetails.getCashAmount());
+                }
+
+                cashbookController.create(cashBook);
+
+
             }
 
-            cashbookController.create(cashBook);
-            
-            
         }
+
         
         //Increment the the Document No 
         currentSystemNumber.setSystemNumber(currentSystemNumber.getSystemNumber() + 1);
         systemNumbersController.edit(currentSystemNumber);
        
         printReportDownload();
-        current = new GRN();
+        setCurrent(new GRN());
         currentDetails = new GRNDetails();
         VirtualList = new ArrayList<GRNDetails>();
         setCashAmount(0);
@@ -462,12 +464,12 @@ public class GRNHandler
     }
     
     public int getListCount(){
-        return current.getExtraz().size();
+        return getCurrent().getExtraz().size();
     }
     
     public String rePrintGRN(){
-        System.out.println("Reprinting GRN " + current.getId() + ":" + current.getGrnNo() );
-        printReportSpecificGrn(current);
+        System.out.println("Reprinting GRN " + getCurrent().getId() + ":" + getCurrent().getGrnNo() );
+        printReportSpecificGrn(getCurrent());
         return "Home";
     }
     
@@ -505,7 +507,7 @@ public class GRNHandler
         try
         {
             List<GRN> GrnList = new ArrayList<GRN>();
-            GRN nn = (GRN) gRNController.find(current.getId());
+            GRN nn = (GRN) gRNController.find(getCurrent().getId());
             System.out.println("Grn : re d " + nn.getGrnNo() + " With :" + nn.getId());
             GrnList.add(nn);
             JRBeanCollectionDataSource beanCollection = new JRBeanCollectionDataSource(GrnList);
@@ -542,7 +544,7 @@ public class GRNHandler
                 break;
             }
         }
-        current.setTotalAmount(getTotal());
+        getCurrent().setTotalAmount(getTotal());
         
         return "#";
     }
@@ -566,7 +568,7 @@ public class GRNHandler
                     break;
                 }
             }
-            current.setTotalAmount(getTotal());
+            getCurrent().setTotalAmount(getTotal());
         }
         return "#";
     }
@@ -606,7 +608,7 @@ public class GRNHandler
             return;
         }
         
-        currentDetails.setRelatedGRN(current);
+        currentDetails.setRelatedGRN(getCurrent());
         
         for(GRNDetails det : getVirtualList())
         {
@@ -626,7 +628,7 @@ public class GRNHandler
         currentDetails = new GRNDetails();
         
         System.out.println("Total : " + getTotal());
-        current.setTotalAmount(getTotal());
+        getCurrent().setTotalAmount(getTotal());
         currentDetails = new GRNDetails();
     }
    
@@ -657,7 +659,7 @@ public class GRNHandler
             }
         }
         
-        current.setTotalAmount(getTotal());
+        getCurrent().setTotalAmount(getTotal());
     }  
     public void onCancel(RowEditEvent event) 
     {  
@@ -696,18 +698,18 @@ public class GRNHandler
     
     public List<Properties> getPropListTest(){
         
-        if(current.getExtraz() == null && propertyManagerController != null && propertyManagerController.findAll() != null){
+        if(getCurrent().getExtraz() == null && propertyManagerController != null && propertyManagerController.findAll() != null){
             List<Properties> propertyList = new ArrayList<Properties>();
             for(PropertyManager propertyMng : propertyManagerController.findAll()){
                 Properties property = new Properties(propertyMng.getFieldName(), null);
                 propertyList.add(property);
                 System.out.println("Property added : " + property.getPropertyName());
             }
-            current.setExtraz(propertyList);
+            getCurrent().setExtraz(propertyList);
             System.out.println("Properties set");
         }
         
-        return current.getExtraz();
+        return getCurrent().getExtraz();
     }
     
    

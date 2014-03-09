@@ -18,7 +18,9 @@ public enum Document {
     GOOD_RECEIPT_NOTE("Grn"),
     METER_READING("Meter"),
     CASH_PAYMENT_CUST("CashPaymentCust"),
-    CASH_RECEIPT_CUST("CashRecieptCust");
+    CASH_PAYMENT_EXP("CashPaymentExpenses"),
+    CASH_RECEIPT_CUST("CashRecieptCust"),
+    CASH_RECEIPT_EXP("CashRecieptExpenses");
     
     private String fieldName;
     private Document(String feild){

@@ -27,9 +27,10 @@ public class ChartHelper implements Serializable {
     public ChartHelper() {  
     }  
   
-    public MeterGaugeChartModel getChart(double value,double reOrderLevel) {
+    public MeterGaugeChartModel getChart(double value,double reOrderLevel,double capacity ) {
+        
         final Number reOrder = (Number) reOrderLevel;
-        final Number max = (Number) (value + 200);
+        final Number max = (Number)((capacity > 0) ? capacity : value + 100 );
         final Number valueAsNumber = (Number)value;
         List<Number> reOrderLevels = new ArrayList<Number>(){{  
             add(reOrder);

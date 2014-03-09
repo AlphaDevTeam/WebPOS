@@ -28,7 +28,8 @@ public class GRNPaymentDetails implements Serializable
     private double ChequeAmount;
     @OneToOne
     private Logger logger;
-    @OneToOne(cascade = CascadeType.ALL)
+    
+    @ManyToOne
     private Cheques relatedCheque;
     
     public GRNPaymentDetails() {
