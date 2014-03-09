@@ -204,6 +204,7 @@ public class MeterReadingHandler {
         Logger Log = EntityHelper.createLogger("Meter Reading", current.getNote(), TransactionTypes.READINGS);
         loggerController.create(Log);
         current.setLogger(Log);
+        
         Stock stock = stockController.findSpecific(current.getRelatedPump().getRelatedItem());
         stock.setStockQty((float) (stock.getStockQty() - current.getReading()));
         
@@ -224,10 +225,14 @@ public class MeterReadingHandler {
         getPumpController().edit(pump);
         
         //Increment the the Document No 
-        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
-        getSystemNumbersController().edit(getCurrentSystemNumber());
-        meterReadingController.create(current);
+        if(getCurrentSystemNumber() != null){
+            getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+            getSystemNumbersController().edit(getCurrentSystemNumber());
+        }
         
+        
+        getCurrent().setLastReading(getLastReading() - getCurrent().getReading() );
+        getMeterReadingController().create(getCurrent());
     }
     
     public void saveMeterReadingAndStay(){

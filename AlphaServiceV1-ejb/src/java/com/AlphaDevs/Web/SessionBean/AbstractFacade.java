@@ -67,7 +67,7 @@ public abstract class AbstractFacade<T>
     
     public T find(Object id) 
     {
-        System.out.println("Getting id : " + id + " with : " + entityClass.getName());
+        //System.out.println("Getting id : " + id + " with : " + entityClass.getName());
         return getEntityManager().find(entityClass, id);
     }
     

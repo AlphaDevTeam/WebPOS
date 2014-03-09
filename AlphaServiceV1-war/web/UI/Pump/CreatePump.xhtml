@@ -19,22 +19,22 @@
                         <h1><h:outputText value="Manage Pump"/></h1>
                         <p:focus for="pumpCode"/>
                         <h:panelGrid columns="2">
-                            <h:outputLabel value="PumpCode:" for="pumpCode" />
+                            <h:outputLabel value="Pump Code : " for="pumpCode" />
                             <h:inputText id="pumpCode" value="#{pumpHandler.current.pumpCode}" title="PumpCode" required="true"/>
-                            <h:outputLabel value="Description:" for="description" />
+                            <h:outputLabel value="Description : " for="description" />
                             <h:inputText id="description" value="#{pumpHandler.current.description}" title="Description" />
-                            <h:outputLabel value="RelatedItem:" for="relatedItem" />
-                            <p:selectOneMenu id="relatedItem" value="#{pumpHandler.current.relatedItem}"  label="RelatedItem" required="true" converter="#{itemConvertor}" >
-                                <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{itemsHandler.listOfLiquids(pumpHandler.current.relatedLocation)}"/>
-                            </p:selectOneMenu>
-                            <h:outputLabel value="RelatedLocation:" for="relatedLocation" />
-                            <p:selectOneMenu id="relatedLocation" value="#{pumpHandler.current.relatedLocation}" label="RelatedLocation" converter="#{locationConvertor}" >
-                                <f:selectItem itemLabel="Select One" itemValue="#{pumpHandler.current.relatedLocation}" />  
+                            <h:outputLabel value="Location : " for="relatedLocation" />
+                            <p:selectOneMenu id="relatedLocation" value="#{pumpHandler.current.relatedLocation}"  label="Location" converter="#{locationConvertor}" >
+                                <f:selectItem itemLabel="Select One"  />  
                                 <f:selectItems value="#{locationHandler.list}"/>
                                 <p:ajax update="relatedItem" /> 
                             </p:selectOneMenu>
-                            <h:outputLabel value="LastReading:" for="lastReading" />
+                            <h:outputLabel value="Item : " for="relatedItem" />
+                            <p:selectOneMenu id="relatedItem" value="#{pumpHandler.current.relatedItem}"  label="Item" converter="#{itemConvertor}" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{itemsHandler.getListOfLiquids(pumpHandler.current.relatedLocation)}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Last Reading : " for="lastReading" />
                             <h:inputText id="lastReading" value="#{pumpHandler.current.lastReading}" title="LastReading" required="true" />
                             <h:commandButton value="Save" action="#{pumpHandler.savePump()}"/>
                             <p:commandButton value="Save and Stay" update="managePumpForm,message" action="#{pumpHandler.savePumpAndStay()}"/>

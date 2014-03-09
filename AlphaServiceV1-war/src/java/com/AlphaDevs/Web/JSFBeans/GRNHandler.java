@@ -4,6 +4,7 @@ package com.AlphaDevs.Web.JSFBeans;
 import com.AlphaDevs.Web.Entities.*;
 import com.AlphaDevs.Web.Enums.BillStatus;
 import com.AlphaDevs.Web.Enums.ChequeStatus;
+import com.AlphaDevs.Web.Enums.CreditCardReceiptStatus;
 import com.AlphaDevs.Web.Enums.Document;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
@@ -46,6 +47,8 @@ import org.primefaces.event.SelectEvent;
 public class GRNHandler 
 {
     @EJB
+    private CreditCardReceiptsController creditCardReceiptsController;
+    @EJB
     private ChequesController chequesController;
     @EJB
     private SystemNumbersController systemNumbersController;
@@ -86,6 +89,8 @@ public class GRNHandler
     private List<GRNDetails> VirtualList;
     private GRNDetails selectedGrnData;
     private GRNPaymentDetails paymentDetails;
+    private Cheques receivedCheque; 
+    private CreditCardReceipts receivedCreditCardReceipts;
     
     private SystemNumbers currentSystemNumber;
     
@@ -108,34 +113,56 @@ public class GRNHandler
         {
             paymentDetails = new GRNPaymentDetails();
         }
-        paymentDetails.setRelatedCheque(new Cheques());
+        
+        receivedCheque = new Cheques();
+        receivedCreditCardReceipts = new CreditCardReceipts();
+       
         VirtualList = new ArrayList<GRNDetails>();
         
         cashAmount = 0;
-        
-        
-                
+            
     }
     
-    public String getGrnNumber(){
+    public String getGrnNumber() {
         currentSystemNumber = null;
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
         UserX loggedUser = (UserX) sessionMap.get("User");
-        if(loggedUser != null && getCurrent().getLocation() != null){
+        if (loggedUser != null && getCurrent().getLocation() != null) {
             List<SystemNumbers> systemNumbers = systemNumbersController.findSpecific(loggedUser.getAssociatedCompany(), getCurrent().getLocation(), currentDocument);
-            if(systemNumbers != null && !systemNumbers.isEmpty()){
-                currentSystemNumber  = systemNumbers.get(0);
+            if (systemNumbers != null && !systemNumbers.isEmpty()) {
+                currentSystemNumber = systemNumbers.get(0);
                 getCurrent().setGrnNo(currentSystemNumber.getDocumentSystemNo());
             }
-            
         }
-        
-        return  currentSystemNumber != null ? currentSystemNumber.getDocumentSystemNo() : "";
-        
+        return currentSystemNumber != null ? currentSystemNumber.getDocumentSystemNo() : "";
     }
 
+    public CreditCardReceiptsController getCreditCardReceiptsController() {
+        return creditCardReceiptsController;
+    }
+
+    public void setCreditCardReceiptsController(CreditCardReceiptsController creditCardReceiptsController) {
+        this.creditCardReceiptsController = creditCardReceiptsController;
+    }
+
+    public CreditCardReceipts getReceivedCreditCardReceipts() {
+        return receivedCreditCardReceipts;
+    }
+
+    public void setReceivedCreditCardReceipts(CreditCardReceipts receivedCreditCardReceipts) {
+        this.receivedCreditCardReceipts = receivedCreditCardReceipts;
+    }
+    
     public ChequesController getChequesController() {
         return chequesController;
+    }
+
+    public Cheques getReceivedCheque() {
+        return receivedCheque;
+    }
+
+    public void setReceivedCheque(Cheques receivedCheque) {
+        this.receivedCheque = receivedCheque;
     }
 
     public void setChequesController(ChequesController chequesController) {
@@ -325,15 +352,10 @@ public class GRNHandler
         Logger log = EntityHelper.createLogger("Good Received Note", getCurrent().getGrnNo(), TransactionTypes.GRN);
         loggerController.create(log);
 
-        getCurrent().setgRNPaymentDetails(paymentDetails);
         getCurrent().setBillStatus(BillStatus.TAX);
-
         getCurrent().setgRNDetailss(VirtualList);
         getCurrent().setLogger(log);
         
-        gRNController.create(getCurrent());
-
-
         for (Properties properties : getCurrent().getExtraz()) {
             System.out.println("Trying Saving ... " + properties.getPropertyName() + " : " + properties.getPropertyValue());
             properties.setRelatedGRNs(getCurrent());
@@ -386,66 +408,87 @@ public class GRNHandler
         customerTransactionController.create(custTran);
 
 
-        if (getCurrent() != null && getCurrent().getgRNPaymentDetails() != null) {
+        if (getPaymentDetails() != null) {
             
-            getCurrent().getgRNPaymentDetails().setTotalAmount(getCurrent().getTotalAmount());
-            getCurrent().getgRNPaymentDetails().setLogger(log);
-            getCurrent().getgRNPaymentDetails().setRelatedGrn(getCurrent());
+            getPaymentDetails().setTotalAmount(getCurrent().getTotalAmount());
+            getPaymentDetails().setLogger(log);
+            getPaymentDetails().setRelatedGrn(getCurrent());
 
-            if(getCurrent().getgRNPaymentDetails().getRelatedCheque() != null && getCurrent().getgRNPaymentDetails().getRelatedCheque().getChequeAmount() != null ){
-                Cheques relatedCheque = getCurrent().getgRNPaymentDetails().getRelatedCheque();
+            if(getReceivedCheque() != null && getReceivedCheque().getChequeAmount() != null ){
+                Cheques relatedCheque = getReceivedCheque();
                 if (relatedCheque.getChequeAmount() > 0) {
                     relatedCheque.setStatus(ChequeStatus.PENDING);
                     relatedCheque.setRelatedLocation(getCurrent().getLocation());
+                    relatedCheque.setgRNPaymentDetails(getPaymentDetails());
+                    getPaymentDetails().setChequeAmount(getReceivedCheque().getChequeAmount());
+                    getPaymentDetails().setRelatedCheque(relatedCheque);
                     getChequesController().create(relatedCheque);
                 }else{
                     getCurrent().getgRNPaymentDetails().setRelatedCheque(null);
                 }
             }
-            gRNPaymentDetailsController.create(getCurrent().getgRNPaymentDetails());
-
             
-            if (paymentDetails.getCashAmount() > 0) {
+            if(getReceivedCreditCardReceipts() != null){
+                CreditCardReceipts relatedCreditCardReceipt = getReceivedCreditCardReceipts();
+                if (relatedCreditCardReceipt.getAmount()> 0) {
+                    relatedCreditCardReceipt.setReceiptStatus(CreditCardReceiptStatus.RECEIVED);
+                    relatedCreditCardReceipt.setRelatedLocation(getCurrent().getLocation());
+                    relatedCreditCardReceipt.setRelatedGRNPaymentDetails(getPaymentDetails());
+                    getPaymentDetails().setCreditCardAmount(relatedCreditCardReceipt.getAmount());
+                    getPaymentDetails().setRelatedCreditCardReceipts(relatedCreditCardReceipt);
+                    getCreditCardReceiptsController().create(relatedCreditCardReceipt);
+                }else{
+                    getCurrent().getgRNPaymentDetails().setRelatedCreditCardReceipts(null);
+                }
+            }
+            
+            if (getPaymentDetails().getCashAmount() > 0) {
                 CustomerTransaction custTranPaid = new CustomerTransaction();
                 custTranPaid.setDescription("PAID - " + getCurrent().getGrnNo());
                 custTranPaid.setSupplier(getCurrent().getSupplier());
                 custTranPaid.setDR(0);
-                custTranPaid.setCR(paymentDetails.getCashAmount());
+                custTranPaid.setCR(getPaymentDetails().getCashAmount());
 
-                Balance.setBalance(Balance.getBalance() - paymentDetails.getCashAmount());
-                customerBalanceController.edit(Balance);
+                Balance.setBalance(Balance.getBalance() - getPaymentDetails().getCashAmount());
+                getCustomerBalanceController().edit(Balance);
                 custTranPaid.setBalance(Balance.getBalance());
                 custTranPaid.setLogger(log);
-                customerTransactionController.create(custTranPaid);
+                getCustomerTransactionController().create(custTranPaid);
 
                 //Cashbook
                 CashBook cashBook = new CashBook();
                 cashBook.setDescription("Purchase - " + getCurrent().getGrnNo());
-                cashBook.setCR(paymentDetails.getCashAmount());
+                cashBook.setCR(getPaymentDetails().getCashAmount());
                 cashBook.setDR(0);
                 cashBook.setLocation(getCurrent().getLocation());
                 cashBook.setLogger(log);
 
-                CashBookBalance cashBalance = cashBookBalanceController.getCashBookBalanceObject(getCurrent().getLocation(), getCurrent().getBillStatus());
+                CashBookBalance cashBalance = getCashBookBalanceController().getCashBookBalanceObject(getCurrent().getLocation(), getCurrent().getBillStatus());
                 if (cashBalance != null) {
-                    cashBalance.setCashBalance(cashBalance.getCashBalance() - paymentDetails.getCashAmount());
-                    cashBookBalanceController.edit(cashBalance);
+                    cashBalance.setCashBalance(cashBalance.getCashBalance() - getPaymentDetails().getCashAmount());
+                    getCashBookBalanceController().edit(cashBalance);
                     cashBook.setBalance(cashBalance.getCashBalance());
                 } else {
-                    cashBook.setBalance(paymentDetails.getCashAmount());
+                    cashBook.setBalance(getPaymentDetails().getCashAmount());
                 }
 
-                cashbookController.create(cashBook);
+                getCashbookController().create(cashBook);
 
 
             }
 
         }
-
+        
+        //getgRNPaymentDetailsController().create(getPaymentDetails());
+        getCurrent().setgRNPaymentDetails(getPaymentDetails());
+        getgRNController().create(getCurrent());
         
         //Increment the the Document No 
-        currentSystemNumber.setSystemNumber(currentSystemNumber.getSystemNumber() + 1);
-        systemNumbersController.edit(currentSystemNumber);
+        if(getCurrentSystemNumber() != null){
+            getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+            getSystemNumbersController().edit(getCurrentSystemNumber());
+        }
+        
        
         printReportDownload();
         setCurrent(new GRN());

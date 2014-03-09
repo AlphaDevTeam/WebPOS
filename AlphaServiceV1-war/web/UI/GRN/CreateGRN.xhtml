@@ -29,11 +29,11 @@
                              </p:calendar>
 
 
-                            <h:outputLabel value="GrnNo:" for="grnNo" />
+                            <h:outputLabel value="Grn No : " for="grnNo" />
                             <h:inputText id="grnNo" value="#{gRNHandler.grnNumber}" title="GrnNo" readonly="#{systemsHandler.current.isGRNnumberAutoGenarated}" />
-                            <h:outputLabel value="InvNo:" for="invNo" />
+                            <h:outputLabel value="Inv No : " for="invNo" />
                             <h:inputText id="invNo" value="#{gRNHandler.current.invNo}" title="InvNo" />
-                            <h:outputLabel value="Location:" for="location" />
+                            <h:outputLabel value="Location : " for="location" />
                             <p:selectOneMenu id="location" value="#{gRNHandler.current.location}" label="Location " converter="#{locationConvertor}" >
                                 <f:selectItem itemLabel="Select One" itemValue="#{gRNHandler.current.location}" />  
                                 <f:selectItems value="#{locationHandler.list}"/>
@@ -154,22 +154,22 @@
                                             <h:inputText id="creditCardAmount" value="#{gRNHandler.paymentDetails.creditCardAmount}" title="Credit Card Amount" />
                                         </p:tab>
                                         <p:tab title="Cheques" >  
-                                                <p:panelGrid columns="4">
+                                            <p:panelGrid columns="4">
                                                 <h:outputLabel value="ChequeNumber:" for="chequeNumber" />
-                                                <h:inputText id="chequeNumber" value="#{gRNHandler.paymentDetails.relatedCheque.chequeNumber}"  title="ChequeNumber" />
+                                                <h:inputText id="chequeNumber" value="#{gRNHandler.receivedCheque.chequeNumber}"  title="ChequeNumber" />
                                                 <h:outputLabel value="ChequeNote:" for="chequeNote" />
-                                                <h:inputText id="chequeNote" value="#{gRNHandler.paymentDetails.relatedCheque.chequeNote}" title="ChequeNote" />
+                                                <h:inputText id="chequeNote" value="#{gRNHandler.receivedCheque.chequeNote}" title="ChequeNote" />
                                                 <h:outputLabel value="ChequeDate:" for="chequeDate" />
-                                                <p:calendar id="chequeDate" value="#{gRNHandler.paymentDetails.relatedCheque.chequeDate}" pattern="MM/dd/yyyy" title="Cheque Date">
+                                                <p:calendar id="chequeDate" value="#{gRNHandler.receivedCheque.chequeDate}" pattern="MM/dd/yyyy" title="Cheque Date">
                                                     <f:convertDateTime pattern="MM/dd/yyyy" />  
                                                 </p:calendar>
                                                 <h:outputLabel value="RelatedBankAccount:" for="relatedBankAccount" />
-                                                <p:selectOneMenu id="relatedBankAccount" value="#{gRNHandler.paymentDetails.relatedCheque.relatedBankAccount}" label="RelatedBankAccount" converter="#{bankAccountConvertor}" >
+                                                <p:selectOneMenu id="relatedBankAccount" value="#{gRNHandler.receivedCheque.relatedBankAccount}" label="RelatedBankAccount" converter="#{bankAccountConvertor}" >
                                                     <f:selectItem itemLabel="Select One" />  
                                                     <f:selectItems value="#{bankAccountsHandler.list}"/>
                                                 </p:selectOneMenu>
                                                 <h:outputLabel value="ChequeAmount:" for="chequeAmount" />
-                                                <h:inputText id="chequeAmount" value="#{gRNHandler.paymentDetails.relatedCheque.chequeAmount}" title="ChequeAmount" />
+                                                <h:inputText id="chequeAmount" value="#{gRNHandler.receivedCheque.chequeAmount}" title="ChequeAmount" />
                                              </p:panelGrid>
                                         </p:tab>
                                     </p:accordionPanel>     

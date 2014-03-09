@@ -1,18 +1,23 @@
 
 package com.AlphaDevs.Web.JSFBeans;
 
+import com.AlphaDevs.Web.Entities.Items;
 import com.AlphaDevs.Web.Entities.Logger;
 import com.AlphaDevs.Web.Entities.Pump;
+import com.AlphaDevs.Web.Entities.Units;
 import com.AlphaDevs.Web.Enums.TransactionTypes;
 import com.AlphaDevs.Web.Helpers.EntityHelper;
 import com.AlphaDevs.Web.Helpers.MessageHelper;
+import com.AlphaDevs.Web.SessionBean.ItemsController;
 import com.AlphaDevs.Web.SessionBean.LoggerController;
 import com.AlphaDevs.Web.SessionBean.PumpController;
+import com.AlphaDevs.Web.SessionBean.UnitsController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
@@ -25,7 +30,7 @@ import javax.faces.bean.RequestScoped;
  */
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class PumpHandler {
     @EJB
     private LoggerController loggerController;
@@ -40,7 +45,16 @@ public class PumpHandler {
             current = new Pump();
         }
     }
+    
+    public LoggerController getLoggerController() {
+        return loggerController;
+    }
 
+    public void setLoggerController(LoggerController loggerController) {
+        this.loggerController = loggerController;
+    }
+
+    
     public PumpController getPumpController() {
         return pumpController;
     }

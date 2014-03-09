@@ -29,13 +29,16 @@ public class GRNPaymentDetails implements Serializable
     @OneToOne
     private Logger logger;
     
-    @ManyToOne
+    @OneToOne(mappedBy = "gRNPaymentDetails")
     private Cheques relatedCheque;
+    
+    @OneToOne(mappedBy = "relatedGRNPaymentDetails")
+    private CreditCardReceipts relatedCreditCardReceipts;
     
     public GRNPaymentDetails() {
     }
 
-    public GRNPaymentDetails(GRN relatedGrn, double TotalAmount, double CashAmount, double CreditCardAmount, double ChequeAmount, Logger logger, Cheques relatedCheque) {
+    public GRNPaymentDetails(GRN relatedGrn, double TotalAmount, double CashAmount, double CreditCardAmount, double ChequeAmount, Logger logger, Cheques relatedCheque, CreditCardReceipts relatedCreditCardReceipts) {
         this.relatedGrn = relatedGrn;
         this.TotalAmount = TotalAmount;
         this.CashAmount = CashAmount;
@@ -43,6 +46,15 @@ public class GRNPaymentDetails implements Serializable
         this.ChequeAmount = ChequeAmount;
         this.logger = logger;
         this.relatedCheque = relatedCheque;
+        this.relatedCreditCardReceipts = relatedCreditCardReceipts;
+    }
+
+    public CreditCardReceipts getRelatedCreditCardReceipts() {
+        return relatedCreditCardReceipts;
+    }
+
+    public void setRelatedCreditCardReceipts(CreditCardReceipts relatedCreditCardReceipts) {
+        this.relatedCreditCardReceipts = relatedCreditCardReceipts;
     }
 
     public Cheques getRelatedCheque() {

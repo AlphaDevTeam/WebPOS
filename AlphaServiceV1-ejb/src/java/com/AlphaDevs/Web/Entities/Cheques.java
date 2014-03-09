@@ -40,7 +40,8 @@ public class Cheques implements Serializable {
     private Double chequeAmount;
     private String chequeNumber;
     private String chequeNote;
-    @OneToOne(mappedBy = "relatedCheque")
+    
+    @OneToOne
     private GRNPaymentDetails gRNPaymentDetails;
 
     public Cheques() {

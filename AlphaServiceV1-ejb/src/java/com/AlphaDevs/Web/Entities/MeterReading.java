@@ -38,11 +38,12 @@ public class MeterReading implements Serializable {
     private Logger logger;
     @OneToOne
     private Location relatedLocation;
+    private double lastReading;
     
     public MeterReading() {
     }
 
-    public MeterReading(String Note, Pump relatedPump, double reading, Date relatedDate, String referenceNumber, Logger logger, Location relatedLocation) {
+    public MeterReading(String Note, Pump relatedPump, double reading, Date relatedDate, String referenceNumber, Logger logger, Location relatedLocation, double lastReading) {
         this.Note = Note;
         this.relatedPump = relatedPump;
         this.reading = reading;
@@ -50,6 +51,15 @@ public class MeterReading implements Serializable {
         this.referenceNumber = referenceNumber;
         this.logger = logger;
         this.relatedLocation = relatedLocation;
+        this.lastReading = lastReading;
+    }
+
+    public double getLastReading() {
+        return lastReading;
+    }
+
+    public void setLastReading(double lastReading) {
+        this.lastReading = lastReading;
     }
 
     public Location getRelatedLocation() {
