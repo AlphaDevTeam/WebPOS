@@ -70,7 +70,7 @@
                             
                             <p:selectBooleanCheckbox value="#{invoiceHandler.isBypassStock}" label="Bypass Stock" />
                             
-                            
+                            <p:commandButton value="Save" action="#{invoiceHandler.saveInvoice()}" />
                         </h:panelGrid>
 
                         <p:dataTable  id="virtualList" editable="true" value="#{invoiceHandler.virtualList}" var="item" selection="#{invoiceHandler.selectedInvoiceDetails}" selectionMode="single" rowKey="#{item.item}">
@@ -138,19 +138,55 @@
                         
                         <p:accordionPanel activeIndex="-1">  
                             <p:tab title="Payments" >  
-                                <h:panelGrid columns="4" cellpadding="10">  
-                                    <h:outputLabel value="Cash Amount:" for="cashAmount" />
-                                    <h:inputText id="cashAmount" value="#{invoiceHandler.paymentDetails.cashAmount}" title="Cash Amount" />
-                                    <h:outputLabel value="Credit Card Amount:" for="creditCardAmount" />
-                                    <h:inputText id="creditCardAmount" value="#{invoiceHandler.paymentDetails.creditCardAmount}" title="Credit Card Amount" />
-                                    <h:outputLabel value="Cheque Amount:" for="chequeAmount" />
-                                    <h:inputText id="chequeAmount" value="#{invoiceHandler.paymentDetails.chequeAmount}" title="Cheque Amount" />
-                                    <h:outputLabel value="Credit Amount:" for="creditAmount" />
-                                    <h:inputText id="creditAmount" value="#{invoiceHandler.paymentDetails.creditAmount}" title="Credit Amount" />
-                                    
-                                    <p:commandButton value="Save" action="#{invoiceHandler.saveInvoice()}" />
-                                </h:panelGrid>  
+                                <h:form>
+                                    <p:accordionPanel activeIndex="0">  
+                                        <p:tab title="Cash">  
+                                            <h:outputLabel value="Amount:" for="cashAmount" />
+                                            <h:inputText id="cashAmount" value="#{invoiceHandler.paymentDetails.cashAmount}" title="Cash Amount" />
+                                        </p:tab>  
+                         
+                                        <p:tab title="Credit Card" >  
+                                            <h:form>
+                                                <h:panelGrid columns="4">
+                                                    <h:outputLabel value="Card Number : " for="cardNumber" />
+                                                    <h:inputText id="cardNumber" value="#{invoiceHandler.receivedCreditCardReceipts.cardNumber}" title="Card Number" />
+                                                    <h:outputLabel value="Note : " for="note" />
+                                                    <h:inputText id="note" value="#{invoiceHandler.receivedCreditCardReceipts.note}" title="Note" />
+                                                    <h:outputLabel value="Amount : " for="amount" />
+                                                    <h:inputText id="amount" value="#{invoiceHandler.receivedCreditCardReceipts.amount}" title="Amount" />
+                                                    <h:outputLabel value="Terminal : " for="relatedTerminal" />
+                                                    <p:selectOneMenu id="relatedTerminal" value="#{invoiceHandler.receivedCreditCardReceipts.relatedTerminal}" converter="#{creditCardTerminalConvertor}" label="Terminal" >
+                                                        <f:selectItem itemLabel="Select One" />  
+                                                        <f:selectItems value="#{creditCardTerminalHandler.list}"/>
+                                                    </p:selectOneMenu>
+                                                    
+                                                </h:panelGrid>
+                                            </h:form>
+
+                                        </p:tab>
+                                        <p:tab title="Cheques" >  
+                                            <p:panelGrid columns="4">
+                                                <h:outputLabel value="ChequeNumber:" for="chequeNumber" />
+                                                <h:inputText id="chequeNumber" value="#{invoiceHandler.receivedCheque.chequeNumber}"  title="ChequeNumber" />
+                                                <h:outputLabel value="ChequeNote:" for="chequeNote" />
+                                                <h:inputText id="chequeNote" value="#{invoiceHandler.receivedCheque.chequeNote}" title="ChequeNote" />
+                                                <h:outputLabel value="ChequeDate:" for="chequeDate" />
+                                                <p:calendar id="chequeDate" value="#{invoiceHandler.receivedCheque.chequeDate}" pattern="MM/dd/yyyy" title="Cheque Date">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />  
+                                                </p:calendar>
+                                                <h:outputLabel value="RelatedBankAccount:" for="relatedBankAccount" />
+                                                <p:selectOneMenu id="relatedBankAccount" value="#{invoiceHandler.receivedCheque.relatedBankAccount}" label="RelatedBankAccount" converter="#{bankAccountConvertor}" >
+                                                    <f:selectItem itemLabel="Select One" />  
+                                                    <f:selectItems value="#{bankAccountsHandler.list}"/>
+                                                </p:selectOneMenu>
+                                                <h:outputLabel value="ChequeAmount:" for="chequeAmount" />
+                                                <h:inputText id="chequeAmount" value="#{invoiceHandler.receivedCheque.chequeAmount}" title="ChequeAmount" />
+                                             </p:panelGrid>
+                                        </p:tab>
+                                    </p:accordionPanel>     
+                                 </h:form>
                             </p:tab>  
+                            
                         </p:accordionPanel>
 
                     </h:form>

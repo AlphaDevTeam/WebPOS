@@ -13,7 +13,7 @@
 
             <ui:define name="content">
                 <f:view>
-                    <h:form>
+                    <h:form target="_new">
                         
                         <h:outputLabel value="GrnDate:" for="Date" />  
                         <p:calendar id="Date" value="#{daySummaryHandler.relatedDate}" pattern="MM/dd/yyyy" title="GRN Date">
@@ -25,6 +25,7 @@
                                 <f:selectItems value="#{locationHandler.list}"/>
                             </p:selectOneMenu>
                         <p:commandButton value="save" update="dataTable"/>  
+                        <h:commandButton value="report" action="#{daySummaryHandler.genarateReport()}"/>  
                         <p:dataTable id="dataTable" value="#{daySummaryHandler.data}" var="item">
                             <p:column>
                                 <f:facet name="header">

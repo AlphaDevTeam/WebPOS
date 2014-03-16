@@ -43,11 +43,15 @@ public class Cheques implements Serializable {
     
     @OneToOne
     private GRNPaymentDetails gRNPaymentDetails;
+    
+    @OneToOne
+    private PaymentDetails relatedPayment;
+            
 
     public Cheques() {
     }
 
-    public Cheques(ChequeStatus status, Date chequeDate, Location relatedLocation, BankAccounts relatedBankAccount, Double chequeAmount, String chequeNumber, String chequeNote) {
+    public Cheques(ChequeStatus status, Date chequeDate, Location relatedLocation, BankAccounts relatedBankAccount, Double chequeAmount, String chequeNumber, String chequeNote, GRNPaymentDetails gRNPaymentDetails, PaymentDetails relatedPayment) {
         this.status = status;
         this.chequeDate = chequeDate;
         this.relatedLocation = relatedLocation;
@@ -55,6 +59,8 @@ public class Cheques implements Serializable {
         this.chequeAmount = chequeAmount;
         this.chequeNumber = chequeNumber;
         this.chequeNote = chequeNote;
+        this.gRNPaymentDetails = gRNPaymentDetails;
+        this.relatedPayment = relatedPayment;
     }
 
     public Cheques(ChequeStatus status, Date chequeDate, Location relatedLocation, BankAccounts relatedBankAccount, Double chequeAmount, String chequeNumber, String chequeNote, GRNPaymentDetails gRNPaymentDetails) {
@@ -66,6 +72,14 @@ public class Cheques implements Serializable {
         this.chequeNumber = chequeNumber;
         this.chequeNote = chequeNote;
         this.gRNPaymentDetails = gRNPaymentDetails;
+    }
+
+    public PaymentDetails getRelatedPayment() {
+        return relatedPayment;
+    }
+
+    public void setRelatedPayment(PaymentDetails relatedPayment) {
+        this.relatedPayment = relatedPayment;
     }
 
     public GRNPaymentDetails getgRNPaymentDetails() {

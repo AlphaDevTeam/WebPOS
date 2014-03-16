@@ -426,8 +426,6 @@ public class GRNHandler
                     getPaymentDetails().setChequeAmount(getReceivedCheque().getChequeAmount());
                     getPaymentDetails().setRelatedCheque(relatedCheque);
                     getChequesController().create(relatedCheque);
-                }else{
-                    getCurrent().getgRNPaymentDetails().setRelatedCheque(null);
                 }
             }
             
@@ -441,8 +439,6 @@ public class GRNHandler
                     getPaymentDetails().setCreditCardAmount(relatedCreditCardReceipt.getAmount());
                     getPaymentDetails().setRelatedCreditCardReceipts(relatedCreditCardReceipt);
                     getCreditCardReceiptsController().create(relatedCreditCardReceipt);
-                }else{
-                    getCurrent().getgRNPaymentDetails().setRelatedCreditCardReceipts(null);
                 }
             }
             

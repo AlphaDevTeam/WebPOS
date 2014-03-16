@@ -43,11 +43,13 @@ public class CreditCardReceipts implements Serializable {
     
     @OneToOne
     private GRNPaymentDetails relatedGRNPaymentDetails;
+    
+    private PaymentDetails relatedPaymentDetails;
 
     public CreditCardReceipts() {
     }
 
-    public CreditCardReceipts(String cardNumber, String note, double amount, CreditCardReceiptStatus receiptStatus, CreditCardTeminals relatedTerminal, Logger relatedLogger, Location relatedLocation, GRNPaymentDetails relatedGRNPaymentDetails) {
+    public CreditCardReceipts(String cardNumber, String note, double amount, CreditCardReceiptStatus receiptStatus, CreditCardTeminals relatedTerminal, Logger relatedLogger, Location relatedLocation, GRNPaymentDetails relatedGRNPaymentDetails, PaymentDetails relatedPaymentDetails) {
         this.cardNumber = cardNumber;
         this.note = note;
         this.amount = amount;
@@ -56,6 +58,15 @@ public class CreditCardReceipts implements Serializable {
         this.relatedLogger = relatedLogger;
         this.relatedLocation = relatedLocation;
         this.relatedGRNPaymentDetails = relatedGRNPaymentDetails;
+        this.relatedPaymentDetails = relatedPaymentDetails;
+    }
+
+    public PaymentDetails getRelatedPaymentDetails() {
+        return relatedPaymentDetails;
+    }
+
+    public void setRelatedPaymentDetails(PaymentDetails relatedPaymentDetails) {
+        this.relatedPaymentDetails = relatedPaymentDetails;
     }
 
     public GRNPaymentDetails getRelatedGRNPaymentDetails() {

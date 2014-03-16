@@ -33,28 +33,23 @@
 	<columnHeader>
 		<band height="24" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="8cf0e8bf-681b-4665-8304-313ac3fc1852" x="39" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="39" y="2" width="100" height="20" uuid="8cf0e8bf-681b-4665-8304-313ac3fc1852"/>
 				<text><![CDATA[grnItem]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4cd58eb1-2fb9-4b2b-aba3-9a2719be7ce1" x="286" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="286" y="2" width="100" height="20" uuid="4cd58eb1-2fb9-4b2b-aba3-9a2719be7ce1"/>
 				<text><![CDATA[grnItemCost]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a6d7ca96-1849-4f7d-8d3a-4638294df51d" x="401" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="401" y="2" width="100" height="20" uuid="a6d7ca96-1849-4f7d-8d3a-4638294df51d"/>
 				<text><![CDATA[grnItemDiscountPerc]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e3de579a-d2e8-4d3b-8b80-7b7e577b55b5" x="516" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="516" y="2" width="100" height="20" uuid="e3de579a-d2e8-4d3b-8b80-7b7e577b55b5"/>
 				<text><![CDATA[grnQty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c03bd31d-8989-40dd-8c97-836328599827" x="174" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="174" y="2" width="100" height="20" uuid="c03bd31d-8989-40dd-8c97-836328599827"/>
 				<text><![CDATA[relatedGRN]]></text>
 			</staticText>
 		</band>
@@ -62,28 +57,23 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement uuid="479d63dd-382a-43c2-98ac-19df174d8b81" x="39" y="0" width="235" height="20"/>
-				<textElement/>
+				<reportElement x="39" y="0" width="235" height="20" uuid="479d63dd-382a-43c2-98ac-19df174d8b81"/>
 				<textFieldExpression><![CDATA[""+$F{grnItem}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="92219e51-0f2b-4e30-aefc-6cd2f5ac816f" x="286" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="286" y="2" width="100" height="20" uuid="92219e51-0f2b-4e30-aefc-6cd2f5ac816f"/>
 				<textFieldExpression><![CDATA[$F{grnItemCost}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b42f98f7-abbf-43e5-8d8a-ef061c46b5b5" x="401" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="401" y="2" width="100" height="20" uuid="b42f98f7-abbf-43e5-8d8a-ef061c46b5b5"/>
 				<textFieldExpression><![CDATA[$F{grnItemDiscountPerc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f2c31107-d6e1-4029-87e4-9cb427f85b05" x="516" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="516" y="2" width="100" height="20" uuid="f2c31107-d6e1-4029-87e4-9cb427f85b05"/>
 				<textFieldExpression><![CDATA[$F{grnQty}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="05360f2f-ecb1-4e82-a778-05336506a3fa" x="174" y="2" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="174" y="2" width="100" height="20" uuid="05360f2f-ecb1-4e82-a778-05336506a3fa"/>
 				<textFieldExpression><![CDATA[""+$F{relatedGRN}]]></textFieldExpression>
 			</textField>
 		</band>

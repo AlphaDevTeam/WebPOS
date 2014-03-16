@@ -38,11 +38,18 @@ public class PaymentDetails implements Serializable
     private double creditCardAmount;
     private double chequeAmount;
     private double creditAmount;
+    private double totalAmount;
     
+    @OneToOne
+    private Cheques relatedCheque;
+    
+    @OneToOne
+    private CreditCardReceipts relatedCreditCardReceipts;
+
     public PaymentDetails() {
     }
 
-    public PaymentDetails(TransactionTypes TrnType, Logger loger, Document documentType, double cashAmount, double creditCardAmount, double chequeAmount, double creditAmount) {
+    public PaymentDetails(TransactionTypes TrnType, Logger loger, Document documentType, double cashAmount, double creditCardAmount, double chequeAmount, double creditAmount, double totalAmount, Cheques relatedCheque, CreditCardReceipts relatedCreditCardReceipts) {
         this.TrnType = TrnType;
         this.loger = loger;
         this.documentType = documentType;
@@ -50,8 +57,47 @@ public class PaymentDetails implements Serializable
         this.creditCardAmount = creditCardAmount;
         this.chequeAmount = chequeAmount;
         this.creditAmount = creditAmount;
+        this.totalAmount = totalAmount;
+        this.relatedCheque = relatedCheque;
+        this.relatedCreditCardReceipts = relatedCreditCardReceipts;
     }
 
+    public PaymentDetails(TransactionTypes TrnType, Logger loger, Document documentType, double cashAmount, double creditCardAmount, double chequeAmount, double creditAmount, Cheques relatedCheque, CreditCardReceipts relatedCreditCardReceipts) {
+        this.TrnType = TrnType;
+        this.loger = loger;
+        this.documentType = documentType;
+        this.cashAmount = cashAmount;
+        this.creditCardAmount = creditCardAmount;
+        this.chequeAmount = chequeAmount;
+        this.creditAmount = creditAmount;
+        this.relatedCheque = relatedCheque;
+        this.relatedCreditCardReceipts = relatedCreditCardReceipts;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+    
+    public Cheques getRelatedCheque() {
+        return relatedCheque;
+    }
+
+    public void setRelatedCheque(Cheques relatedCheque) {
+        this.relatedCheque = relatedCheque;
+    }
+
+    public CreditCardReceipts getRelatedCreditCardReceipts() {
+        return relatedCreditCardReceipts;
+    }
+
+    public void setRelatedCreditCardReceipts(CreditCardReceipts relatedCreditCardReceipts) {
+        this.relatedCreditCardReceipts = relatedCreditCardReceipts;
+    }
+    
     public TransactionTypes getTrnType() {
         return TrnType;
     }

@@ -45,11 +45,14 @@ public class Invoice  implements Serializable
     
     @OneToMany
     private List<Properties> extraz;
-
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private PaymentDetails paymentDetails;
+    
     public Invoice() {
     }
 
-    public Invoice(String BillNo, String RefNo, double TotalAmount, BillStatus BillStat, Date TrnDate, Supplier Customer, com.AlphaDevs.Web.Entities.Location Location, com.AlphaDevs.Web.Entities.Logger Logger) {
+    public Invoice(String BillNo, String RefNo, double TotalAmount, BillStatus BillStat, Date TrnDate, Supplier Customer, Location Location, Logger Logger, List<InvoiceDetails> InvDetails, List<Properties> extraz, PaymentDetails paymentDetails) {
         this.BillNo = BillNo;
         this.RefNo = RefNo;
         this.TotalAmount = TotalAmount;
@@ -58,6 +61,17 @@ public class Invoice  implements Serializable
         this.Customer = Customer;
         this.Location = Location;
         this.Logger = Logger;
+        this.InvDetails = InvDetails;
+        this.extraz = extraz;
+        this.paymentDetails = paymentDetails;
+    }
+
+    public PaymentDetails getPaymentDetails() {
+        return paymentDetails;
+    }
+
+    public void setPaymentDetails(PaymentDetails paymentDetails) {
+        this.paymentDetails = paymentDetails;
     }
 
     public String getBillNo() {
