@@ -3,6 +3,7 @@ package com.AlphaDevs.Web.Entities;
 
 import com.AlphaDevs.Web.Enums.AdjestmentTypes;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -27,7 +29,7 @@ public class StockAdjestments implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+    private String refNumber;
     private String AdjestmentDescription;
     private Double AdjestmentQty;
     @OneToOne
@@ -41,17 +43,50 @@ public class StockAdjestments implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private AdjestmentTypes adjestmentType;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date adjestmentDate;
 
     public StockAdjestments() {
     }
 
-    public StockAdjestments(String AdjestmentDescription, Double AdjestmentQty, Logger logger, Location AdjestmentLocation, Items AdjestmentItems, AdjestmentTypes adjestmentType) {
+    public StockAdjestments(String refNumber, String AdjestmentDescription, Double AdjestmentQty, Logger logger, Location AdjestmentLocation, Items AdjestmentItems, AdjestmentTypes adjestmentType, Date adjestmentDate) {
+        this.refNumber = refNumber;
         this.AdjestmentDescription = AdjestmentDescription;
         this.AdjestmentQty = AdjestmentQty;
         this.logger = logger;
         this.AdjestmentLocation = AdjestmentLocation;
         this.AdjestmentItems = AdjestmentItems;
         this.adjestmentType = adjestmentType;
+        this.adjestmentDate = adjestmentDate;
+    }
+
+    public StockAdjestments(Double AdjestmentQty, Items AdjestmentItems) {
+        this.AdjestmentQty = AdjestmentQty;
+        this.AdjestmentItems = AdjestmentItems;
+    }
+
+    public StockAdjestments(Double AdjestmentQty, Items AdjestmentItems, AdjestmentTypes adjestmentType) {
+        this.AdjestmentQty = AdjestmentQty;
+        this.AdjestmentItems = AdjestmentItems;
+        this.adjestmentType = adjestmentType;
+    }
+    
+
+    public Date getAdjestmentDate() {
+        return adjestmentDate;
+    }
+
+    public void setAdjestmentDate(Date adjestmentDate) {
+        this.adjestmentDate = adjestmentDate;
+    }
+
+    public String getRefNumber() {
+        return refNumber;
+    }
+
+    public void setRefNumber(String refNumber) {
+        this.refNumber = refNumber;
     }
 
     public String getAdjestmentDescription() {
@@ -101,8 +136,8 @@ public class StockAdjestments implements Serializable {
     public void setAdjestmentType(AdjestmentTypes adjestmentType) {
         this.adjestmentType = adjestmentType;
     }
-
-   
+    
+    
     public Long getId() {
         return id;
     }

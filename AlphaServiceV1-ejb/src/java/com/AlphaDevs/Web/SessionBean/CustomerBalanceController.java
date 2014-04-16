@@ -2,8 +2,11 @@
 package com.AlphaDevs.Web.SessionBean;
 
 import com.AlphaDevs.Web.Entities.CustomerBalance;
-import com.AlphaDevs.Web.Entities.Design;
+import com.AlphaDevs.Web.Entities.CustomerBalance_;
+import com.AlphaDevs.Web.Entities.Location;
 import com.AlphaDevs.Web.Entities.Supplier;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -11,7 +14,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.SetJoin;
 
 /**
  *
@@ -81,6 +86,25 @@ public class CustomerBalanceController extends AbstractFacade<CustomerBalance>
         }
         
         
+    }
+    
+    public List<CustomerBalance> findCustomerBalances(boolean showInactives) 
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<CustomerBalance> q = cb.createQuery(CustomerBalance.class);
+        Root<CustomerBalance> c = q.from(CustomerBalance.class);
+        Join<CustomerBalance,Supplier> supplier = c.join(CustomerBalance_.supplier); 
+        q.select(c);
+        if(!showInactives){
+            q.where(cb.equal(supplier.get("inactive"), showInactives));
+        }
+               
+        List<CustomerBalance> resultList = getEntityManager().createQuery(q).getResultList();
+        if(resultList == null || resultList.isEmpty()){
+            return new ArrayList<CustomerBalance>();
+        }else{
+            return resultList;
+        }
     }
     
 }

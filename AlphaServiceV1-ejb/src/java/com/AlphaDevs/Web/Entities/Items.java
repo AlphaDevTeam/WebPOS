@@ -68,6 +68,21 @@ public class Items implements Serializable
         this.capacity = capacity;
     }
 
+    public Items(String ItemDescription) {
+        this.ItemDescription = ItemDescription;
+    }
+
+    public Items(String ItemCode, String ItemName) {
+        this.ItemCode = ItemCode;
+        this.ItemName = ItemName;
+    }
+
+    public Items(String ItemDescription, double UnitPrice) {
+        this.ItemDescription = ItemDescription;
+        this.UnitPrice = UnitPrice;
+    }
+    
+
     public double getCapacity() {
         return capacity;
     }

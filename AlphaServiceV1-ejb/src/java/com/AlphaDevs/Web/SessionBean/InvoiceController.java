@@ -62,6 +62,6 @@ public class InvoiceController extends AbstractFacade<Invoice>
             return resultList;
         }
     }
- 
+    
     
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoices_Sub" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9a5b60cc-1305-430c-91c5-455a14b24655">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoices_Sub" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9a5b60cc-1305-430c-91c5-455a14b24655">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="250"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -34,37 +34,73 @@
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="9" splitType="Stretch"/>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="14" uuid="db64c209-84be-4cd5-9a2e-7df4d7a5bb24"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Invoice Items]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="13" width="250" height="1" uuid="9c44d64f-faeb-4925-b92f-5f6ce911f348"/>
+			</line>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="14" splitType="Stretch">
 			<textField>
-				<reportElement x="119" y="0" width="100" height="20" uuid="4aca5db1-8f20-4c85-9b43-f13f60e63e26"/>
-				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="243" y="0" width="100" height="20" uuid="042c76ed-054c-4ce7-bdae-a0bbfac4555d"/>
-				<textFieldExpression><![CDATA[$F{itemQty}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="360" y="0" width="100" height="20" uuid="6971e1b1-d93f-4065-9537-662233ca81eb"/>
+				<reportElement x="183" y="0" width="67" height="14" uuid="6971e1b1-d93f-4065-9537-662233ca81eb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="0" width="100" height="20" uuid="d047d3f8-8737-45ab-8171-e684a5157eb2"/>
+				<reportElement x="0" y="0" width="70" height="14" uuid="d047d3f8-8737-45ab-8171-e684a5157eb2"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{itemCode}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="12" width="250" height="1" uuid="4ad8ccbe-e5d6-4db9-be93-b9ec74338e6f"/>
+			</line>
+			<textField>
+				<reportElement x="70" y="0" width="68" height="14" uuid="4aca5db1-8f20-4c85-9b43-f13f60e63e26"/>
+				<textElement>
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="45" height="14" uuid="042c76ed-054c-4ce7-bdae-a0bbfac4555d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemQty}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="21" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="360" y="0" width="100" height="20" uuid="c9f58279-a17d-40cb-91c2-32b52513db02"/>
-				<textFieldExpression><![CDATA[$V{price_1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="243" y="0" width="100" height="20" uuid="7262645a-1f94-4623-90ca-a18f1f2bd006"/>
+				<reportElement x="138" y="0" width="45" height="15" uuid="7262645a-1f94-4623-90ca-a18f1f2bd006"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{itemQty_2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="66" y="0" width="72" height="15" uuid="f6e95e85-7d30-4e8a-9878-9fc82a0a88c8"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="0" width="67" height="15" uuid="c9f58279-a17d-40cb-91c2-32b52513db02"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{price_1}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

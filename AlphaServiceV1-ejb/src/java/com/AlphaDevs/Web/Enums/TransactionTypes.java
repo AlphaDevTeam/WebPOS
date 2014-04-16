@@ -28,5 +28,6 @@ public enum TransactionTypes
     SUPPLIER,
     LOCATION,
     EMPLOYEE,
-    JOB
+    JOB,
+    STOCK_ADJ
 }

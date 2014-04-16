@@ -54,6 +54,9 @@ public class CreditCardTeminalsController extends AbstractFacade<CreditCardTemin
             return resultList;
         }
     }
+    
+    
+    
 
     
 

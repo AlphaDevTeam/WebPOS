@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportTest" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a617bc7-cace-4f6e-a346-a7f4dda63640">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="212"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["H:\\AlphaDevs\\Git Repo\\WebPOS\\AlphaServiceV1-war\\web\\Reports\\"]]></defaultValueExpression>
@@ -45,6 +45,10 @@
 	</field>
 	<variable name="MihiTest" class="java.lang.Double" resetType="None"/>
 	<variable name="MeterReadingSubTotal" class="java.lang.String" resetType="None"/>
+	<variable name="totalAdjestmentsAmount" class="java.lang.Double"/>
+	<variable name="finalTotal" class="java.lang.Double">
+		<variableExpression><![CDATA[new Double(($P{totalLiquidAmount} == null ? 0.0:$P{totalLiquidAmount}.doubleValue()) - ($V{totalAdjestmentsAmount} == null ? 0.0:$V{totalAdjestmentsAmount}.doubleValue()))]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -122,30 +126,64 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="319" splitType="Stretch">
+		<band height="324" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="46" isRemoveLineWhenBlank="true" backcolor="#CCFFFF" uuid="fca816a3-95ce-4f2f-9d89-0e0a7894be49"/>
+				<reportElement x="0" y="0" width="252" height="46" isRemoveLineWhenBlank="true" backcolor="#CCFFFF" uuid="fca816a3-95ce-4f2f-9d89-0e0a7894be49"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="location">
+					<subreportParameterExpression><![CDATA[$P{location}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="date">
+					<subreportParameterExpression><![CDATA[$P{date}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalLiquidAmount">
+					<subreportParameterExpression><![CDATA[$P{totalLiquidAmount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{meterReadings})]]></dataSourceExpression>
 				<returnValue subreportVariable="MeterReadingSubTotal" toVariable="MeterReadingSubTotal"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "MeterReadings_Sub.jasper"]]></subreportExpression>
 			</subreport>
+			<subreport>
+				<reportElement x="288" y="0" width="267" height="46" isRemoveLineWhenBlank="true" uuid="39a6e068-0e72-469a-bade-1ef86d48cafe"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{invoiceDetails})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Invoices_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<break type="Column">
+				<reportElement x="0" y="46" width="555" height="1" uuid="9777e411-f4cc-4118-8d4b-6ceb5cfebe16"/>
+			</break>
+			<subreport>
+				<reportElement x="0" y="47" width="252" height="39" isRemoveLineWhenBlank="true" uuid="95d771e6-db2b-4b46-b237-debb92f3c30e"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{stockAdjestments})]]></dataSourceExpression>
+				<returnValue subreportVariable="MihiTest" toVariable="MihiTest"/>
+				<returnValue subreportVariable="totalAdjestmentsAmount" toVariable="totalAdjestmentsAmount"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "StockAdjestments_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="288" y="47" width="267" height="39" isRemoveLineWhenBlank="true" uuid="af774c1c-8953-484c-a568-c6f28567a951"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{customerBalances})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CustomerBalances_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<break type="Column">
+				<reportElement x="0" y="86" width="555" height="1" uuid="2ff21dcf-1bf2-445f-9ca6-c8cebb0bf6b0"/>
+			</break>
+			<line direction="BottomUp">
+				<reportElement x="268" y="0" width="1" height="319" uuid="22adb4cd-91c2-475b-9472-743c87bd61fa"/>
+			</line>
+			<subreport>
+				<reportElement x="0" y="87" width="252" height="49" isRemoveLineWhenBlank="true" uuid="7f301e65-2b35-44f9-9eae-a6a5b97cae49"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{creditCardReceipts})]]></dataSourceExpression>
+				<returnValue subreportVariable="MihiTest" toVariable="MihiTest"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CreditCardReceipts_Sub.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="59" splitType="Stretch">
-			<textField evaluationTime="Report">
-				<reportElement x="378" y="14" width="100" height="20" uuid="6eb3fb53-25ef-4a85-ade2-950fb00f2066"/>
-				<textFieldExpression><![CDATA[$V{MihiTest}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="113" y="14" width="100" height="20" uuid="786140e0-1748-4aec-83c2-4825ce3b4d0a"/>
-				<textFieldExpression><![CDATA[$P{totalLiquidAmount}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="13" y="14" width="100" height="20" uuid="52b9f6ae-1735-4156-8225-d9a03866d797"/>
-				<text><![CDATA[Total]]></text>
-			</staticText>
-		</band>
+		<band height="27" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="27" splitType="Stretch">
@@ -158,9 +196,21 @@
 				<reportElement x="515" y="0" width="40" height="20" uuid="916e9f4c-b91e-44b5-8ba8-d4af0efa9122"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="200" y="7" width="100" height="20" uuid="74fc8f74-db25-4d47-8139-2891775d02e7"/>
+				<textFieldExpression><![CDATA[$V{totalAdjestmentsAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="7" width="100" height="20" uuid="874c43c3-43ca-4c3c-b3ee-498787dd4a92"/>
+				<textFieldExpression><![CDATA[$V{finalTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="7" width="100" height="20" uuid="b9c9087f-382c-42a5-902a-ced08d79f12f"/>
+				<textFieldExpression><![CDATA[$P{totalLiquidAmount}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="412" splitType="Stretch"/>
+		<band height="9" splitType="Stretch"/>
 	</summary>
 </jasperReport>

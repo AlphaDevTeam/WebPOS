@@ -37,6 +37,10 @@ public class Pump implements Serializable {
     public Pump() {
     }
 
+    public Pump(Items relatedItem) {
+        this.relatedItem = relatedItem;
+    }
+    
     public Pump(String pumpCode, String description, Items relatedItem, Location relatedLocation, Double lastReading, Logger logger) {
         this.pumpCode = pumpCode;
         this.description = description;

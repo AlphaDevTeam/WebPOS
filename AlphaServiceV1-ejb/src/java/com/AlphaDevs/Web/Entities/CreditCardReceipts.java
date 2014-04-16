@@ -2,9 +2,9 @@
 
 package com.AlphaDevs.Web.Entities;
 
-import com.AlphaDevs.Web.Enums.ChequeStatus;
 import com.AlphaDevs.Web.Enums.CreditCardReceiptStatus;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -44,23 +45,43 @@ public class CreditCardReceipts implements Serializable {
     @OneToOne
     private GRNPaymentDetails relatedGRNPaymentDetails;
     
+    @OneToOne
     private PaymentDetails relatedPaymentDetails;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date receiptDate;
 
     public CreditCardReceipts() {
     }
 
-    public CreditCardReceipts(String cardNumber, String note, double amount, CreditCardReceiptStatus receiptStatus, CreditCardTeminals relatedTerminal, Logger relatedLogger, Location relatedLocation, GRNPaymentDetails relatedGRNPaymentDetails, PaymentDetails relatedPaymentDetails) {
+    public CreditCardReceipts(double amount, CreditCardTeminals relatedTerminal) {
+        this.amount = amount;
+        this.relatedTerminal = relatedTerminal;
+    }
+    
+    
+
+    public CreditCardReceipts(String cardNumber, String note, double amount, CreditCardReceiptStatus receiptStatus, CreditCardTeminals relatedTerminal, Logger relatedLogger, GRNPaymentDetails relatedGRNPaymentDetails, PaymentDetails relatedPaymentDetails, Date receiptDate) {
         this.cardNumber = cardNumber;
         this.note = note;
         this.amount = amount;
         this.receiptStatus = receiptStatus;
         this.relatedTerminal = relatedTerminal;
         this.relatedLogger = relatedLogger;
-        this.relatedLocation = relatedLocation;
         this.relatedGRNPaymentDetails = relatedGRNPaymentDetails;
         this.relatedPaymentDetails = relatedPaymentDetails;
+        this.receiptDate = receiptDate;
     }
 
+    public Date getReceiptDate() {
+        return receiptDate;
+    }
+
+    public void setReceiptDate(Date receiptDate) {
+        this.receiptDate = receiptDate;
+    }
+
+    
     public PaymentDetails getRelatedPaymentDetails() {
         return relatedPaymentDetails;
     }

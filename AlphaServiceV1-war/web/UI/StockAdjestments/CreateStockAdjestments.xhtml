@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -16,18 +17,32 @@
                     <h:form>
                         <h1><h:outputText value="Create Stock Adjestments "/></h1>
                         <h:panelGrid columns="2">
-                            <h:outputLabel value="AdjestmentDescription:" for="adjestmentDescription" />
-                            <h:inputText id="adjestmentDescription" value="#{stockAdjestmentsHandler.current.adjestmentDescription}" title="AdjestmentDescription" />
-                            <h:outputLabel value="AdjestmentQty:" for="adjestmentQty" />
-                            <h:inputText id="adjestmentQty" value="#{stockAdjestmentsHandler.current.adjestmentQty}" title="AdjestmentQty" />
+                            <h:outputLabel value="Ref Number : " for="refNumber" />
+                            <h:inputText id="refNumber" value="#{stockAdjestmentsHandler.refNumber}" title="Reference Number" />
+                            <h:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{stockAdjestmentsHandler.current.adjestmentDate}" pattern="MM/dd/yyyy" title="Date">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />  
+                            </p:calendar>
+                            <h:outputLabel value="Description : " for="adjestmentDescription" />
+                            <h:inputText id="adjestmentDescription" value="#{stockAdjestmentsHandler.current.adjestmentDescription}" title="Description" />
+                            <h:outputLabel value="Qty : " for="adjestmentQty" />
+                            <h:inputText id="adjestmentQty" value="#{stockAdjestmentsHandler.current.adjestmentQty}" title="Qty" />
                             
-                            <h:outputLabel value="AdjestmentLocation:" for="adjestmentLocation" />
-                            <h:inputText id="adjestmentLocation" value="#{stockAdjestmentsHandler.current.adjestmentLocation}" title="AdjestmentLocation" />
-                            <h:outputLabel value="AdjestmentItems:" for="adjestmentItems" />
-                            <h:inputText id="adjestmentItems" value="#{stockAdjestmentsHandler.current.adjestmentItems}" title="AdjestmentItems" />
-                            <h:outputLabel value="AdjestmentType:" for="adjestmentType" />
-                            <h:inputText id="adjestmentType" value="#{stockAdjestmentsHandler.current.adjestmentType}" title="AdjestmentType" />
-                            <h:commandButton value="Save" action="#" />
+                            <h:outputLabel value="Location : " for="adjestmentLocation" />
+                            <p:selectOneMenu id="location" value="#{stockAdjestmentsHandler.current.adjestmentLocation}" label="Location " converter="#{locationConvertor}" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="refNumber" /> 
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Item " for="adjestmentItem" />
+                            <p:autoComplete id="adjestmentItem" value="#{stockAdjestmentsHandler.current.adjestmentItems}"   
+                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                            </p:autoComplete>  
+                            <h:outputLabel value="Type : " for="adjestmentType" />
+                            <p:selectOneMenu id="adjestmentType" value="#{stockAdjestmentsHandler.current.adjestmentType}" label="Type " >
+                                <f:selectItems value="#{stockAdjestmentsHandler.adjTypes}"/>
+                            </p:selectOneMenu>
+                            <h:commandButton value="Save" action="#{stockAdjestmentsHandler.persistStockAdjestment()}" />
                         </h:panelGrid>
                     </h:form>
                 </f:view>

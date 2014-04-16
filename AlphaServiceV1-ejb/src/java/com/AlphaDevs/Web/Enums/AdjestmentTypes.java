@@ -1,6 +1,10 @@
 
 package com.AlphaDevs.Web.Enums;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author Mihindu Gajaba Karunarathne 
@@ -12,5 +16,22 @@ package com.AlphaDevs.Web.Enums;
  */
 
 public enum AdjestmentTypes {
-    OPENING_STOCK,STOCK_ADJ
+    
+    OPENING_STOCK("Opening Stock"),
+    STOCK_ADJ("Stock Adjestment"),
+    TESTING("Testing");
+    
+    private String fieldName;
+    private AdjestmentTypes(String feild){
+        fieldName = feild;
+    }
+    
+    public String getDocumentName(){
+        return fieldName;
+    }
+    
+    public ArrayList<AdjestmentTypes> getList(){
+       return new ArrayList<AdjestmentTypes>(Arrays.asList(AdjestmentTypes.values()));
+    }
+    
 }

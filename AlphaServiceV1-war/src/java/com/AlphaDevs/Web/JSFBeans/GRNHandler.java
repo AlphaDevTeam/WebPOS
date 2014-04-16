@@ -434,6 +434,7 @@ public class GRNHandler
                 if (relatedCreditCardReceipt.getAmount()> 0) {
                     relatedCreditCardReceipt.setReceiptStatus(CreditCardReceiptStatus.RECEIVED);
                     relatedCreditCardReceipt.setRelatedLocation(getCurrent().getLocation());
+                    relatedCreditCardReceipt.setReceiptDate(getCurrent().getGrnDate());
                     relatedCreditCardReceipt.setRelatedGRNPaymentDetails(getPaymentDetails());
                     relatedCreditCardReceipt.setRelatedLogger(log);
                     getPaymentDetails().setCreditCardAmount(relatedCreditCardReceipt.getAmount());

@@ -41,6 +41,13 @@ public class InvoiceDetails implements Serializable
         this.invoice = invoice;
     }
 
+    public InvoiceDetails(Items Item, double ItemQty, double Price) {
+        this.Item = Item;
+        this.ItemQty = ItemQty;
+        this.Price = Price;
+    }
+    
+
     public Invoice getInvoice() {
         return invoice;
     }

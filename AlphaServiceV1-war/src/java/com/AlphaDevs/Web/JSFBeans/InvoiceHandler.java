@@ -541,6 +541,7 @@ public class InvoiceHandler {
                 if (relatedCreditCardReceipt.getAmount() > 0) {
                     relatedCreditCardReceipt.setReceiptStatus(CreditCardReceiptStatus.RECEIVED);
                     relatedCreditCardReceipt.setRelatedLocation(getCurrent().getLocation());
+                    relatedCreditCardReceipt.setReceiptDate(getCurrent().getTrnDate());
                     relatedCreditCardReceipt.setRelatedPaymentDetails(getPaymentDetails());
                     relatedCreditCardReceipt.setRelatedLogger(log);
                     getPaymentDetails().setCreditCardAmount(relatedCreditCardReceipt.getAmount());
