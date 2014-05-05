@@ -2,6 +2,7 @@
 
 package com.AlphaDevs.Web.Helpers;
 
+import com.AlphaDevs.Web.Entities.CashPaymentVoucherExpenses;
 import com.AlphaDevs.Web.Extra.DaySummaryReportHelper;
 import com.AlphaDevs.Web.Entities.CreditCardReceipts;
 import com.AlphaDevs.Web.Entities.CreditCardTeminals;
@@ -14,6 +15,7 @@ import com.AlphaDevs.Web.Entities.MeterReading;
 import com.AlphaDevs.Web.Entities.MeterReading_;
 import com.AlphaDevs.Web.Entities.Pump;
 import com.AlphaDevs.Web.Entities.StockAdjestments;
+import com.AlphaDevs.Web.SessionBean.CashPaymentVoucherExpensesController;
 import com.AlphaDevs.Web.SessionBean.CreditCardReceiptsController;
 import com.AlphaDevs.Web.SessionBean.CreditCardTeminalsController;
 import com.AlphaDevs.Web.SessionBean.CustomerBalanceController;
@@ -58,6 +60,8 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @SessionScoped
 public class DaySummaryHandler {
     @EJB
+    private CashPaymentVoucherExpensesController cashPaymentVoucherExpensesController;
+    @EJB
     private InvoiceDetailsController invoiceDetailsController;
     @EJB
     private CustomerBalanceController customerBalanceController;
@@ -90,6 +94,15 @@ public class DaySummaryHandler {
         daySumaryReportHelper = new DaySummaryReportHelper();
         reportParams = new HashMap<String, Object>();
     }
+
+    public CashPaymentVoucherExpensesController getCashPaymentVoucherExpensesController() {
+        return cashPaymentVoucherExpensesController;
+    }
+
+    public void setCashPaymentVoucherExpensesController(CashPaymentVoucherExpensesController cashPaymentVoucherExpensesController) {
+        this.cashPaymentVoucherExpensesController = cashPaymentVoucherExpensesController;
+    }
+    
 
     public CustomerBalanceController getCustomerBalanceController() {
         return customerBalanceController;
@@ -215,8 +228,9 @@ public class DaySummaryHandler {
     public List<DataTableRow> getData(){
         
         double totalAmount = 0;
+        double totalLiquidAmount = 0;
         getCurrent().clear();
-        Double amount = 0.0;
+        
         inputDate = null;
         try {
  
@@ -246,7 +260,8 @@ public class DaySummaryHandler {
                      if(reading.getRelatedPump() != null && reading.getRelatedPump().getRelatedItem() != null){
                          double unitPrice = reading.getRelatedPump().getRelatedItem().getUnitPrice();
                          totalAmount = totalAmount + ( unitPrice * reading.getReading());
-                         System.out.println("Meter Reading " + totalAmount + " - Unit : " + unitPrice + " - Reading " + reading.getReading());
+                         totalLiquidAmount = totalLiquidAmount + ( unitPrice * reading.getReading());
+                         //System.out.println("Meter Reading " + totalAmount + " - Unit : " + unitPrice + " - Reading " + reading.getReading());
                      }
                      //Pump relatedPump = reading.getRelatedPump();
                      
@@ -330,7 +345,16 @@ public class DaySummaryHandler {
                 }
             }
         }
-        getReportParams().put("totalLiquidAmount", totalAmount);
+        
+        //Cash Payment Vouchers
+        List<CashPaymentVoucherExpenses> cashPaymentExp = getCashPaymentVoucherExpensesController().findCashPaymentVoucherExpenses(getInputDate(),getRelatedLocation());
+        if(cashPaymentExp != null && ! cashPaymentExp.isEmpty()){
+            getDaySumaryReportHelper().setCashPaymentVouchersExpenses(cashPaymentExp);
+          
+        }
+        
+        getReportParams().put("totalLiquidAmount", totalLiquidAmount);
+        getReportParams().put("totalAmount", totalAmount);
         return getCurrent();
         
     }
