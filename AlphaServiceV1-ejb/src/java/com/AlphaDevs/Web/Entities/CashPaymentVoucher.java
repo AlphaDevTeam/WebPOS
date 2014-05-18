@@ -2,11 +2,13 @@
 package com.AlphaDevs.Web.Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -27,6 +29,8 @@ public class CashPaymentVoucher implements Serializable {
     private String paymentNumber;
     private String paymentRefNumber;
     private String paymentDescription;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date paymentDate;
     private double paymentAmount;
     @OneToOne
     private Location paymentLocation;
@@ -40,15 +44,24 @@ public class CashPaymentVoucher implements Serializable {
     public CashPaymentVoucher() {
     }
 
-    public CashPaymentVoucher(String paymentNumber, String paymentRefNumber, String paymentDescription, double paymentAmount, Location paymentLocation, Company relatedCompany, Supplier relatedSupplier, Logger relatedLogger) {
+    public CashPaymentVoucher(String paymentNumber, String paymentRefNumber, String paymentDescription, Date paymentDate, double paymentAmount, Location paymentLocation, Company relatedCompany, Supplier relatedSupplier, Logger relatedLogger) {
         this.paymentNumber = paymentNumber;
         this.paymentRefNumber = paymentRefNumber;
         this.paymentDescription = paymentDescription;
+        this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
         this.paymentLocation = paymentLocation;
         this.relatedCompany = relatedCompany;
         this.relatedSupplier = relatedSupplier;
         this.relatedLogger = relatedLogger;
+    }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
     public Logger getRelatedLogger() {

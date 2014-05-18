@@ -206,6 +206,7 @@ public class CashReceiptsVoucherHandler {
         cashBook.setDescription("Cash Receipt Voucher - " + getCurrent().getReceiptNumber()+ "-" + getCurrent().getReceiptRefNumber() + " - "+ getCurrent().getReceiptDescription());
         cashBook.setCR(0);
         cashBook.setDR(getCurrent().getReceiptAmount());
+        cashBook.setRelatedDate(getCurrent().getReceiptDate());
         cashBook.setLocation(getCurrent().getReceiptLocation());
         cashBook.setLogger(log);
 
@@ -225,7 +226,7 @@ public class CashReceiptsVoucherHandler {
         cashbookController.create(cashBook);
         
         //Increment the the Document No 
-        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getIncrementedSystemNumber());
         getSystemNumbersController().edit(getCurrentSystemNumber());
         
         getCashReceivedVoucherController().create(current);

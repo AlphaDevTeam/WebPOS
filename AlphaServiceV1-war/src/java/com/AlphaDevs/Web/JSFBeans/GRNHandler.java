@@ -461,6 +461,7 @@ public class GRNHandler
                 cashBook.setDescription("Purchase - " + getCurrent().getGrnNo());
                 cashBook.setCR(getPaymentDetails().getCashAmount());
                 cashBook.setDR(0);
+                cashBook.setRelatedDate(getCurrent().getGrnDate());
                 cashBook.setLocation(getCurrent().getLocation());
                 cashBook.setLogger(log);
 
@@ -485,7 +486,7 @@ public class GRNHandler
         
         //Increment the the Document No 
         if(getCurrentSystemNumber() != null){
-            getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+            getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getIncrementedSystemNumber());
             getSystemNumbersController().edit(getCurrentSystemNumber());
         }
         

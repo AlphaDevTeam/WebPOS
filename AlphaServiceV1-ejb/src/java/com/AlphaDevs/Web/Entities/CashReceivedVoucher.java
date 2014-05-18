@@ -3,11 +3,13 @@
 package com.AlphaDevs.Web.Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -29,6 +31,8 @@ public class CashReceivedVoucher implements Serializable {
     private String receiptNumber;
     private String receiptRefNumber;
     private String receiptDescription;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date receiptDate;
     private double receiptAmount;
     @OneToOne
     private Location receiptLocation;
@@ -43,15 +47,24 @@ public class CashReceivedVoucher implements Serializable {
     public CashReceivedVoucher() {
     }
 
-    public CashReceivedVoucher(String receiptNumber, String receiptRefNumber, String receiptDescription, double receiptAmount, Location receiptLocation, Company relatedCompany, Supplier relatedSupplier, Logger relatedLogger) {
+    public CashReceivedVoucher(String receiptNumber, String receiptRefNumber, String receiptDescription, Date receiptDate, double receiptAmount, Location receiptLocation, Company relatedCompany, Supplier relatedSupplier, Logger relatedLogger) {
         this.receiptNumber = receiptNumber;
         this.receiptRefNumber = receiptRefNumber;
         this.receiptDescription = receiptDescription;
+        this.receiptDate = receiptDate;
         this.receiptAmount = receiptAmount;
         this.receiptLocation = receiptLocation;
         this.relatedCompany = relatedCompany;
         this.relatedSupplier = relatedSupplier;
         this.relatedLogger = relatedLogger;
+    }
+
+    public Date getReceiptDate() {
+        return receiptDate;
+    }
+
+    public void setReceiptDate(Date receiptDate) {
+        this.receiptDate = receiptDate;
     }
 
     public Logger getRelatedLogger() {

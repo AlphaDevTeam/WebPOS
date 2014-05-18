@@ -17,6 +17,10 @@
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Payment Number : " for="paymentNumber" />
                             <h:inputText id="paymentNumber" value="#{cashPaymentVoucherExpensesHandler.paymentNumber}" readonly="true" title="PaymentNumber" />
+                            <h:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{cashPaymentVoucherExpensesHandler.current.paymentDate}" pattern="MM/dd/yyyy" title="Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                            </p:calendar>
                             <h:outputLabel value="Ref Number : " for="paymentRefNumber" />
                             <h:inputText id="paymentRefNumber" value="#{cashPaymentVoucherExpensesHandler.current.paymentRefNumber}" title="PaymentRefNumber" />
                             <h:outputLabel value="Description : " for="paymentDescription" />

@@ -18,13 +18,17 @@
                         <h:panelGrid columns="4">
                             
                             <h:outputLabel value="Receipt Number:" for="receiptNumber" />
-                            <h:inputText id="receiptNumber" value="#{cashReceiptsVoucherHandler.receiptNumber}" title="ReceiptNumber" required="true" />
+                            <h:inputText id="receiptNumber" value="#{cashReceiptsVoucherHandler.receiptNumber}" title="Receipt Number" required="true" />
                             <h:outputLabel value="Receipt Ref Number:" for="receiptRefNumber" />
-                            <h:inputText id="receiptRefNumber" value="#{cashReceiptsVoucherHandler.current.receiptRefNumber}" title="ReceiptRefNumber" />
-                            <h:outputLabel value="Receipt Description:" for="receiptDescription" />
-                            <h:inputText id="receiptDescription" value="#{cashReceiptsVoucherHandler.current.receiptDescription}" title="ReceiptDescription" />
-                            <h:outputLabel value="Receipt Amount:" for="receiptAmount" />
-                            <h:inputText id="receiptAmount" value="#{cashReceiptsVoucherHandler.current.receiptAmount}" title="ReceiptAmount" />
+                            <h:inputText id="receiptRefNumber" value="#{cashReceiptsVoucherHandler.current.receiptRefNumber}" title="Receipt Ref Number" />
+                            <h:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{cashReceiptsVoucherHandler.current.receiptDate}" pattern="MM/dd/yyyy" title="Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                            </p:calendar>
+                            <h:outputLabel value="Description:" for="receiptDescription" />
+                            <h:inputText id="receiptDescription" value="#{cashReceiptsVoucherHandler.current.receiptDescription}" title="Receipt Description" />
+                            <h:outputLabel value="Amount:" for="receiptAmount" />
+                            <h:inputText id="receiptAmount" value="#{cashReceiptsVoucherHandler.current.receiptAmount}" title="Amount" />
                             <h:outputLabel value="Receipt Location:" for="receiptLocation" />
                             <p:selectOneMenu id="receiptLocation" value="#{cashReceiptsVoucherHandler.current.receiptLocation}" required="true" converter="#{locationConvertor}" label="Receipt Location" >
                                 <f:selectItem itemLabel="Select One"  />  

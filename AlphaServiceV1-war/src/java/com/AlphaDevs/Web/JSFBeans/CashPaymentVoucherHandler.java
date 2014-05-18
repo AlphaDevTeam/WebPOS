@@ -214,6 +214,7 @@ public class CashPaymentVoucherHandler {
         cashBook.setDescription("Cash Payament Voucher - " + current.getPaymentNumber() + "-" + getCurrent().getPaymentRefNumber() + " - "+ getCurrent().getPaymentDescription());
         cashBook.setCR(getCurrent().getPaymentAmount());
         cashBook.setDR(0);
+        cashBook.setRelatedDate(getCurrent().getPaymentDate());
         cashBook.setLocation(getCurrent().getPaymentLocation());
         cashBook.setLogger(log);
 
@@ -233,7 +234,7 @@ public class CashPaymentVoucherHandler {
         cashbookController.create(cashBook);
         
         //Increment the the Document No 
-        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getIncrementedSystemNumber());
         getSystemNumbersController().edit(getCurrentSystemNumber());
         
         getCashPaymentVoucherController().create(current);

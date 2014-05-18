@@ -5,6 +5,7 @@ import com.AlphaDevs.Web.Entities.Company;
 import com.AlphaDevs.Web.Entities.Location;
 import com.AlphaDevs.Web.Entities.SystemNumbers;
 import com.AlphaDevs.Web.Enums.Document;
+import com.AlphaDevs.Web.Extra.NumberFormatUtil;
 import com.AlphaDevs.Web.SessionBean.SystemNumbersController;
 import java.util.List;
 import javax.ejb.EJB;
@@ -54,7 +55,7 @@ public class SystemNumbersHandler extends SuperHandler{
     }
     
     public String createSystemNumber(){
-        getSystemNumbersController().create(current);
+        getSystemNumbersController().create(getCurrent());
         return "Home";
     }
     

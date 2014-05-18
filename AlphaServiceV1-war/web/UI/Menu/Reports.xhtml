@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:growl id="message"/>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Customer Account"/>
+                        <h:commandButton value="Customer Account" action="./../../UI/Supplier/Account.xhtml"/>
+                        
+                        <h:outputLabel value="Stock Report"/>
+                        <h:commandButton value="Stock Report" action="./../Reports/Stock.xhtml"/>
+                        
+                        <h:outputLabel value="Day Summary"/>
+                        <h:commandButton value="Day Summary" action="./../Reports/DaySummary.xhtml"/>
+                        
+                        <h:outputLabel value="Item Bin Card"/>
+                        <h:commandButton value="Item Bin Card" action="./../Reports/BinCard.xhtml"/>
+                        
+                        <h:outputLabel value="Cash Book"/>
+                        <h:commandButton value="Cash Book" action="./../CashBook/CashBook.xhtml"/>
+                        
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

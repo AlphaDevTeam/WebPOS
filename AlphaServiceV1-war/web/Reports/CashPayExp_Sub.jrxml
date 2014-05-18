@@ -24,42 +24,76 @@
 	<field name="paymentAmount" class="java.lang.Double">
 		<fieldDescription><![CDATA[paymentAmount]]></fieldDescription>
 	</field>
+	<variable name="paymentAmount_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{paymentAmount}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="28" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<staticText>
-				<reportElement x="10" y="8" width="100" height="20" uuid="d0b5133b-de0f-4c0f-94f3-5a834862051f"/>
-				<text><![CDATA[relatedExpenses]]></text>
+				<reportElement x="0" y="32" width="85" height="15" uuid="d0b5133b-de0f-4c0f-94f3-5a834862051f"/>
+				<text><![CDATA[Expense]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="110" y="8" width="100" height="20" uuid="a04c84be-d069-4972-b54d-a586967de612"/>
-				<text><![CDATA[paymentRefNumber]]></text>
+				<reportElement x="85" y="32" width="85" height="15" uuid="a04c84be-d069-4972-b54d-a586967de612"/>
+				<text><![CDATA[Ref Number]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="210" y="8" width="100" height="20" uuid="2a2ed327-56a1-4c40-b595-eec07bbc86ce"/>
-				<text><![CDATA[paymentAmount]]></text>
+				<reportElement x="170" y="32" width="80" height="15" uuid="2a2ed327-56a1-4c40-b595-eec07bbc86ce"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="16" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="791922a6-6267-4625-aaf8-8c9b2648f68a"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cash Payment Vouchers  ( Exp )]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="0" width="100" height="20" uuid="dd5a0cc7-dabd-40f2-b47b-8a8d0a6828cc"/>
+				<reportElement x="0" y="0" width="85" height="15" uuid="dd5a0cc7-dabd-40f2-b47b-8a8d0a6828cc"/>
 				<textFieldExpression><![CDATA[""+$F{relatedExpenses}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="0" width="100" height="20" uuid="e1f12d9f-1e0d-4057-9899-e52d330c933b"/>
+				<reportElement x="85" y="0" width="85" height="15" uuid="e1f12d9f-1e0d-4057-9899-e52d330c933b"/>
 				<textFieldExpression><![CDATA[$F{paymentRefNumber}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="210" y="0" width="100" height="20" uuid="991d0d87-3a89-4446-8243-bd443a68e369"/>
+				<reportElement x="170" y="0" width="80" height="15" uuid="991d0d87-3a89-4446-8243-bd443a68e369"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{paymentAmount}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="-1" width="250" height="1" uuid="b38f407f-9a1a-4be1-8c22-0572fc879ea5"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="20" splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="3" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="02c1b4e6-8fdb-4f0b-bbcf-f045373e25d8"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="3" width="80" height="14" uuid="3c7bc35f-7264-406e-8a8e-dc5cd72924fa"/>
+				<box>
+					<topPen lineWidth="1.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{paymentAmount_1}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 </jasperReport>

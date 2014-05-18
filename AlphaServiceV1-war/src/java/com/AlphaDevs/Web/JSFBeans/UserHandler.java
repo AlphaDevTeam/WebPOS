@@ -108,6 +108,7 @@ public class UserHandler
         Terminal term = new Terminal("", "", InfoGrabber.getTerminalString());
         List<Terminal> LoggedTerminal;
         LoggedTerminal = terminalController.ValidateTerminal(term);
+        System.out.println("Terminal : " + term);
         if(!LoggedTerminal.isEmpty())
         {
             SessionDataHelper.addToSessionMap("Terminal", LoggedTerminal.get(0));

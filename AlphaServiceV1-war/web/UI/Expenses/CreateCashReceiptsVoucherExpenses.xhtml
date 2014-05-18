@@ -19,6 +19,10 @@
                             <h:inputText id="receiptNumber" value="#{cashReceiptsVoucherExpensesHandler.receiptNumber}" readonly="true" title="ReceiptNumber" />
                             <h:outputLabel value="Ref Number : " for="receiptRefNumber" />
                             <h:inputText id="receiptRefNumber" value="#{cashReceiptsVoucherExpensesHandler.current.receiptRefNumber}" title="ReceiptRefNumber" />
+                            <h:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{cashReceiptsVoucherExpensesHandler.current.receiptDate}" pattern="MM/dd/yyyy" title="Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                            </p:calendar>
                             <h:outputLabel value="Description : " for="receiptDescription" />
                             <h:inputText id="receiptDescription" value="#{cashReceiptsVoucherExpensesHandler.current.receiptDescription}" title="ReceiptDescription" />
                             <h:outputLabel value="Amount : " for="receiptAmount" />

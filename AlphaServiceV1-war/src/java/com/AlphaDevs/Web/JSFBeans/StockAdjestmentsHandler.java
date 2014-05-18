@@ -163,7 +163,7 @@ public class StockAdjestmentsHandler {
         
         //Increment the the Document No 
         if(getCurrentSystemNumber() != null){
-            getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+            getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getIncrementedSystemNumber());
             getSystemNumbersController().edit(getCurrentSystemNumber());
         }
         

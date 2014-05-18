@@ -2,7 +2,9 @@
 package com.AlphaDevs.Web.Entities;
 
 import com.AlphaDevs.Web.Enums.Document;
+import com.AlphaDevs.Web.Extra.NumberFormatUtil;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +32,7 @@ public class SystemNumbers implements Serializable {
     @Enumerated(EnumType.STRING)
     private Document document;
     private String documentPrefix;
-    private double systemNumber;
+    private BigDecimal systemNumber;
     @OneToOne
     private Company relatedCompany;
     @ManyToOne
@@ -39,7 +41,7 @@ public class SystemNumbers implements Serializable {
     public SystemNumbers() {
     }
 
-    public SystemNumbers(Document document, String documentPrefix, double systemNumber, Company relatedCompany, Location relatedLocation) {
+    public SystemNumbers(Document document, String documentPrefix, BigDecimal systemNumber, Company relatedCompany, Location relatedLocation) {
         this.document = document;
         this.documentPrefix = documentPrefix;
         this.systemNumber = systemNumber;
@@ -79,12 +81,17 @@ public class SystemNumbers implements Serializable {
         this.documentPrefix = documentPrefix;
     }
 
-    public double getSystemNumber() {
-        return systemNumber;
+    public BigDecimal getSystemNumber() {
+        return NumberFormatUtil.formatSystemNumbers(systemNumber);
     }
 
-    public void setSystemNumber(double systemNumber) {
-        this.systemNumber = systemNumber;
+    public void setSystemNumber(BigDecimal systemNumber) {
+        this.systemNumber = NumberFormatUtil.formatSystemNumbers(systemNumber);
+    }
+    
+    public BigDecimal getIncrementedSystemNumber() {
+        BigDecimal formatSystemNumbers = NumberFormatUtil.formatSystemNumbers(systemNumber).add(new BigDecimal(1));
+        return formatSystemNumbers;
     }
 
     
@@ -98,7 +105,8 @@ public class SystemNumbers implements Serializable {
     
     public String getDocumentSystemNo()
     {
-        return getDocumentPrefix() + "-" + (getSystemNumber()+ 1);
+        BigDecimal systemNo = getSystemNumber().add(new BigDecimal(1));
+        return getDocumentPrefix() + "-" + systemNo;
     }
 
     @Override

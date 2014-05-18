@@ -29,5 +29,6 @@ public enum TransactionTypes
     LOCATION,
     EMPLOYEE,
     JOB,
-    STOCK_ADJ
+    STOCK_ADJ,
+    BANK_DEPOSIT
 }

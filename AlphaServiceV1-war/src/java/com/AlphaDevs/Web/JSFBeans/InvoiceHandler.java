@@ -568,6 +568,7 @@ public class InvoiceHandler {
                 cashBook.setDescription("Invoice - " + getCurrent().getBillNo());
                 cashBook.setCR(getPaymentDetails().getCashAmount());
                 cashBook.setDR(0);
+                cashBook.setRelatedDate(getCurrent().getTrnDate());
                 cashBook.setLocation(getCurrent().getLocation());
                 cashBook.setLogger(log);
 
@@ -586,7 +587,7 @@ public class InvoiceHandler {
         }
 
         //Increment the the Document No 
-        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getSystemNumber() + 1);
+        getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getIncrementedSystemNumber());
         getSystemNumbersController().edit(getCurrentSystemNumber());
 
 

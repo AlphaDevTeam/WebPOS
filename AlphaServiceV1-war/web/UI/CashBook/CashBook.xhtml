@@ -11,17 +11,24 @@
     <h:body>
         <ui:composition template="./../../MainTemplateUI.xhtml">
             <ui:define name="content">
-                <h:form> 
-                    <h:commandButton value="Print" action="#{cashbookHandler.printReport}"/>
-                    <h:commandButton value="Print Down" action="#{cashbookHandler.printReportDownload}"/>
-                    <p:commandButton value="Prime Print " ajax="false"  action="#{cashbookHandler.printReportDownload}"/>
-                            <h:outputLabel value="Item" for="acItem" />
-                            <p:autoComplete id="acItem" value="#{gRNHandler.currentDetails.grnItem}" 
-                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" converter="#{itemConvertor}"/>  
-                            <f:view>
-                                <h:form>
-                                    <h1><h:outputText value="List"/></h1>
-                                    <p:dataTable value="#{cashbookHandler.list}" var="item">
+                <h:form target="_new"> 
+                    
+                    <h:outputLabel value="Date : " for="Date" />  
+                    <p:calendar id="Date" value="#{cashbookHandler.relatedDate}" pattern="MM/dd/yyyy" title="Date">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />  
+                    </p:calendar>
+                    <h:outputLabel value="Location :" for="paymentLocation" />
+                    <p:selectOneMenu id="paymentLocation" value="#{cashbookHandler.relatedLocation}" label="Location" converter="#{locationConvertor}"  >
+                        <f:selectItem itemLabel="Select One"  />  
+                        <f:selectItems value="#{locationHandler.list}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="Refresh" update="dataTable"/>  
+                    <p:commandButton value="Print" ajax="false"  action="#{cashbookHandler.printReportDownload}"/>
+                    <f:view>
+                                
+                                    <h1><h:outputText value="Cash Book"/></h1>
+                                    
+                                    <p:dataTable id="dataTable" value="#{cashbookHandler.list}" var="item">
                                         <p:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Id"/>
@@ -60,7 +67,6 @@
                                         </p:column>
 
                                     </p:dataTable>
-                                </h:form>
                             </f:view>
                    </h:form>
             </ui:define>

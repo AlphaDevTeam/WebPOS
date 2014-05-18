@@ -63,3 +63,12 @@ body
     font: 20px "Lucida Console", Monaco, monospace;
     letter-spacing: -1px;
 }
+
+.reportSection {
+    background: url('custom-reports.png') no-repeat top;
+    cursor: pointer;
+    background-position: top;
+    width: 128px;
+    height: 128px;
+    border: none;
+}

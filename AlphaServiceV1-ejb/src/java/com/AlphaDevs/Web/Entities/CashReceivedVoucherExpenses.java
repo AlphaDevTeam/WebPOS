@@ -3,11 +3,13 @@
 package com.AlphaDevs.Web.Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -29,6 +31,8 @@ public class CashReceivedVoucherExpenses implements Serializable {
     private String receiptNumber;
     private String receiptRefNumber;
     private String receiptDescription;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date receiptDate;
     private double receiptAmount;
     @OneToOne
     private Location receiptLocation;
@@ -43,10 +47,11 @@ public class CashReceivedVoucherExpenses implements Serializable {
     public CashReceivedVoucherExpenses() {
     }
 
-    public CashReceivedVoucherExpenses(String receiptNumber, String receiptRefNumber, String receiptDescription, double receiptAmount, Location receiptLocation, Company relatedCompany, Expenses relatedExpenses, Logger relatedLogger) {
+    public CashReceivedVoucherExpenses(String receiptNumber, String receiptRefNumber, String receiptDescription, Date receiptDate, double receiptAmount, Location receiptLocation, Company relatedCompany, Expenses relatedExpenses, Logger relatedLogger) {
         this.receiptNumber = receiptNumber;
         this.receiptRefNumber = receiptRefNumber;
         this.receiptDescription = receiptDescription;
+        this.receiptDate = receiptDate;
         this.receiptAmount = receiptAmount;
         this.receiptLocation = receiptLocation;
         this.relatedCompany = relatedCompany;
@@ -54,7 +59,13 @@ public class CashReceivedVoucherExpenses implements Serializable {
         this.relatedLogger = relatedLogger;
     }
 
-    
+    public Date getReceiptDate() {
+        return receiptDate;
+    }
+
+    public void setReceiptDate(Date receiptDate) {
+        this.receiptDate = receiptDate;
+    }
 
     public Logger getRelatedLogger() {
         return relatedLogger;

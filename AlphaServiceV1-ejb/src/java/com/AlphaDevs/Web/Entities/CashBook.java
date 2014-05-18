@@ -4,6 +4,7 @@ package com.AlphaDevs.Web.Entities;
 
 import com.AlphaDevs.Web.Enums.BillStatus;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -28,6 +29,9 @@ public class CashBook implements Serializable
     private double CR;
     private double DR;
     private double Balance;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date relatedDate;
+            
     
     @OneToOne
     private Logger Logger;
@@ -37,25 +41,25 @@ public class CashBook implements Serializable
     public CashBook() {
     }
 
-    public CashBook(Location location, String Description, double CR, double DR, double Balance, com.AlphaDevs.Web.Entities.Logger Logger) {
+    public CashBook(Location location, String Description, double CR, double DR, double Balance, Date relatedDate, Logger Logger, BillStatus billStat) {
         this.location = location;
         this.Description = Description;
         this.CR = CR;
         this.DR = DR;
         this.Balance = Balance;
-        this.Logger = Logger;
-    }
-
-    public CashBook(Location location, String Description, double CR, double DR, double Balance, com.AlphaDevs.Web.Entities.Logger Logger, BillStatus billStat) {
-        this.location = location;
-        this.Description = Description;
-        this.CR = CR;
-        this.DR = DR;
-        this.Balance = Balance;
+        this.relatedDate = relatedDate;
         this.Logger = Logger;
         this.billStat = billStat;
     }
 
+    public Date getRelatedDate() {
+        return relatedDate;
+    }
+
+    public void setRelatedDate(Date relatedDate) {
+        this.relatedDate = relatedDate;
+    }
+    
     public BillStatus getBillStat() {
         return billStat;
     }

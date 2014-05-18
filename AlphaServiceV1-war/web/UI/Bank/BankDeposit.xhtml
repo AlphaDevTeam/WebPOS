@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../MainTemplateUI.xhtml">
+
+         
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Bank Deposit"/></h1>
+                        <h:panelGrid columns="2">
+                            
+                            <h:outputLabel value="Ref Number : " for="refNumber" />
+                            <h:inputText id="refNumber" value="#{bankDepositHandler.refNumber}" title="Ref Number" readonly="true" required="true"/>
+                            <h:outputLabel value="Description : " for="description" />
+                            <h:inputText id="description" value="#{bankDepositHandler.current.description}" title="Description" />
+                            <h:outputLabel value="Date : " for="depositDate" />
+                            <p:calendar id="Date" value="#{bankDepositHandler.current.depositDate}" pattern="MM/dd/yyyy" title="Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                            </p:calendar>
+                            
+                            <h:outputLabel value="Location : " for="relatedLocation" />
+                            <p:selectOneMenu id="paymentLocation" value="#{bankDepositHandler.current.relatedLocation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="refNumber" />
+                            </p:selectOneMenu>
+                            
+                            <h:outputLabel value="Amount : " for="amount" />
+                            <h:inputText id="amount" value="#{bankDepositHandler.current.amount}" title="Amount" />
+                            <h:outputLabel value="Account : " for="relatedAccount" />
+                            <p:selectOneMenu id="relatedBankAccount" value="#{bankDepositHandler.current.relatedAccount}" label="Bank Account" converter="#{bankAccountConvertor}" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{bankAccountsHandler.list}"/>
+                            </p:selectOneMenu>
+                            <h:commandButton value="Save" action="#{bankDepositHandler.createDeposit()}" />
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -3,9 +3,15 @@
 package com.AlphaDevs.Web.JSFBeans;
 
 import com.AlphaDevs.Web.Entities.CashBook;
+import com.AlphaDevs.Web.Entities.Location;
+import com.AlphaDevs.Web.Helpers.MessageHelper;
 import com.AlphaDevs.Web.SessionBean.CashbookController;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -38,7 +44,9 @@ public class CashbookHandler
     private CashbookController cashbookController;
     
     private CashBook current;
-
+    private Date relatedDate;
+    private Location relatedLocation;
+    Date inputDate;
     /** Creates a new instance of CashbookHandler */
     public CashbookHandler() 
     {
@@ -48,6 +56,22 @@ public class CashbookHandler
         }
     }
 
+    public Date getRelatedDate() {
+        return relatedDate;
+    }
+
+    public void setRelatedDate(Date relatedDate) {
+        this.relatedDate = relatedDate;
+    }
+
+    public Location getRelatedLocation() {
+        return relatedLocation;
+    }
+
+    public void setRelatedLocation(Location relatedLocation) {
+        this.relatedLocation = relatedLocation;
+    }
+    
     public CashbookController getCashbookController() {
         return cashbookController;
     }
@@ -56,6 +80,14 @@ public class CashbookHandler
         this.cashbookController = cashbookController;
     }
 
+    public Date getInputDate() {
+        return inputDate;
+    }
+
+    public void setInputDate(Date inputDate) {
+        this.inputDate = inputDate;
+    }
+    
     public CashBook getCurrent() {
         return current;
     }
@@ -66,7 +98,24 @@ public class CashbookHandler
     
     public List<CashBook> getList()
     {
-        return cashbookController.findAll();
+        inputDate = null;
+        try {
+ 
+            if(getRelatedDate() == null){
+                setRelatedDate(new Date());
+            }
+            
+            String inputStr = new SimpleDateFormat("yyyy-MM-dd").format(getRelatedDate());
+           
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            inputDate = dateFormat.parse(inputStr);
+            setInputDate(inputDate);
+        } catch (ParseException ex) {
+            MessageHelper.addErrorMessage("Error While Converting Date", ex.getLocalizedMessage());
+        }
+        
+        
+        return cashbookController.findReadingByDate(getRelatedDate(), getRelatedLocation());
     }
      
     public void printReport() throws JRException, IOException
@@ -86,12 +135,12 @@ public class CashbookHandler
     public void printReportDownload() throws JRException, IOException
     {
         JRBeanCollectionDataSource beanCollection = new JRBeanCollectionDataSource(getList());
-        String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reports/CashBook.jasper");
+        String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reports/CashBookV2.jasper");
         System.out.println("Path : " + reportPath);
         
         //Set Map
         HashMap map = new HashMap();
-        map.put("Header", "This is Heasder");
+        map.put("Header", getRelatedLocation().toString());
         
         
         JasperPrint jasPrint =  JasperFillManager.fillReport(reportPath, map, beanCollection);

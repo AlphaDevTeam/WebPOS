@@ -120,6 +120,18 @@ public class DaySummaryReportHelper {
         this.invoiceDetails = invoiceDetails;
     }
     
+    public void clean(){
+        setMeterReadings(new ArrayList<MeterReading>());
+        setInvoiceDetails(new ArrayList<InvoiceDetails>());
+        setStockAdjestments(new ArrayList<StockAdjestments>());
+        setCustomerBalances(new ArrayList<CustomerBalance>());
+        setCreditCardReceipts(new ArrayList<CreditCardReceipts>());
+        setCashPaymentVouchers(new ArrayList<CashPaymentVoucher>());
+        setCashReceivedVouchers(new ArrayList<CashReceivedVoucher>());
+        setCashPaymentVouchersExpenses(new ArrayList<CashPaymentVoucherExpenses>());
+        setCashReceivedVouchersExpenses(new ArrayList<CashReceivedVoucherExpenses>());
+    }
+    
     
     
 }

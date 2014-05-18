@@ -21,6 +21,7 @@ public enum Document {
     CASH_PAYMENT_EXP("CashPaymentExpenses"),
     CASH_RECEIPT_CUST("CashRecieptCust"),
     CASH_RECEIPT_EXP("CashRecieptExpenses"),
+    BANK_DEPOSIT("BankDeposit"),
     STOCK_ADJESTMENT("StockAdjestment");
     
     private String fieldName;

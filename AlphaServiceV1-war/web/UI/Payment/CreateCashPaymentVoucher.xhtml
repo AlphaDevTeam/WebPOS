@@ -21,6 +21,10 @@
                             <h:inputText id="paymentNumber" value="#{cashPaymentVoucherHandler.paymentNumber}" title="PaymentNumber" />
                             <h:outputLabel value="Payment Ref Number :" for="paymentRefNumber" />
                             <h:inputText id="paymentRefNumber" value="#{cashPaymentVoucherHandler.current.paymentRefNumber}" title="PaymentRefNumber" />
+                            <h:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{cashPaymentVoucherHandler.current.paymentDate}" pattern="MM/dd/yyyy" title="Date">
+                                 <f:convertDateTime pattern="MM/dd/yyyy" />  
+                            </p:calendar>
                             <h:outputLabel value="Description :" for="paymentDescription" />
                             <h:inputText id="paymentDescription" value="#{cashPaymentVoucherHandler.current.paymentDescription}" title="PaymentDescription" />
                             <h:outputLabel value="Amount :" for="paymentAmount" />

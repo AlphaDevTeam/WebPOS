@@ -91,11 +91,11 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="52">
+			<band height="29">
 				<textField>
-					<reportElement x="186" y="1" width="60" height="21" uuid="5920f38d-3a54-431e-a696-a095e901dec3"/>
+					<reportElement x="164" y="1" width="82" height="23" uuid="5920f38d-3a54-431e-a696-a095e901dec3"/>
 					<textElement textAlignment="Right">
-						<font fontName="Tahoma" isBold="true"/>
+						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{reading_2}]]></textFieldExpression>
 				</textField>
@@ -116,9 +116,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="14" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<staticText>
-				<reportElement x="1" y="0" width="88" height="14" uuid="d77a277d-22e7-4f69-aa27-bec602b43b3a"/>
+				<reportElement mode="Opaque" x="1" y="15" width="245" height="14" backcolor="#CCCCCC" uuid="d77a277d-22e7-4f69-aa27-bec602b43b3a"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
@@ -170,7 +170,7 @@
 			</line>
 			<textField>
 				<reportElement x="146" y="1" width="100" height="16" uuid="1086b006-49d7-4ff8-b303-44e8c928e773"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalLiquidAmount}]]></textFieldExpression>
