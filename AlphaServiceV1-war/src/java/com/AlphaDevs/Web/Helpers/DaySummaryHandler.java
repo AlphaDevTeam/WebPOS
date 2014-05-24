@@ -2,6 +2,7 @@
 
 package com.AlphaDevs.Web.Helpers;
 
+import com.AlphaDevs.Web.Entities.BankDeposit;
 import com.AlphaDevs.Web.Entities.CashPaymentVoucher;
 import com.AlphaDevs.Web.Entities.CashPaymentVoucherExpenses;
 import com.AlphaDevs.Web.Entities.CashReceivedVoucher;
@@ -15,6 +16,7 @@ import com.AlphaDevs.Web.Entities.MeterReading;
 import com.AlphaDevs.Web.Entities.StockAdjestments;
 import com.AlphaDevs.Web.Extra.MailUtil;
 import com.AlphaDevs.Web.Extra.NumberFormatUtil;
+import com.AlphaDevs.Web.SessionBean.BankDepositController;
 import com.AlphaDevs.Web.SessionBean.CashPaymentVoucherController;
 import com.AlphaDevs.Web.SessionBean.CashPaymentVoucherExpensesController;
 import com.AlphaDevs.Web.SessionBean.CashReceivedVoucherController;
@@ -65,6 +67,8 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @SessionScoped
 public class DaySummaryHandler {
     @EJB
+    private BankDepositController bankDepositController;
+    @EJB
     private CashReceivedVoucherController cashReceivedVoucherController;
     @EJB
     private CashReceivedVoucherExpensesController cashReceivedVoucherExpensesController;
@@ -106,10 +110,18 @@ public class DaySummaryHandler {
         reportParams = new HashMap<String, Object>();
     }
 
+    public BankDepositController getBankDepositController() {
+        return bankDepositController;
+    }
+
+    public void setBankDepositController(BankDepositController bankDepositController) {
+        this.bankDepositController = bankDepositController;
+    }
+    
     public CashReceivedVoucherController getCashReceivedVoucherController() {
         return cashReceivedVoucherController;
     }
-
+    
     public void setCashReceivedVoucherController(CashReceivedVoucherController cashReceivedVoucherController) {
         this.cashReceivedVoucherController = cashReceivedVoucherController;
     }
@@ -422,6 +434,19 @@ public class DaySummaryHandler {
                 }
             }
             totalAmount = totalAmount + totalCashCashReceivedVouchers;
+        }
+        
+        //Bank Deposit
+        List<BankDeposit> bankDeposits = getBankDepositController().findBankDeposits(getInputDate(),getRelatedLocation());
+        if(bankDeposits != null && ! bankDeposits.isEmpty()){
+            getDaySumaryReportHelper().setBankDeposits(bankDeposits);
+            double totalBankDeposits  = 0;
+            for (BankDeposit bankDeposit : bankDeposits) {
+                if(bankDeposit != null && bankDeposit.getAmount() != null){
+                    totalBankDeposits = totalBankDeposits + bankDeposit.getAmount().doubleValue();
+                }
+            }
+            totalAmount = totalAmount - totalBankDeposits;
         }
         
         getReportParams().put("totalLiquidAmount", totalLiquidAmount);

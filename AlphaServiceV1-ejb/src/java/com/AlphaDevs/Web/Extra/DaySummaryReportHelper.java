@@ -2,6 +2,7 @@
 
 package com.AlphaDevs.Web.Extra;
 
+import com.AlphaDevs.Web.Entities.BankDeposit;
 import com.AlphaDevs.Web.Entities.CashPaymentVoucher;
 import com.AlphaDevs.Web.Entities.CashPaymentVoucherExpenses;
 import com.AlphaDevs.Web.Entities.CashReceivedVoucher;
@@ -35,17 +36,32 @@ public class DaySummaryReportHelper {
     private List<CashReceivedVoucher> cashReceivedVouchers;
     private List<CashPaymentVoucherExpenses> cashPaymentVouchersExpenses;
     private List<CashReceivedVoucherExpenses> cashReceivedVouchersExpenses;
+    private List<BankDeposit> bankDeposits;
+
+    public DaySummaryReportHelper(List<MeterReading> meterReadings, List<InvoiceDetails> invoiceDetails, List<StockAdjestments> stockAdjestments, List<CustomerBalance> customerBalances, List<CreditCardReceipts> creditCardReceipts, List<CashPaymentVoucher> cashPaymentVouchers, List<CashReceivedVoucher> cashReceivedVouchers, List<CashPaymentVoucherExpenses> cashPaymentVouchersExpenses, List<CashReceivedVoucherExpenses> cashReceivedVouchersExpenses, List<BankDeposit> bankDeposits) {
+        this.meterReadings = meterReadings;
+        this.invoiceDetails = invoiceDetails;
+        this.stockAdjestments = stockAdjestments;
+        this.customerBalances = customerBalances;
+        this.creditCardReceipts = creditCardReceipts;
+        this.cashPaymentVouchers = cashPaymentVouchers;
+        this.cashReceivedVouchers = cashReceivedVouchers;
+        this.cashPaymentVouchersExpenses = cashPaymentVouchersExpenses;
+        this.cashReceivedVouchersExpenses = cashReceivedVouchersExpenses;
+        this.bankDeposits = bankDeposits;
+    }
 
     public DaySummaryReportHelper() {
-        meterReadings = new ArrayList<MeterReading>();
-        invoiceDetails = new ArrayList<InvoiceDetails>();
-        stockAdjestments = new ArrayList<StockAdjestments>();
-        customerBalances = new ArrayList<CustomerBalance>();
-        creditCardReceipts = new ArrayList<CreditCardReceipts>();
-        cashPaymentVouchers = new ArrayList<CashPaymentVoucher>();
-        cashReceivedVouchers = new ArrayList<CashReceivedVoucher>();
-        cashPaymentVouchersExpenses = new ArrayList<CashPaymentVoucherExpenses>();
-        cashReceivedVouchersExpenses = new ArrayList<CashReceivedVoucherExpenses>();
+    }
+    
+    
+
+    public List<BankDeposit> getBankDeposits() {
+        return bankDeposits;
+    }
+
+    public void setBankDeposits(List<BankDeposit> bankDeposits) {
+        this.bankDeposits = bankDeposits;
     }
 
     public List<CreditCardReceipts> getCreditCardReceipts() {
