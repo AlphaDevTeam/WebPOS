@@ -2,6 +2,8 @@
 
 package com.AlphaDevs.Web.Extra;
 
+import com.AlphaDevs.Web.Entities.CustomEmailSettings;
+import com.AlphaDevs.Web.Entities.EmailAddress;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -21,133 +23,80 @@ import javax.activation.DataSource;
 
 public class MailUtil {
     
-    private String toEmailAddress;
-    private String fromEmailAddress;
-    private String messageBody;
-    private String emailSubject;
-    private String smtpServer; 
-    private DataSource datasource;
-
-    /**
-     * @return the toEmailAddress
-     */
-    public String getToEmailAddress() {
-        return toEmailAddress;
-    }
-
-    /**
-     * @param toEmailAddress the toEmailAddress to set
-     */
-    public void setToEmailAddress(String toEmailAddress) {
-        this.toEmailAddress = toEmailAddress;
-    }
-
-    /**
-     * @return the fromEmailAddress
-     */
-    public String getFromEmailAddress() {
-        return fromEmailAddress;
-    }
-
-    /**
-     * @param fromEmailAddress the fromEmailAddress to set
-     */
-    public void setFromEmailAddress(String fromEmailAddress) {
-        this.fromEmailAddress = fromEmailAddress;
-    }
-
-    /**
-     * @return the messageBody
-     */
-    public String getMessageBody() {
-        return messageBody;
-    }
-
-    /**
-     * @param messageBody the messageBody to set
-     */
-    public void setMessageBody(String messageBody) {
-        this.messageBody = messageBody;
-    }
-
-    /**
-     * @return the emailSubject
-     */
-    public String getEmailSubject() {
-        return emailSubject;
-    }
-
-    /**
-     * @param emailSubject the emailSubject to set
-     */
-    public void setEmailSubject(String emailSubject) {
-        this.emailSubject = emailSubject;
-    }
-
-    /**
-     * @return the smtpServer
-     */
-    public String getSmtpServer() {
-        return smtpServer;
-    }
-
-    /**
-     * @param smtpServer the smtpServer to set
-     */
-    public void setSmtpServer(String smtpServer) {
-        this.smtpServer = smtpServer;
-    }
+    private String username = "";           
+    private String password = "";           
     
-    
-    public int sendMail() {
+    public int sendMail(CustomEmailSettings emailSettings, DataSource datasource) {
+        
+//        String username =  "alphadevs.mail@gmail.com";           
+//        String password = "KnightRider";  
+        
         try {
+            if(emailSettings != null){
+                
+                setUsername(emailSettings.getFromEmailAddress());
+                setPassword(emailSettings.getFromEmailPassword());
+                
+                Properties props = System.getProperties();
+                props.put("mail.transport.protocol", "smtp");
+                props.put("mail.smtp.starttls.enable", "true");
+                props.put("mail.smtp.host", emailSettings.getSmtpServer());
+                props.put("mail.smtp.auth", "true");
 
-            Properties props = System.getProperties();
-            props.put("mail.transport.protocol", "smtp");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", getSmtpServer());
-            props.put("mail.smtp.auth", "true");
-            
-            Authenticator auth = new SMTPAuthenticator();
-            Session session = Session.getInstance(props, auth);
-            // -- Create a new message --
-            Message msg = new MimeMessage(session);
-            // -- Set the FROM and TO fields --
-            msg.setFrom(new InternetAddress(getFromEmailAddress()));
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(getToEmailAddress(), false));
-            msg.setSubject(getEmailSubject());
-            msg.setText(getMessageBody());
-            // -- Set some other header information --
-            msg.setHeader("MyMail", "Mr. XYZ");
-            msg.setSentDate(new Date());
-            
-            // create the message part 
-            MimeBodyPart messageBodyPart = 
-              new MimeBodyPart();
+                Authenticator auth = new SMTPAuthenticator();
+                Session session = Session.getInstance(props, auth);
+                // -- Create a new message --
+                Message msg = new MimeMessage(session);
+                // -- Set the FROM and TO fields --
+                msg.setFrom(new InternetAddress(emailSettings.getFromEmailAddress()));
+                InternetAddress[] addressTo = new InternetAddress[0];
+                if(emailSettings.getToEmailAddress() != null){
+                    addressTo = new InternetAddress[emailSettings.getToEmailAddress().size()];
+                    List<EmailAddress> toEmailAddress = emailSettings.getToEmailAddress();
+                    if(toEmailAddress != null && !toEmailAddress.isEmpty()){
+                        for (int i = 0; i < emailSettings.getToEmailAddress().size(); i++) {
+                            EmailAddress emailAddress = emailSettings.getToEmailAddress().get(i);
+                            if(emailAddress != null && emailAddress.getEmailAddress() != null){
+                                addressTo[i] = new InternetAddress(emailAddress.getEmailAddress());
+                            }
+                        }
+                    }
+                }
+                
+                msg.setRecipients(Message.RecipientType.TO, addressTo);
+                msg.setSubject(emailSettings.getEmailSubject());
+                // -- Set some other header information --
+                msg.setHeader("Alpha Devs Email Module - WEB POS ", emailSettings.getFromEmailAddress());
+                msg.setSentDate(new Date());
 
-            //fill message
-            messageBodyPart.setText("Hi");
+                // create the message part 
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
 
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart);
+                //fill message
+                messageBodyPart.setText(emailSettings.getMessageBody());
 
-            // Part two is attachment
-            
-            if(getDatasource() != null){
-                messageBodyPart = new MimeBodyPart();
-                messageBodyPart.setDataHandler(new DataHandler(getDatasource()));
-                //messageBodyPart.setFileName(fileAttachment);
+                Multipart multipart = new MimeMultipart();
                 multipart.addBodyPart(messageBodyPart);
-            }
-            
 
-            // Put parts in message
-            msg.setContent(multipart);
-            
-            // -- Send the message --
-            Transport.send(msg);
-            System.out.println("Message sent to " + getToEmailAddress() + " OK. With Attachment");
-            return 0;
+                // Part two is attachment
+
+                if(datasource != null){
+                    messageBodyPart = new MimeBodyPart();
+                    messageBodyPart.setDataHandler(new DataHandler(datasource));
+                    messageBodyPart.setFileName(emailSettings.getAttachmentPrefix() + " ");
+                    multipart.addBodyPart(messageBodyPart);
+                }
+
+
+                // Put parts in message
+                msg.setContent(multipart);
+
+                // -- Send the message --
+                Transport.send(msg);
+                System.out.println("Message sent to " + emailSettings.getToEmailAddress() + " OK. With Attachment");
+               
+            }
+             return 0;
             
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -157,25 +106,37 @@ public class MailUtil {
     }
 
     /**
-     * @return the datasource
+     * @return the username
      */
-    public DataSource getDatasource() {
-        return datasource;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * @param datasource the datasource to set
+     * @param username the username to set
      */
-    public void setDatasource(DataSource datasource) {
-        this.datasource = datasource;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     private class SMTPAuthenticator extends javax.mail.Authenticator {
         @Override
         public PasswordAuthentication getPasswordAuthentication() {
-            String username =  "alphadevs.mail@gmail.com";           
-            String password = "KnightRider";                          
-            return new PasswordAuthentication(username, password);
+            return new PasswordAuthentication(getUsername(), getPassword());
         }
     }
 }

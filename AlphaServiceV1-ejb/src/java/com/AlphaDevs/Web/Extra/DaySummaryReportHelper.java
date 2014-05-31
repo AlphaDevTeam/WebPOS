@@ -7,6 +7,7 @@ import com.AlphaDevs.Web.Entities.CashPaymentVoucher;
 import com.AlphaDevs.Web.Entities.CashPaymentVoucherExpenses;
 import com.AlphaDevs.Web.Entities.CashReceivedVoucher;
 import com.AlphaDevs.Web.Entities.CashReceivedVoucherExpenses;
+import com.AlphaDevs.Web.Entities.Cheques;
 import com.AlphaDevs.Web.Entities.CreditCardReceipts;
 import com.AlphaDevs.Web.Entities.CustomerBalance;
 import com.AlphaDevs.Web.Entities.InvoiceDetails;
@@ -37,8 +38,9 @@ public class DaySummaryReportHelper {
     private List<CashPaymentVoucherExpenses> cashPaymentVouchersExpenses;
     private List<CashReceivedVoucherExpenses> cashReceivedVouchersExpenses;
     private List<BankDeposit> bankDeposits;
+    private List<Cheques> receivedCheques;
 
-    public DaySummaryReportHelper(List<MeterReading> meterReadings, List<InvoiceDetails> invoiceDetails, List<StockAdjestments> stockAdjestments, List<CustomerBalance> customerBalances, List<CreditCardReceipts> creditCardReceipts, List<CashPaymentVoucher> cashPaymentVouchers, List<CashReceivedVoucher> cashReceivedVouchers, List<CashPaymentVoucherExpenses> cashPaymentVouchersExpenses, List<CashReceivedVoucherExpenses> cashReceivedVouchersExpenses, List<BankDeposit> bankDeposits) {
+    public DaySummaryReportHelper(List<MeterReading> meterReadings, List<InvoiceDetails> invoiceDetails, List<StockAdjestments> stockAdjestments, List<CustomerBalance> customerBalances, List<CreditCardReceipts> creditCardReceipts, List<CashPaymentVoucher> cashPaymentVouchers, List<CashReceivedVoucher> cashReceivedVouchers, List<CashPaymentVoucherExpenses> cashPaymentVouchersExpenses, List<CashReceivedVoucherExpenses> cashReceivedVouchersExpenses, List<BankDeposit> bankDeposits, List<Cheques> receivedCheques) {
         this.meterReadings = meterReadings;
         this.invoiceDetails = invoiceDetails;
         this.stockAdjestments = stockAdjestments;
@@ -49,13 +51,22 @@ public class DaySummaryReportHelper {
         this.cashPaymentVouchersExpenses = cashPaymentVouchersExpenses;
         this.cashReceivedVouchersExpenses = cashReceivedVouchersExpenses;
         this.bankDeposits = bankDeposits;
+        this.receivedCheques = receivedCheques;
     }
+
+    
 
     public DaySummaryReportHelper() {
     }
-    
-    
 
+    public List<Cheques> getReceivedCheques() {
+        return receivedCheques;
+    }
+
+    public void setReceivedCheques(List<Cheques> receivedCheques) {
+        this.receivedCheques = receivedCheques;
+    }
+    
     public List<BankDeposit> getBankDeposits() {
         return bankDeposits;
     }

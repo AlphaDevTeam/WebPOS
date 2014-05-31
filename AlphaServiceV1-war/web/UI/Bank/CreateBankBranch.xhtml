@@ -21,7 +21,6 @@
                                     <f:selectItems value="#{bankHandler.list}"/>
                                 </h:selectOneMenu>
                                 <h:outputLabel value="BrnachCode:" for="brnachCode" />
-                                <h:inputText id="brnachCode" value="#{bankBranchHandler.current.brnachCode}" title="BrnachCode" />
                                 <h:outputLabel value="BranchName:" for="branchName" />
                                 <h:inputText id="branchName" value="#{bankBranchHandler.current.branchName}" title="BranchName" />
                                 <p:commandButton value="Add" action="#{bankBranchHandler.addBankBranch()}" update="virtualList,panel,:mainForm:messages" />

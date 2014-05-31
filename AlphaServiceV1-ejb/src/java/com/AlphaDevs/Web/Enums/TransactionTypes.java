@@ -30,5 +30,6 @@ public enum TransactionTypes
     EMPLOYEE,
     JOB,
     STOCK_ADJ,
-    BANK_DEPOSIT
+    BANK_DEPOSIT,
+    EMAIL_SETUP
 }

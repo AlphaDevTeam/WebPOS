@@ -7,8 +7,10 @@ import com.AlphaDevs.Web.Entities.CashPaymentVoucher;
 import com.AlphaDevs.Web.Entities.CashPaymentVoucherExpenses;
 import com.AlphaDevs.Web.Entities.CashReceivedVoucher;
 import com.AlphaDevs.Web.Entities.CashReceivedVoucherExpenses;
+import com.AlphaDevs.Web.Entities.Cheques;
 import com.AlphaDevs.Web.Extra.DaySummaryReportHelper;
 import com.AlphaDevs.Web.Entities.CreditCardReceipts;
+import com.AlphaDevs.Web.Entities.CustomEmailSettings;
 import com.AlphaDevs.Web.Entities.CustomerBalance;
 import com.AlphaDevs.Web.Entities.InvoiceDetails;
 import com.AlphaDevs.Web.Entities.Location;
@@ -21,8 +23,10 @@ import com.AlphaDevs.Web.SessionBean.CashPaymentVoucherController;
 import com.AlphaDevs.Web.SessionBean.CashPaymentVoucherExpensesController;
 import com.AlphaDevs.Web.SessionBean.CashReceivedVoucherController;
 import com.AlphaDevs.Web.SessionBean.CashReceivedVoucherExpensesController;
+import com.AlphaDevs.Web.SessionBean.ChequesController;
 import com.AlphaDevs.Web.SessionBean.CreditCardReceiptsController;
 import com.AlphaDevs.Web.SessionBean.CreditCardTeminalsController;
+import com.AlphaDevs.Web.SessionBean.CustomEmailSettingsController;
 import com.AlphaDevs.Web.SessionBean.CustomerBalanceController;
 import com.AlphaDevs.Web.SessionBean.GRNController;
 import com.AlphaDevs.Web.SessionBean.InvoiceController;
@@ -67,6 +71,11 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @SessionScoped
 public class DaySummaryHandler {
     @EJB
+    private ChequesController chequesController;
+    
+    @EJB
+    private CustomEmailSettingsController customEmailSettingsController;
+    @EJB
     private BankDepositController bankDepositController;
     @EJB
     private CashReceivedVoucherController cashReceivedVoucherController;
@@ -95,11 +104,14 @@ public class DaySummaryHandler {
     @EJB
     private GRNController gRNController;
     
+    
     private List<DataTableRow> current;
     
     private Date relatedDate;
     private Location relatedLocation;
     private DaySummaryReportHelper daySumaryReportHelper;
+    private CustomEmailSettings emailSettings;
+    
     Date inputDate;
     
     Map<String,Object> reportParams;
@@ -108,8 +120,17 @@ public class DaySummaryHandler {
         current = new ArrayList<DataTableRow>();
         daySumaryReportHelper = new DaySummaryReportHelper();
         reportParams = new HashMap<String, Object>();
+        emailSettings = new CustomEmailSettings();
     }
 
+    public ChequesController getChequesController() {
+        return chequesController;
+    }
+
+    public void setChequesController(ChequesController chequesController) {
+        this.chequesController = chequesController;
+    }
+    
     public BankDepositController getBankDepositController() {
         return bankDepositController;
     }
@@ -149,8 +170,23 @@ public class DaySummaryHandler {
     public void setCashPaymentVoucherExpensesController(CashPaymentVoucherExpensesController cashPaymentVoucherExpensesController) {
         this.cashPaymentVoucherExpensesController = cashPaymentVoucherExpensesController;
     }
-    
 
+    public CustomEmailSettingsController getCustomEmailSettingsController() {
+        return customEmailSettingsController;
+    }
+
+    public void setCustomEmailSettingsController(CustomEmailSettingsController customEmailSettingsController) {
+        this.customEmailSettingsController = customEmailSettingsController;
+    }
+
+    public CustomEmailSettings getEmailSettings() {
+        return emailSettings;
+    }
+
+    public void setEmailSettings(CustomEmailSettings emailSettings) {
+        this.emailSettings = emailSettings;
+    }
+    
     public CustomerBalanceController getCustomerBalanceController() {
         return customerBalanceController;
     }
@@ -272,7 +308,7 @@ public class DaySummaryHandler {
         this.current = current;
     }
     
-    public List<DataTableRow> getData(){
+    public List<DataTableRow> InitReport(){
         
         double totalAmount = 0;
         double totalLiquidAmount = 0;
@@ -367,6 +403,19 @@ public class DaySummaryHandler {
             
             totalAmount = totalAmount - totalcreditCardReceipt;
         }
+        List<Cheques> chequesByDate = getChequesController().findChequesByDate(getInputDate(),getRelatedLocation());
+        getDaySumaryReportHelper().setReceivedCheques(chequesByDate);
+        double totalReceivedCheques  = 0;
+        if(chequesByDate != null && ! chequesByDate.isEmpty()){
+            for (Cheques receivedCheque : chequesByDate) {
+                if(receivedCheque !=null ){
+                    totalReceivedCheques = totalReceivedCheques + receivedCheque.getChequeAmount();
+                    getCurrent().add(new DataTableRow("Received Cheque  - " + receivedCheque.getChequeNumber() + "-" + receivedCheque.getChequeNote(), String.valueOf(receivedCheque.getChequeAmount()),"0"));
+                }
+            }
+            
+            totalAmount = totalAmount - totalcreditCardReceipt;
+        }
         
         
         //Credit Customers
@@ -456,22 +505,28 @@ public class DaySummaryHandler {
     }
     
     public void genarateReport(){
-        getData();
+        InitReport();
         List<DaySummaryReportHelper> listSummary = new ArrayList<DaySummaryReportHelper>();
-        listSummary.add(daySumaryReportHelper);
+        listSummary.add(getDaySumaryReportHelper());
         printReportSpecificGrn(listSummary);
-        emailReport(listSummary);
-        System.out.println("mETER" + daySumaryReportHelper.toString());
-        
-        MailUtil mailUtil = new MailUtil();
-        mailUtil.setEmailSubject("Subject");
-        mailUtil.setFromEmailAddress("AlphaDevs@gmail.com");
-        mailUtil.setMessageBody("message");
-        mailUtil.setSmtpServer("smtp.gmail.com");
-        mailUtil.setToEmailAddress("mihindugajaba@gmail.com");
-        System.out.println("Result of Email : " + mailUtil.sendMail()); 
+
+        //Remove ME
+        List<CustomEmailSettings> findRelatedEmailSettings = getCustomEmailSettingsController().findRelatedEmailSettings(EntityHelper.getLoggedCompany());
+        if(findRelatedEmailSettings != null && !findRelatedEmailSettings.isEmpty()){
+            MailUtil mailUtil = new MailUtil();
+            mailUtil.sendMail(findRelatedEmailSettings.get(0), null);
+        }
         
     }
+    public void emailReport(){
+        InitReport();
+        List<DaySummaryReportHelper> listSummary = new ArrayList<DaySummaryReportHelper>();
+        listSummary.add(getDaySumaryReportHelper());
+        emailReportAsAttachment(listSummary);
+        
+    }
+    
+    
     public void printReportSpecificGrn(List<DaySummaryReportHelper> daySummary) 
     {
         try
@@ -499,7 +554,7 @@ public class DaySummaryHandler {
         
     }
     
-    public void emailReport(List<DaySummaryReportHelper> daySummary) 
+    public void emailReportAsAttachment(List<DaySummaryReportHelper> daySummary) 
     {
         try
         {
@@ -511,29 +566,15 @@ public class DaySummaryHandler {
             JasperPrint jasPrint =  JasperFillManager.fillReport(reportPath, getReportParams(), beanCollection);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             JasperExportManager.exportReportToPdfStream(jasPrint, baos);
-            DataSource aAttachment =  new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
+            DataSource attachment =  new ByteArrayDataSource(baos.toByteArray(), "application/pdf");
             FacesContext.getCurrentInstance().responseComplete();
             System.out.println("Report Done");
             
-            MailUtil mailUtil = new MailUtil();
-            mailUtil.setEmailSubject("Subject Attachment");
-            mailUtil.setFromEmailAddress("AlphaDevs@gmail.com");
-            mailUtil.setMessageBody("message With Attachment");
-            mailUtil.setSmtpServer("smtp.gmail.com");
-            mailUtil.setDatasource(aAttachment);
-            mailUtil.setToEmailAddress("mihindugajaba@gmail.com");
-            System.out.println("Result of Email With Attachment : " + mailUtil.sendMail()); 
-            
-            
-//            MimeMessage message = mailSender.createMimeMessage();
-//			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//			helper.setFrom(from);
-//			helper.setTo(to);
-//			helper.setSubject(subject);
-//			helper.addAttachment(attachmentFilename, aAttachment);
-//			message.setContent(mailContent, "text/html");
-//			mailSender.send(message);
-            
+            List<CustomEmailSettings> findRelatedEmailSettings = getCustomEmailSettingsController().findRelatedEmailSettings(EntityHelper.getLoggedCompany());
+            if(findRelatedEmailSettings != null && !findRelatedEmailSettings.isEmpty()){
+                MailUtil mailUtil = new MailUtil();
+                mailUtil.sendMail(findRelatedEmailSettings.get(0), attachment);
+            }
         }
         catch(Exception e)
         {

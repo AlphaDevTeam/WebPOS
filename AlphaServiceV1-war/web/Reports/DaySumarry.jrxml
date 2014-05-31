@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportTest" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a617bc7-cace-4f6e-a346-a7f4dda63640">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="123"/>
+	<property name="ireport.y" value="166"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["H:\\AlphaDevs\\Git Repo\\WebPOS\\AlphaServiceV1-war\\web\\Reports\\"]]></defaultValueExpression>
@@ -43,6 +43,12 @@
 	</field>
 	<field name="creditCardReceipts" class="java.util.List">
 		<fieldDescription><![CDATA[creditCardReceipts]]></fieldDescription>
+	</field>
+	<field name="bankDeposits" class="java.util.List">
+		<fieldDescription><![CDATA[bankDeposits]]></fieldDescription>
+	</field>
+	<field name="receivedCheques" class="java.util.List">
+		<fieldDescription><![CDATA[receivedCheques]]></fieldDescription>
 	</field>
 	<variable name="MihiTest" class="java.lang.Double" resetType="None"/>
 	<variable name="MeterReadingSubTotal" class="java.lang.String" resetType="None"/>
@@ -127,7 +133,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="253" splitType="Stretch">
+		<band height="315" splitType="Stretch">
 			<subreport>
 				<reportElement positionType="Float" x="0" y="0" width="252" height="46" isRemoveLineWhenBlank="true" backcolor="#CCFFFF" uuid="fca816a3-95ce-4f2f-9d89-0e0a7894be49"/>
 				<subreportParameter name="SUBREPORT_DIR">
@@ -170,7 +176,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CustomerBalances_Sub.jasper"]]></subreportExpression>
 			</subreport>
 			<line direction="BottomUp">
-				<reportElement x="268" y="0" width="1" height="253" uuid="22adb4cd-91c2-475b-9472-743c87bd61fa"/>
+				<reportElement x="268" y="0" width="1" height="315" uuid="22adb4cd-91c2-475b-9472-743c87bd61fa"/>
 			</line>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="87" width="252" height="49" isRemoveLineWhenBlank="true" uuid="7f301e65-2b35-44f9-9eae-a6a5b97cae49"/>
@@ -199,19 +205,29 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CashRecVouchersExp_Sub.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement positionType="Float" x="114" y="204" width="100" height="20" uuid="481acc91-e8d7-4252-be6c-232450a85bb2"/>
+				<reportElement positionType="Float" x="114" y="295" width="100" height="20" uuid="481acc91-e8d7-4252-be6c-232450a85bb2"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalAmount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="204" width="114" height="20" uuid="930faa94-0ba4-4fd4-9b76-3e117875f15f"/>
+				<reportElement positionType="Float" x="0" y="295" width="114" height="20" uuid="930faa94-0ba4-4fd4-9b76-3e117875f15f"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Amount]]></text>
 			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="192" width="252" height="41" uuid="37ed8f94-9945-4bbb-a505-ecadd58257c6"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{bankDeposits})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BankDeposits_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="288" y="237" width="267" height="42" uuid="ff75a892-105a-4ac1-92c5-8314777358ba"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{receivedCheques})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReceivedCheques_Sub.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>

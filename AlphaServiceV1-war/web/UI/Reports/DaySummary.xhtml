@@ -25,8 +25,9 @@
                                 <f:selectItems value="#{locationHandler.list}"/>
                             </p:selectOneMenu>
                         <p:commandButton value="save" update="dataTable"/>  
-                        <h:commandButton value="report" action="#{daySummaryHandler.genarateReport()}"/>  
-                        <p:dataTable id="dataTable" value="#{daySummaryHandler.data}" var="item">
+                        <h:commandButton value="Genarate Report" action="#{daySummaryHandler.genarateReport()}"/>  
+                        <h:commandButton value="Email Report" action="#{daySummaryHandler.emailReport()}"/>  
+                        <p:dataTable id="dataTable" value="#{daySummaryHandler.InitReport()}" var="item">
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Description"/>
