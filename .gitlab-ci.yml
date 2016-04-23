@@ -1,0 +1,11 @@
+before_script:
+  - sudo apt-get update && apt-get install mysql
+  - java -version
+ 
+rspec:
+  script:
+    - bundle exec rspec
+
+rubocop:
+  script:
+    - bundle exec rubocop
