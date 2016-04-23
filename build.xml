@@ -58,4 +58,8 @@
     nbproject/build-impl.xml file. 
 
     -->
+	 <classpath>
+        <pathelement location="/var/lib/jenkins/workspace/AlphaDevs-Web-POS/lib"/>
+    </classpath>
+	
 </project>
